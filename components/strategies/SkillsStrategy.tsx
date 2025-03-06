@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box, Card, Flex, Grid, Link, Text } from '@radix-ui/themes';
 import {
   SiNestjs,
   SiNextdotjs,
@@ -18,18 +17,20 @@ import {
   SiObsidian,
   SiObsstudio,
 } from 'react-icons/si';
+import { VscAzure } from 'react-icons/vsc';
+import { HiOutlineCog } from 'react-icons/hi';
 import { AiOutlineDeploymentUnit } from 'react-icons/ai';
 import { RiCodeBlock, RiVideoAiLine } from 'react-icons/ri';
-import { HiOutlineCog } from 'react-icons/hi';
-import { VscAzure } from 'react-icons/vsc';
+import { Box, Flex, Grid, Link, Text } from '@radix-ui/themes';
+import SectionHeader from '../SectionHeader';
 
 export default function SkillsStrategy() {
   return (
-    <Flex direction="column" gap="6">
-      <Text weight="bold" size="7">
-        Mes outils
-      </Text>
-      <Text>The tools I use everyday</Text>
+    <Flex direction="column" gap="8">
+      <SectionHeader
+        title={'Mes outils'}
+        subTitle={`Les technologies et applications que j'utilise au quotidien.`}
+      />
 
       <Grid columns="3" gap="3" width="auto">
         <SkillList title="Front-end Web">

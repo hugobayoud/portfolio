@@ -1,16 +1,23 @@
-import { Text } from '@radix-ui/themes';
+import { Container, Text } from '@radix-ui/themes';
 
 export default function StoryStrategy() {
   return (
-    <Text weight="light" color="indigo" wrap="pretty">
-      Développeur depuis plus de cinq ans et passionné par l'entrepreneuriat
-      depuis encore plus longtemps, j'ai eu l'opportunité d'explorer, de
-      concevoir et de concrétiser divers projets. Transformer une idée en
-      produit tangible est un défi que j'aime relever, en alliant vision
-      stratégique et maîtrise technique. Aujourd'hui, mon objectif est
-      d'accompagner les startups et scale-ups en leur apportant une expertise
-      technique pointue et une approche pragmatique pour faire évoluer leurs
-      produits.
-    </Text>
+    <Container
+      size="2"
+      style={{
+        margin: '70px 0',
+        textAlign: 'center',
+      }}
+    >
+      <Text style={{ opacity: 0.7 }}>
+        Développeur depuis plus de cinq ans et passionné d'entrepreneuriat,
+        j'aime transformer une idée en produit concret en alliant stratégie et
+        technique. <Text weight="bold">Mon objectif est d'accompagner les</Text>
+        <Text weight="bold">{` startups`}</Text> et
+        <Text weight="bold">{` scale-ups`}</Text> avec une expertise pointue et
+        une approche pragmatique pour faire
+        <Text weight="bold">{` évoluer leurs produits.`}</Text>
+      </Text>
+    </Container>
   );
 }
