@@ -11,7 +11,7 @@ export default function StoryStrategy() {
   // Split the text to maintain the bold formatting
   const fullText = messages.strategies.story.text;
   const parts = fullText.split(
-    /(\bstartups\b|\bscale-ups\b|\bévoluer leurs produits\b|\bMon objectif est d'accompagner les\b)/gi
+    /(\bstartups\b|\bscale-ups\b|\bévoluer leurs produits\b|\bMon objectif est d'accompagner les\b|\bMy goal is to support\b|\bto evolve their products\b)/gi
   );
 
   return (
@@ -26,7 +26,7 @@ export default function StoryStrategy() {
         {parts.map((part: string, index: number) => {
           // Check if this part should be bold
           const isBold =
-            /startups|scale-ups|évoluer leurs produits|Mon objectif est d'accompagner les/i.test(
+            /startups|scale-ups|évoluer leurs produits|Mon objectif est d'accompagner les|My goal is to support|to evolve their products/i.test(
               part
             );
 

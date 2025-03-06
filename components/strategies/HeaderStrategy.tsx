@@ -4,12 +4,14 @@ import { Flex, Text, Button, Avatar } from '@radix-ui/themes';
 import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
 import { useTheme } from '../ThemeProvider';
 import { useEffect, useState } from 'react';
+import { useLanguage } from '../../src/i18n/LanguageProvider';
 
 import EmailButton from '../EmailButton';
 import Link from 'next/link';
 
 export default function HeaderStrategy() {
   const { theme } = useTheme();
+  const { messages } = useLanguage();
   const [showSunglasses, setShowSunglasses] = useState(false);
 
   // Effect to animate sunglasses when theme changes to light
@@ -56,10 +58,10 @@ export default function HeaderStrategy() {
       <Flex direction="column" gap="6">
         <Flex direction="column" gap="2">
           <Text weight="bold" size="8">
-            HUGO BAYOUD
+            {messages.strategies.header.name}
           </Text>
           <Text weight="bold" size="4" style={{ color: 'var(--accent-9)' }}>
-            Développeur Full Stack Web & Mobile
+            {messages.strategies.header.title}
           </Text>
 
           <Text
@@ -69,21 +71,20 @@ export default function HeaderStrategy() {
             }}
             wrap="pretty"
           >
-            Spécialisé dans l'écosystème JavaScript. Forte sensibilité UX/UI
-            pour créer des applications performantes et intuitives.
+            {messages.strategies.header.description}
           </Text>
         </Flex>
 
         <Flex direction="row" gap="2">
           <SocialButton
             icon={<LinkedInLogoIcon />}
-            label="LinkedIn"
+            label={messages.strategies.header.social.linkedin}
             href="www.linkedin.com/in/hugo-bayoud-4aa927194/"
           />
 
           <SocialButton
             icon={<GitHubLogoIcon />}
-            label="GitHub"
+            label={messages.strategies.header.social.github}
             href="https://github.com/hugobayoud/"
           />
 

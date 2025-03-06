@@ -2,11 +2,68 @@
   "strategies": {
     "story": {
       "text": "Développeur depuis plus de cinq ans et passionné d'entrepreneuriat, j'aime transformer une idée en produit concret en alliant stratégie et technique. Mon objectif est d'accompagner les startups et scale-ups avec une expertise pointue et une approche pragmatique pour faire évoluer leurs produits."
+    },
+    "header": {
+      "name": "HUGO BAYOUD",
+      "title": "Développeur Full Stack Web & Mobile",
+      "description": "Spécialisé dans l'écosystème JavaScript. Forte sensibilité UX/UI pour créer des applications performantes et intuitives.",
+      "social": {
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
+        "email": "Email"
+      }
+    },
+    "projects": {
+      "title": "Mes projets",
+      "subTitle": "Je crée des applications et des outils rentables et aide les gens avec mes compétences.",
+      "lepto": {
+        "title": "Lepto",
+        "description": "Automatiser les remboursements entre amis en voyage tout en évitant les tensions liées aux finances. Le défi majeur : proposer une expérience plus fluide et intuitive que les concurrents, comme Tricount, grâce à une UI/UX optimisée."
+      },
+      "sowhat": {
+        "title": "Sowhat",
+        "description": "Une FinTech qui exploite l'Open Finance pour aider les utilisateurs à mieux gérer leur budget, leurs économies et leur patrimoine. Simplicité, efficacité et impact sont les maîtres mots."
+      },
+      "mybus": {
+        "title": "Monkey Factory",
+        "description": "Faciliter la mobilité urbaine en centralisant les moyens de transport (vélos, trottinettes, bus, covoiturage…) au sein d'une application. Mon rôle : intégrer un système de calcul d'itinéraire performant et optimiser l'architecture Back-end en mono-repo."
+      }
+    },
+    "skills": {
+      "title": "Mes outils",
+      "subTitle": "Les technologies et applications que j'utilise au quotidien.",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "ciCd": "CI/CD",
+      "code": "Code",
+      "other": "Création de contenu"
+    },
+    "references": {
+      "title": "Mes références",
+      "subTitle": "On/Je parle de moi.",
+      "leProgres": {
+        "title": "Le Progrès",
+        "description": "Le journal \"Le Progrès\" nous a interviewé pour parler de l'application Lepto."
+      },
+      "bfmLyon": {
+        "title": "BFM TV Lyon",
+        "description": "Raphaël Metro, mon associé sur l'application Sowhat a été interviewé sur BFM TV Lyon pour parler en direct de notre travail."
+      },
+      "podcast": {
+        "title": "Podcast",
+        "description": "Invité au micro de Fabien Serra sur Tizy Media, je reviens sur mon parcours dans le développement, les FinTechs et l'entrepreneuriat."
+      }
     }
   },
   "common": {
     "language": "Langue",
     "english": "Anglais",
-    "french": "Français"
+    "french": "Français",
+    "theme": "Thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "copyEmail": "Copier l'email",
+    "emailCopied": "Email copié !",
+    "contactMe": "Me contacter"
   }
 }

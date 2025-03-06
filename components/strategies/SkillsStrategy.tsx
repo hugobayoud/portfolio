@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import {
   SiNestjs,
@@ -23,17 +25,20 @@ import { AiOutlineDeploymentUnit } from 'react-icons/ai';
 import { RiCodeBlock, RiVideoAiLine } from 'react-icons/ri';
 import { Box, Flex, Grid, Link, Text } from '@radix-ui/themes';
 import SectionHeader from '../SectionHeader';
+import { useLanguage } from '@/i18n/LanguageProvider';
 
 export default function SkillsStrategy() {
+  const { messages } = useLanguage();
+
   return (
     <Flex direction="column" gap="8">
       <SectionHeader
-        title={'Mes outils'}
-        subTitle={`Les technologies et applications que j'utilise au quotidien.`}
+        title={messages.strategies.skills.title}
+        subTitle={messages.strategies.skills.subTitle}
       />
 
       <Grid columns="3" gap="3" width="auto">
-        <SkillList title="Front-end Web">
+        <SkillList title={messages.strategies.skills.frontend}>
           <SkillListItem href="https://reactjs.org/">
             <SiReact />
             React
@@ -52,7 +57,7 @@ export default function SkillsStrategy() {
           </SkillListItem>
         </SkillList>
 
-        <SkillList title="Front-end Mobile">
+        <SkillList title={messages.strategies.skills.frontend}>
           <SkillListItem href="https://reactnative.dev/">
             <SiReact />
             React Native
@@ -67,7 +72,7 @@ export default function SkillsStrategy() {
           </SkillListItem>
         </SkillList>
 
-        <SkillList title="Back-end">
+        <SkillList title={messages.strategies.skills.backend}>
           <SkillListItem href="https://www.typescriptlang.org/">
             <SiTypescript />
             Typescript
@@ -90,7 +95,7 @@ export default function SkillsStrategy() {
           </SkillListItem>
         </SkillList>
 
-        <SkillList title="CI/CD">
+        <SkillList title={messages.strategies.skills.ciCd}>
           <SkillListItem href="https://github.com/features/actions/">
             <SiGithubactions />
             GitHub Actions
@@ -105,7 +110,7 @@ export default function SkillsStrategy() {
           </SkillListItem>
         </SkillList>
 
-        <SkillList title="Code">
+        <SkillList title={messages.strategies.skills.code}>
           <SkillListItem href="https://github.com/">
             <SiGithub />
             GitHub
@@ -124,7 +129,7 @@ export default function SkillsStrategy() {
           </SkillListItem>
         </SkillList>
 
-        <SkillList title="Création contenus">
+        <SkillList title={messages.strategies.skills.other}>
           <SkillListItem href="https://obsidian.md/">
             <SiObsidian />
             Obsidian

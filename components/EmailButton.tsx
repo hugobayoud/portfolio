@@ -8,11 +8,13 @@ import {
   CheckIcon,
 } from '@radix-ui/react-icons';
 import * as Toast from '@radix-ui/react-toast';
+import { useLanguage } from '../src/i18n/LanguageProvider';
 
 const EmailButton = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const { messages } = useLanguage();
 
   const email = 'bayoud.hugo@hotmail.com';
 
@@ -62,7 +64,9 @@ const EmailButton = () => {
         ) : (
           <EnvelopeClosedIcon />
         )}
-        {isHovering || isCopied ? email : 'Email'}
+        {isHovering || isCopied
+          ? email
+          : messages.strategies.header.social.email}
       </Button>
 
       <Toast.Root
@@ -71,7 +75,7 @@ const EmailButton = () => {
         onOpenChange={setShowToast}
       >
         <Toast.Title className="text-green-900 flex-1">
-          Email copié!
+          {messages.common.emailCopied}
         </Toast.Title>
         <Toast.Action className="[grid-area:_action]" asChild altText="Close">
           <Button color="green">
