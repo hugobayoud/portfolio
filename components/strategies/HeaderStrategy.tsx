@@ -20,13 +20,13 @@ export default function HeaderStrategy() {
           <SocialButton
             icon={<LinkedInLogoIcon />}
             label="LinkedIn"
-            href="https://www.linkedin.com/in/hugo-bayoud/"
+            href="www.linkedin.com/in/hugo-bayoud-4aa927194/"
           />
 
           <SocialButton
             icon={<GitHubLogoIcon />}
             label="GitHub"
-            href="https://www.linkedin.com/in/hugo-bayoud/"
+            href="https://github.com/hugobayoud/"
           />
 
           <EmailButton />
