@@ -6,12 +6,18 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import enMessages from './locales/en.json';
 import frMessages from './locales/fr.json';
 
+type Messages = typeof enMessages | typeof frMessages;
+
 type Language = 'en' | 'fr';
+
+// // Define a recursive type for nested message objects
+// type MessageValue = string | number | boolean | { [key: string]: MessageValue };
+// type Messages = { [key: string]: MessageValue };
 
 type LanguageContextType = {
   language: Language;
   toggleLanguage: () => void;
-  messages: Record<string, any>;
+  messages: Messages;
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(

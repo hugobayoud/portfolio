@@ -42,10 +42,20 @@ export default function HeaderStrategy() {
               transition: 'opacity 0.3s ease, transform 0.3s ease',
             }}
           >
-            <img
+            {/* <img
               src="/sunglasses.png"
               alt="Sunglasses"
               className="w-full h-auto"
+              style={{
+                position: 'absolute',
+                zIndex: 10,
+              }}
+            /> */}
+            <Avatar
+              src="/sunglasses.png"
+              size="9"
+              fallback="HB"
+              radius="full"
               style={{
                 position: 'absolute',
                 zIndex: 10,
@@ -55,12 +65,25 @@ export default function HeaderStrategy() {
         )}
       </div>
 
-      <Flex direction="column" gap="6">
-        <Flex direction="column" gap="2">
-          <Text weight="bold" size="8">
+      <Flex direction="column" gap="6" className="sm:text-left text-center">
+        <Flex
+          direction="column"
+          gap="2"
+          align={{ initial: 'center', sm: 'start' }}
+        >
+          <Text
+            weight="bold"
+            size={{ initial: '6', sm: '8' }}
+            align={{ initial: 'center', sm: 'left' }}
+          >
             {messages.strategies.header.name}
           </Text>
-          <Text weight="bold" size="4" style={{ color: 'var(--accent-9)' }}>
+          <Text
+            weight="bold"
+            size={{ initial: '3', sm: '4' }}
+            style={{ color: 'var(--accent-9)' }}
+            align={{ initial: 'center', sm: 'left' }}
+          >
             {messages.strategies.header.title}
           </Text>
 
@@ -70,12 +93,19 @@ export default function HeaderStrategy() {
               opacity: 0.8,
             }}
             wrap="pretty"
+            align={{ initial: 'center', sm: 'left' }}
+            className="mx-auto sm:mx-0"
           >
             {messages.strategies.header.description}
           </Text>
         </Flex>
 
-        <Flex direction="row" gap="2">
+        <Flex
+          direction="row"
+          gap="2"
+          justify={{ initial: 'center', sm: 'start' }}
+          className="flex-wrap"
+        >
           <SocialButton
             icon={<LinkedInLogoIcon />}
             label={messages.strategies.header.social.linkedin}

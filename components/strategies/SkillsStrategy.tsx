@@ -37,7 +37,7 @@ export default function SkillsStrategy() {
         subTitle={messages.strategies.skills.subTitle}
       />
 
-      <Grid columns="3" gap="3" width="auto">
+      <Grid columns={{ xs: '1', sm: '3' }} gap="8">
         <SkillList title={messages.strategies.skills.frontend}>
           <SkillListItem href="https://reactjs.org/">
             <SiReact />
@@ -180,7 +180,14 @@ const SkillListItem = ({ href, children }: SkillListItemProps) => {
   const text = childrenArray.slice(1).join('');
 
   return (
-    <Link href={href} target="_blank" style={{ textDecoration: 'none' }}>
+    <Link
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        textDecoration: 'none',
+      }}
+    >
       <Flex align="center" gap="2" py="1">
         <Box
           style={{ fontSize: '1.5rem', display: 'flex', alignItems: 'center' }}
