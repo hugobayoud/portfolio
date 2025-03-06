@@ -1,0 +1,12 @@
+{
+  "strategies": {
+    "story": {
+      "text": "Développeur depuis plus de cinq ans et passionné d'entrepreneuriat, j'aime transformer une idée en produit concret en alliant stratégie et technique. Mon objectif est d'accompagner les startups et scale-ups avec une expertise pointue et une approche pragmatique pour faire évoluer leurs produits."
+    }
+  },
+  "common": {
+    "language": "Langue",
+    "english": "Anglais",
+    "french": "Français"
+  }
+}

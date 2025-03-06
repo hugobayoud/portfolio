@@ -1,0 +1,12 @@
+{
+  "strategies": {
+    "story": {
+      "text": "As a developer with over five years of experience and a passion for entrepreneurship, I enjoy transforming ideas into concrete products by combining strategy and technique. My goal is to support startups and scale-ups with sharp expertise and a pragmatic approach to evolve their products."
+    }
+  },
+  "common": {
+    "language": "Language",
+    "english": "English",
+    "french": "French"
+  }
+}

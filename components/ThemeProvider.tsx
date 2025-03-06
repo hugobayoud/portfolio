@@ -1,7 +1,7 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
 import { Theme } from '@radix-ui/themes';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 type ThemeMode = 'dark' | 'light';
 

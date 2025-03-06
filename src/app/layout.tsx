@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
-import { Open_Sans } from 'next/font/google';
-import './globals.css';
 import '@radix-ui/themes/styles.css';
+import { Open_Sans } from 'next/font/google';
+
+import './globals.css';
+import { LanguageProvider } from '../i18n/LanguageProvider';
 import { ThemeProvider } from '../../components/ThemeProvider';
 
 const OpenSans = Open_Sans({
@@ -22,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${OpenSans.variable} antialiased`}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <LanguageProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

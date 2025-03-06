@@ -1,6 +1,19 @@
+'use client';
+
+import React from 'react';
 import { Container, Text } from '@radix-ui/themes';
 
+import { useLanguage } from '../../src/i18n/LanguageProvider';
+
 export default function StoryStrategy() {
+  const { messages } = useLanguage();
+
+  // Split the text to maintain the bold formatting
+  const fullText = messages.strategies.story.text;
+  const parts = fullText.split(
+    /(\bstartups\b|\bscale-ups\b|\bévoluer leurs produits\b|\bMon objectif est d'accompagner les\b)/gi
+  );
+
   return (
     <Container
       size="2"
@@ -10,13 +23,21 @@ export default function StoryStrategy() {
       }}
     >
       <Text style={{ opacity: 0.7 }}>
-        Développeur depuis plus de cinq ans et passionné d'entrepreneuriat,
-        j'aime transformer une idée en produit concret en alliant stratégie et
-        technique. <Text weight="bold">Mon objectif est d'accompagner les</Text>
-        <Text weight="bold">{` startups`}</Text> et
-        <Text weight="bold">{` scale-ups`}</Text> avec une expertise pointue et
-        une approche pragmatique pour faire
-        <Text weight="bold">{` évoluer leurs produits.`}</Text>
+        {parts.map((part: string, index: number) => {
+          // Check if this part should be bold
+          const isBold =
+            /startups|scale-ups|évoluer leurs produits|Mon objectif est d'accompagner les/i.test(
+              part
+            );
+
+          return isBold ? (
+            <Text key={index} weight="bold">
+              {part}
+            </Text>
+          ) : (
+            <React.Fragment key={index}>{part}</React.Fragment>
+          );
+        })}
       </Text>
     </Container>
   );
