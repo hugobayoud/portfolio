@@ -33,9 +33,23 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguage] = useState<Language>('fr');
   const [isClient, setIsClient] = useState(false);
 
+  // Setting up the default language based on URL or local storage preferences
   useEffect(() => {
     setIsClient(true);
-    // Check if there's a saved language preference in localStorage
+
+    // Check URL parameters first
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlLanguage = urlParams.get('lg');
+
+      if (urlLanguage === 'en' || urlLanguage === 'fr') {
+        setLanguage(urlLanguage);
+        localStorage.setItem('language', urlLanguage);
+        return;
+      }
+    }
+
+    // If no URL parameter, check localStorage
     const savedLanguage = localStorage.getItem('language') as Language;
     if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'fr')) {
       setLanguage(savedLanguage);

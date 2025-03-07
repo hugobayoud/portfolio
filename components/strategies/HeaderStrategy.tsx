@@ -1,69 +1,20 @@
 'use client';
 
-import { Flex, Text, Button, Avatar } from '@radix-ui/themes';
+import Link from 'next/link';
+import { Flex, Text, Button } from '@radix-ui/themes';
 import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
-import { useTheme } from '../ThemeProvider';
-import { useEffect, useState } from 'react';
-import { useLanguage } from '../../src/i18n/LanguageProvider';
 
 import EmailButton from '../EmailButton';
-import Link from 'next/link';
+import { BsWhatsapp } from 'react-icons/bs';
+import { MeWithSunglasses } from '../MeWithSunglasses';
+import { useLanguage } from '../../src/i18n/LanguageProvider';
 
 export default function HeaderStrategy() {
-  const { theme } = useTheme();
   const { messages } = useLanguage();
-  const [showSunglasses, setShowSunglasses] = useState(false);
-
-  // Effect to animate sunglasses when theme changes to light
-  useEffect(() => {
-    if (theme === 'light') {
-      // Small delay before showing sunglasses for better animation effect
-      const timer = setTimeout(() => {
-        setShowSunglasses(true);
-      }, 100);
-      return () => clearTimeout(timer);
-    } else {
-      setShowSunglasses(false);
-    }
-  }, [theme]);
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
-      <div className="relative">
-        <Avatar src="/hugo.png" size="9" fallback="HB" radius="full" />
-
-        {/* Sunglasses overlay */}
-        {theme === 'light' && (
-          <div
-            className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none"
-            style={{
-              opacity: showSunglasses ? 1 : 0,
-              transform: `translateY(${showSunglasses ? '0' : '-10px'})`,
-              transition: 'opacity 0.3s ease, transform 0.3s ease',
-            }}
-          >
-            {/* <img
-              src="/sunglasses.png"
-              alt="Sunglasses"
-              className="w-full h-auto"
-              style={{
-                position: 'absolute',
-                zIndex: 10,
-              }}
-            /> */}
-            <Avatar
-              src="/sunglasses.png"
-              size="9"
-              fallback="HB"
-              radius="full"
-              style={{
-                position: 'absolute',
-                zIndex: 10,
-              }}
-            />
-          </div>
-        )}
-      </div>
+      <MeWithSunglasses />
 
       <Flex direction="column" gap="6" className="sm:text-left text-center">
         <Flex
@@ -109,15 +60,18 @@ export default function HeaderStrategy() {
           <SocialButton
             icon={<LinkedInLogoIcon />}
             label={messages.strategies.header.social.linkedin}
-            href="www.linkedin.com/in/hugo-bayoud-4aa927194/"
+            href="https://www.linkedin.com/in/hugo-bayoud-4aa927194/"
           />
-
           <SocialButton
             icon={<GitHubLogoIcon />}
             label={messages.strategies.header.social.github}
-            href="https://github.com/hugobayoud/"
+            href="https://www.github.com/hugobayoud/"
           />
-
+          <SocialButton
+            icon={<BsWhatsapp />}
+            label={messages.strategies.header.social.whatsapp}
+            href="https://wa.me/33698352892"
+          />
           <EmailButton />
         </Flex>
       </Flex>
