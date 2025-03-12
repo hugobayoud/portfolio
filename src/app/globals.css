@@ -46,6 +46,10 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-open-sans);
+  --color-light-yellow: #ffed88;
+  --color-dark-yellow: #f7c400;
+  --color-light-blue: #0090ff;
+  --color-dark-blue: #003a7c;
 }
 
 @media (prefers-color-scheme: dark) {

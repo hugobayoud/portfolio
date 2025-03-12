@@ -1,15 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Avatar } from '@radix-ui/themes';
+import { useEffect, useState } from 'react';
 
 import { useTheme } from './ThemeProvider';
+
+/**
+ * Light gradient: light blue to dark blue
+ * Dark gradient: dark blue to dark purple
+ */
+const lightGradient =
+  'bg-gradient-to-t from-light-blue to-dark-blue shadow-[0_0_15px_rgba(0,7,131,0.6)]';
+const darkGradient =
+  'bg-gradient-to-t from-light-yellow to-dark-yellow shadow-[0_0_15px_rgba(247,196,0,0.6)]';
 
 export function MeWithSunglasses() {
   const { theme } = useTheme();
   const [showSunglasses, setShowSunglasses] = useState(false);
 
-  // Effect to animate sunglasses when theme changes to light
+  // Effect to animate sunglasses when theme changes
   useEffect(() => {
     if (theme === 'light') {
       // Small delay before showing sunglasses for better animation effect
@@ -24,6 +33,14 @@ export function MeWithSunglasses() {
 
   return (
     <div className="relative">
+      {/* Animated background */}
+      <div
+        className={`absolute rounded-full transition-colors duration-1000 ease-in-out ${
+          theme === 'light' ? lightGradient : darkGradient
+        }`}
+        style={{ width: '100%', height: '100%', zIndex: -1 }}
+      />
+
       <Avatar src="/hugo.png" size="9" fallback="HB" radius="full" />
 
       {/* Sunglasses overlay */}

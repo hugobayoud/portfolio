@@ -57,7 +57,7 @@ export default function SkillsStrategy() {
           </SkillListItem>
         </SkillList>
 
-        <SkillList title={messages.strategies.skills.frontend}>
+        <SkillList title={messages.strategies.skills.mobile}>
           <SkillListItem href="https://reactnative.dev/">
             <SiReact />
             React Native

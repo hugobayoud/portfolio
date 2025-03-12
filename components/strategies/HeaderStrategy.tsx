@@ -52,26 +52,27 @@ export default function HeaderStrategy() {
         </Flex>
 
         <Flex
-          direction="row"
           gap="2"
-          justify={{ initial: 'center', sm: 'start' }}
-          className="flex-wrap"
+          direction="column"
+          align={{ initial: 'center', sm: 'start' }}
         >
-          <SocialButton
-            icon={<LinkedInLogoIcon />}
-            label={messages.strategies.header.social.linkedin}
-            href="https://www.linkedin.com/in/hugo-bayoud-4aa927194/"
-          />
-          <SocialButton
-            icon={<GitHubLogoIcon />}
-            label={messages.strategies.header.social.github}
-            href="https://www.github.com/hugobayoud/"
-          />
-          <SocialButton
-            icon={<BsWhatsapp />}
-            label={messages.strategies.header.social.whatsapp}
-            href="https://wa.me/33698352892"
-          />
+          <Flex direction="row" gap="2">
+            <SocialButton
+              icon={<LinkedInLogoIcon />}
+              label={messages.strategies.header.social.linkedin}
+              href="https://www.linkedin.com/in/hugo-bayoud-4aa927194/"
+            />
+            <SocialButton
+              icon={<GitHubLogoIcon />}
+              label={messages.strategies.header.social.github}
+              href="https://www.github.com/hugobayoud/"
+            />
+            <SocialButton
+              icon={<BsWhatsapp />}
+              label={messages.strategies.header.social.whatsapp}
+              href="https://wa.me/33698352892"
+            />
+          </Flex>
           <EmailButton />
         </Flex>
       </Flex>
