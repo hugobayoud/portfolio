@@ -64,9 +64,7 @@ const EmailButton = () => {
         ) : (
           <EnvelopeClosedIcon />
         )}
-        {isHovering || isCopied
-          ? email
-          : messages.strategies.header.social.email}
+        {isHovering || isCopied ? email : messages.strategies.hero.social.email}
       </Button>
 
       <Toast.Root

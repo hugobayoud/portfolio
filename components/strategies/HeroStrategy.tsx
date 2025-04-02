@@ -9,7 +9,7 @@ import { BsWhatsapp } from 'react-icons/bs';
 import { MeWithSunglasses } from '../MeWithSunglasses';
 import { useLanguage } from '../../src/i18n/LanguageProvider';
 
-export default function HeaderStrategy() {
+export default function HeroStrategy() {
   const { messages } = useLanguage();
 
   return (
@@ -27,7 +27,7 @@ export default function HeaderStrategy() {
             size={{ initial: '6', sm: '8' }}
             align={{ initial: 'center', sm: 'left' }}
           >
-            {messages.strategies.header.name}
+            {messages.strategies.hero.name}
           </Text>
           <Text
             weight="bold"
@@ -35,7 +35,7 @@ export default function HeaderStrategy() {
             style={{ color: 'var(--accent-9)' }}
             align={{ initial: 'center', sm: 'left' }}
           >
-            {messages.strategies.header.title}
+            {messages.strategies.hero.title}
           </Text>
 
           <Text
@@ -47,7 +47,7 @@ export default function HeaderStrategy() {
             align={{ initial: 'center', sm: 'left' }}
             className="mx-auto sm:mx-0"
           >
-            {messages.strategies.header.description}
+            {messages.strategies.hero.description}
           </Text>
         </Flex>
 
@@ -59,17 +59,17 @@ export default function HeaderStrategy() {
           <Flex direction="row" gap="2">
             <SocialButton
               icon={<LinkedInLogoIcon />}
-              label={messages.strategies.header.social.linkedin}
+              label={messages.strategies.hero.social.linkedin}
               href="https://www.linkedin.com/in/hugo-bayoud-4aa927194/"
             />
             <SocialButton
               icon={<GitHubLogoIcon />}
-              label={messages.strategies.header.social.github}
+              label={messages.strategies.hero.social.github}
               href="https://www.github.com/hugobayoud/"
             />
             <SocialButton
               icon={<BsWhatsapp />}
-              label={messages.strategies.header.social.whatsapp}
+              label={messages.strategies.hero.social.whatsapp}
               href="https://wa.me/33698352892"
             />
           </Flex>

@@ -1,9 +1,17 @@
 {
+  "header": {
+    "blog": {
+      "title": "Blog"
+    },
+    "home": {
+      "title": "Home"
+    }
+  },
   "strategies": {
     "story": {
       "text": "As a developer with over five years of experience and a passion for entrepreneurship, I enjoy transforming ideas into concrete products by combining strategy and technique. My goal is to support startups and scale-ups with sharp expertise and a pragmatic approach to evolve their products."
     },
-    "header": {
+    "hero": {
       "name": "HUGO BAYOUD",
       "title": "Full Stack Web & Mobile Developer",
       "description": "Specialized in the JavaScript ecosystem. Strong UX/UI sensitivity to create performant and intuitive applications.",
@@ -67,5 +75,11 @@
     "copyEmail": "Copy email",
     "emailCopied": "Email copied!",
     "contactMe": "Contact me"
+  },
+  "blog": {
+    "header": {
+      "title": "Blog",
+      "subtitle": "My articles and my reflections on web and mobile development."
+    }
   }
 }
