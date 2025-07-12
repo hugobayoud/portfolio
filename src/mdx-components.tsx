@@ -2,7 +2,7 @@ import React, { ComponentPropsWithoutRef } from 'react';
 import { highlight } from 'sugar-high';
 import Link from 'next/link';
 import Image from 'next/image';
-import { OpenSans } from './app/layout';
+import { OpenSans, TTTrailersBold, PoppinsRegular } from './app/layout';
 
 type HeadingProps = ComponentPropsWithoutRef<'h1'>;
 type ParagraphProps = ComponentPropsWithoutRef<'p'>;
@@ -22,19 +22,26 @@ type ImageWithCaptionProps = {
 const components = {
   h1: (props: HeadingProps) => (
     <h1
-      className={`text-2xl sm:text-4xl pt-8 pb-16 mb-0 fade-in text-center ${OpenSans.className}`}
+      className={`text-3xl sm:text-6xl pt-12 pb-8 mb-0 fade-in text-center leading-tight ${TTTrailersBold.className}`}
       {...props}
     />
   ),
+  Date: ({ children }: { children: React.ReactNode }) => (
+    <p
+      className={`text-sm sm:text-md text-center mb-12 opacity-70 ${PoppinsRegular.className}`}
+    >
+      {children}
+    </p>
+  ),
   h2: (props: HeadingProps) => (
     <h2
-      className={`text-xl sm:text-2xl pt-8 text-gray-800 font-medium mt-8 mb-3 ${OpenSans.className}`}
+      className={`text-xl sm:text-3xl pt-16 font-semibold mt-16 mb-6 leading-tight ${TTTrailersBold.className}`}
       {...props}
     />
   ),
   h3: (props: HeadingProps) => (
     <h3
-      className={`text-lg text-gray-800 font-medium mt-8 mb-3 ${OpenSans.className}`}
+      className={`text-lg sm:text-xl font-medium mt-12 mb-4 ${PoppinsRegular.className}`}
       {...props}
     />
   ),
@@ -43,24 +50,33 @@ const components = {
   ),
   p: (props: ParagraphProps) => (
     <p
-      className="text-gray-800 text-base sm:text-lg text-pretty leading-snug"
+      className={`text-base sm:text-lg text-pretty leading-relaxed mb-6 ${PoppinsRegular.className}`}
       {...props}
     />
   ),
   ol: (props: ListProps) => (
-    <ol className="text-gray-800 list-decimal pl-5 space-y-2" {...props} />
+    <ol
+      className={`list-decimal pl-6 space-y-3 mb-6 ${PoppinsRegular.className}`}
+      {...props}
+    />
   ),
   ul: (props: ListProps) => (
-    <ul className="text-gray-800 list-disc pl-5 space-y-1" {...props} />
+    <ul
+      className={`list-disc pl-6 space-y-2 mb-6 ${PoppinsRegular.className}`}
+      {...props}
+    />
   ),
   li: (props: ListItemProps) => (
-    <li className="pl-1 text-base sm:text-lg" {...props} />
+    <li
+      className={`pl-2 text-base sm:text-lg leading-relaxed ${PoppinsRegular.className}`}
+      {...props}
+    />
   ),
   em: (props: ComponentPropsWithoutRef<'em'>) => (
     <em className="font-medium" {...props} />
   ),
   strong: (props: ComponentPropsWithoutRef<'strong'>) => (
-    <strong className="font-bold" {...props} />
+    <strong className="font-extrabold" {...props} />
   ),
   a: ({ href, children, ...props }: AnchorProps) => {
     const className = 'text-amber-600 hover:text-amber-500';
