@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { BlogContent } from './BlogContent';
 
 export const metadata: Metadata = {
   title: 'Blog | Hugo Bayoud Développeur Full Stack Web & Mobile',
@@ -10,5 +11,5 @@ export default function BlogLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  return <BlogContent>{children}</BlogContent>;
 }
