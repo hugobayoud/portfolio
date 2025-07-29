@@ -1,22 +1,9 @@
-/**
- * HeartButton - Interactive Heart Component
- *
- * A refactored, modular implementation of an interactive heart button with:
- * - Separate CSS file for reusable animations (HeartButton.css)
- * - Dedicated Sparkles component for effect management (Sparkles.tsx)
- * - Comprehensive TypeScript documentation
- * - Improved developer experience and maintainability
- *
- * Architecture:
- * - HeartButton.tsx: Main component logic and UI
- * - Sparkles.tsx: Sparkle effects and utility functions
- * - HeartButton.css: Reusable CSS animations and styles
- */
+import './HeartButton.css';
 
 import React, { useState } from 'react';
+
 import Heart from './icons/Heart';
 import Sparkles, { generateSparkles, type Sparkle } from './Sparkles';
-import './HeartButton.css';
 
 interface HeartButtonProps {
   onClick: () => void;
