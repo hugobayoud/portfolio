@@ -8,6 +8,7 @@ import EmailButton from '../EmailButton';
 import { BsWhatsapp } from 'react-icons/bs';
 import { MeWithSunglasses } from '../MeWithSunglasses';
 import { useLanguage } from '../../src/i18n/LanguageProvider';
+import HeartButton from '../HeartButton';
 
 export default function HeroStrategy() {
   const { messages } = useLanguage();
@@ -22,6 +23,7 @@ export default function HeroStrategy() {
           gap="2"
           align={{ initial: 'center', sm: 'start' }}
         >
+          <HeartButton onClick={() => console.log('Heart button pressed!')} />
           <Text
             weight="bold"
             size={{ initial: '6', sm: '8' }}
