@@ -2,19 +2,35 @@ import NextLink from 'next/link';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { Box, Card, Flex, Heading, Text } from '@radix-ui/themes';
 
-import { Article } from '@/utils/getArticles';
+import { BlogPostPreview } from '@/lib/blogUtils';
 
-const ArticleCard = ({ title, slug, date }: Article) => {
+const ArticleCard = ({
+  title,
+  slug,
+  date,
+  description,
+  category,
+}: BlogPostPreview) => {
   return (
     <Card size="2" asChild>
       <NextLink href={`/blog/${slug}`} passHref>
         <Box p="4" style={{ cursor: 'pointer' }}>
-          <Flex direction="column" gap="2">
+          <Flex direction="column" gap="3">
             <Heading size="4">{title}</Heading>
-            <Flex align="center" gap="2">
-              <CalendarIcon />
+            {description && (
               <Text size="2" color="gray">
-                {date}
+                {description}
+              </Text>
+            )}
+            <Flex align="center" gap="2" justify="between">
+              <Flex align="center" gap="2">
+                <CalendarIcon />
+                <Text size="2" color="gray">
+                  {date}
+                </Text>
+              </Flex>
+              <Text size="1" color="blue">
+                {category}
               </Text>
             </Flex>
           </Flex>
