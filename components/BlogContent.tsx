@@ -1,6 +1,6 @@
 'use client';
 
-import { useTheme } from '../../../components/ThemeProvider';
+import { useTheme } from './ThemeProvider';
 
 export function BlogContent({ children }: { children: React.ReactNode }) {
   const { theme } = useTheme();

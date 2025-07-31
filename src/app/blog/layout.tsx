@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { BlogContent } from './BlogContent';
+import { BlogContent } from '../../../components/BlogContent';
 
 export const metadata: Metadata = {
   title: 'Blog | Hugo Bayoud Développeur Full Stack Web & Mobile',
