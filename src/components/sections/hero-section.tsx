@@ -4,12 +4,12 @@ import Link from 'next/link';
 import { Flex, Text, Button } from '@radix-ui/themes';
 import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
 
-import EmailButton from '../ui/email-button';
 import { BsWhatsapp } from 'react-icons/bs';
+import { EmailButton } from '../ui/email-button';
+import { useLanguage } from '@/lib/hooks/use-language';
 import { MeWithSunglasses } from '../ui/me-with-sunglasses';
-import { useLanguage } from '../../src/i18n/LanguageProvider';
 
-export default function HeroStrategy() {
+export const HeroSection = () => {
   const { messages } = useLanguage();
 
   return (
@@ -78,7 +78,7 @@ export default function HeroStrategy() {
       </Flex>
     </div>
   );
-}
+};
 
 const SocialButton = ({
   icon,

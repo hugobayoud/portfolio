@@ -3,9 +3,9 @@
 import React from 'react';
 import { Container, Text } from '@radix-ui/themes';
 
-import { useLanguage } from '../../src/i18n/LanguageProvider';
+import { useLanguage } from '@/lib/hooks/use-language';
 
-export default function StoryStrategy() {
+export const StorySection = () => {
   const { messages } = useLanguage();
 
   // Split the text to maintain the bold formatting
@@ -41,4 +41,4 @@ export default function StoryStrategy() {
       </Text>
     </Container>
   );
-}
+};

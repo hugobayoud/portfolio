@@ -1,6 +1,7 @@
-import { getBlogPost } from '@/lib/blogUtils';
-import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+
+import { getBlogPost } from '@/lib/services/blog/blog-service';
 
 interface BlogPostPageProps {
   params: {

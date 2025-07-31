@@ -1,7 +1,8 @@
 'use client';
 
 import { Button } from '@radix-ui/themes';
-import { useLanguage } from '../src/i18n/LanguageProvider';
+
+import { useLanguage } from '@/lib/hooks/use-language';
 
 export function LanguageToggle() {
   const { language, toggleLanguage, messages } = useLanguage();

@@ -1,8 +1,10 @@
 'use client';
 
+import { ReactNode } from 'react';
+
 import { useTheme } from '@/lib/hooks/use-theme';
 
-export function BlogContent({ children }: { children: React.ReactNode }) {
+export const BlogContent = ({ children }: { children: ReactNode }) => {
   const { theme } = useTheme();
   const textColor = theme === 'light' ? 'text-neutral-800' : 'text-neutral-200';
 
@@ -13,4 +15,4 @@ export function BlogContent({ children }: { children: React.ReactNode }) {
       <div className="prose prose-lg max-w-none">{children}</div>
     </article>
   );
-}
+};

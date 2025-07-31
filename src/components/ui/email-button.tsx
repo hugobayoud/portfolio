@@ -1,16 +1,17 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Button } from '@radix-ui/themes';
 import {
-  EnvelopeClosedIcon,
-  ClipboardCopyIcon,
   CheckIcon,
+  ClipboardCopyIcon,
+  EnvelopeClosedIcon,
 } from '@radix-ui/react-icons';
+import { Button } from '@radix-ui/themes';
 import * as Toast from '@radix-ui/react-toast';
-import { useLanguage } from '../src/i18n/LanguageProvider';
+import React, { useState, useEffect } from 'react';
 
-const EmailButton = () => {
+import { useLanguage } from '@/lib/hooks/use-language';
+
+export const EmailButton = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -86,5 +87,3 @@ const EmailButton = () => {
     </Toast.Provider>
   );
 };
-
-export default EmailButton;

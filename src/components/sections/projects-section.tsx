@@ -2,11 +2,11 @@
 
 import { Flex } from '@radix-ui/themes';
 
-import ProjectCard from '../ui/project-card';
-import SectionHeader from '../layout/section-header';
-import { useLanguage } from '@/components/providers/language-providers';
+import { ProjectCard } from '../ui/project-card';
+import { useLanguage } from '@/lib/hooks/use-language';
+import { SectionHeader } from '../layout/section-header';
 
-export default function ProjectsStrategy() {
+export const ProjectsSection = () => {
   const { messages } = useLanguage();
 
   return (
@@ -41,4 +41,4 @@ export default function ProjectsStrategy() {
       </Flex>
     </Flex>
   );
-}
+};

@@ -1,12 +1,14 @@
 'use client';
 
-import { useLanguage } from '@/components/providers/language-providers';
+import { ReactNode } from 'react';
+
+import { useLanguage } from '@/lib/hooks/use-language';
 
 interface MDXWrapperProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-const MDXWrapper = ({ children }: MDXWrapperProps) => {
+export const MDXWrapper = ({ children }: MDXWrapperProps) => {
   const { messages } = useLanguage();
 
   return (
@@ -21,5 +23,3 @@ const MDXWrapper = ({ children }: MDXWrapperProps) => {
     </div>
   );
 };
-
-export default MDXWrapper;

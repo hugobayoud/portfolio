@@ -2,32 +2,35 @@
 
 import React from 'react';
 import {
-  SiNestjs,
-  SiNextdotjs,
-  SiReact,
-  SiTailwindcss,
-  SiFigma,
+  SiGit,
   SiExpo,
-  SiTypescript,
-  SiTypeorm,
+  SiReact,
   SiClerk,
-  SiGithubactions,
+  SiFigma,
+  SiNestjs,
   SiVercel,
   SiGithub,
-  SiGit,
   SiSentry,
+  SiTypeorm,
   SiObsidian,
+  SiNextdotjs,
   SiObsstudio,
+  SiTypescript,
+  SiTailwindcss,
+  SiGithubactions,
 } from 'react-icons/si';
 import { VscAzure } from 'react-icons/vsc';
+import { Flex, Grid } from '@radix-ui/themes';
 import { HiOutlineCog } from 'react-icons/hi';
 import { AiOutlineDeploymentUnit } from 'react-icons/ai';
 import { RiCodeBlock, RiVideoAiLine } from 'react-icons/ri';
-import { Box, Flex, Grid, Link, Text } from '@radix-ui/themes';
-import SectionHeader from '../layout/section-header';
-import { useLanguage } from '@/components/providers/language-providers';
 
-export default function SkillsStrategy() {
+import { SkillList } from '../ui/skill-list';
+import { SkillListItem } from '../ui/skill-list-item';
+import { useLanguage } from '@/lib/hooks/use-language';
+import { SectionHeader } from '../layout/section-header';
+
+export const SkillsSection = () => {
   const { messages } = useLanguage();
 
   return (
@@ -145,57 +148,5 @@ export default function SkillsStrategy() {
         </SkillList>
       </Grid>
     </Flex>
-  );
-}
-
-interface SkillListProps {
-  title: string;
-  children: React.ReactNode;
-}
-
-const SkillList = ({ title, children }: SkillListProps) => {
-  return (
-    <Box>
-      <Flex direction="column" gap="3">
-        <Text weight="medium" size="5">
-          {title}
-        </Text>
-        <Flex direction="column" gap="2" className="pl-2">
-          {children}
-        </Flex>
-      </Flex>
-    </Box>
-  );
-};
-
-interface SkillListItemProps {
-  href: string;
-  children: React.ReactNode;
-}
-
-const SkillListItem = ({ href, children }: SkillListItemProps) => {
-  // Extract icon and text from children
-  const childrenArray = React.Children.toArray(children);
-  const icon = childrenArray[0];
-  const text = childrenArray.slice(1).join('');
-
-  return (
-    <Link
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{
-        textDecoration: 'none',
-      }}
-    >
-      <Flex align="center" gap="2" py="1">
-        <Box
-          style={{ fontSize: '1.5rem', display: 'flex', alignItems: 'center' }}
-        >
-          {icon}
-        </Box>
-        <Text>{text}</Text>
-      </Flex>
-    </Link>
   );
 };

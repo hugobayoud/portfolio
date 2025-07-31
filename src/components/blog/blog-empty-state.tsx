@@ -2,7 +2,7 @@
 
 import { useLanguage } from '@/lib/hooks/use-language';
 
-export default function BlogEmptyState() {
+export const BlogEmptyState = () => {
   const { messages } = useLanguage();
 
   return (
@@ -12,4 +12,4 @@ export default function BlogEmptyState() {
       </p>
     </div>
   );
-}
+};

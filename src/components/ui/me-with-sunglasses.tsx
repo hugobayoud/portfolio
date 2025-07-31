@@ -3,7 +3,7 @@
 import { Avatar } from '@radix-ui/themes';
 import { useEffect, useState } from 'react';
 
-import { useTheme } from '../providers/theme-provider';
+import { useTheme } from '@/lib/hooks/use-theme';
 
 /**
  * Light gradient: light blue to dark blue
@@ -14,7 +14,7 @@ const lightGradient =
 const darkGradient =
   'bg-gradient-to-t from-light-yellow to-dark-yellow shadow-[0_0_15px_rgba(247,196,0,0.6)]';
 
-export function MeWithSunglasses() {
+export const MeWithSunglasses = () => {
   const { theme } = useTheme();
   const [showSunglasses, setShowSunglasses] = useState(false);
 
@@ -67,4 +67,4 @@ export function MeWithSunglasses() {
       )}
     </div>
   );
-}
+};

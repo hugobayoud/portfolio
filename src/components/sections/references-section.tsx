@@ -3,11 +3,11 @@
 import React from 'react';
 import { Flex } from '@radix-ui/themes';
 
-import ProjectCard from '../ui/project-card';
-import SectionHeader from '../layout/section-header';
-import { useLanguage } from '@/components/providers/language-providers';
+import { ProjectCard } from '../ui/project-card';
+import { useLanguage } from '@/lib/hooks/use-language';
+import { SectionHeader } from '../layout/section-header';
 
-export default function ReferencesStrategy() {
+export const ReferencesSection = () => {
   const { messages } = useLanguage();
 
   return (
@@ -42,4 +42,4 @@ export default function ReferencesStrategy() {
       </Flex>
     </Flex>
   );
-}
+};

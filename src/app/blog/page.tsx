@@ -1,7 +1,7 @@
-import MDXWrapper from '../../../components/MDXWrapper';
-import { getAllBlogPosts } from '@/lib/blogUtils';
-import ArticleCard from '../../../components/ArticleCard';
-import BlogEmptyState from '../../../components/BlogEmptyState';
+import { MDXWrapper } from '@/components/blog/mdx-wrapper';
+import { ArticleCard } from '@/components/blog/article-card';
+import { getAllBlogPosts } from '@/lib/services/blog/blog-service';
+import { BlogEmptyState } from '@/components/blog/blog-empty-state';
 
 // Server component that fetches data
 export default async function BlogPage() {

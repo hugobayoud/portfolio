@@ -1,10 +1,10 @@
 'use client';
 
+import Link from 'next/link';
 import Image from 'next/image';
 import { Avatar, Flex, Text, Box } from '@radix-ui/themes';
 
-import { useTheme } from '../providers/theme-provider';
-import Link from 'next/link';
+import { useTheme } from '@/lib/hooks/use-theme';
 
 interface Props {
   title: string;
@@ -14,7 +14,7 @@ interface Props {
   link: string;
 }
 
-const ProjectCard = ({
+export const ProjectCard = ({
   title,
   description,
   image,
@@ -93,5 +93,3 @@ const ProjectCard = ({
     </Box>
   );
 };
-
-export default ProjectCard;

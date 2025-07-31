@@ -1,14 +1,15 @@
 'use client';
 
-import { Container, Flex, Button } from '@radix-ui/themes';
 import Link from 'next/link';
-import { LanguageToggle } from '../ui/language-toggle';
-import { ThemeToggle } from '../ui/theme-toggle';
-import { useLanguage } from '@/components/providers/language-providers';
 import { usePathname } from 'next/navigation';
+import { Container, Flex, Button } from '@radix-ui/themes';
 import { ArchiveIcon, ChevronLeftIcon, HomeIcon } from '@radix-ui/react-icons';
 
-export function Header() {
+import { ThemeToggle } from '../ui/theme-toggle';
+import { useLanguage } from '@/lib/hooks/use-language';
+import { LanguageToggle } from '../ui/language-toggle';
+
+export const Header = () => {
   const pathname = usePathname();
 
   const isBlogPage = pathname === '/blog';
@@ -61,4 +62,4 @@ export function Header() {
       </Flex>
     </Container>
   );
-}
+};

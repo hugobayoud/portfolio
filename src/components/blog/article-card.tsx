@@ -2,9 +2,9 @@ import NextLink from 'next/link';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { Box, Card, Flex, Heading, Text } from '@radix-ui/themes';
 
-import { BlogPostPreview } from '@/lib/blogUtils';
+import { BlogPostPreview } from '@/lib/types/blog';
 
-const ArticleCard = ({
+export const ArticleCard = ({
   title,
   slug,
   date,
@@ -39,5 +39,3 @@ const ArticleCard = ({
     </Card>
   );
 };
-
-export default ArticleCard;

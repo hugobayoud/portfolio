@@ -5,7 +5,7 @@ interface Props {
   title: string;
 }
 
-const SectionHeader = ({ title, subTitle }: Props) => {
+export const SectionHeader = ({ title, subTitle }: Props) => {
   return (
     <Flex direction="column" gap="3">
       <Text weight="bold" size="7">
@@ -16,5 +16,3 @@ const SectionHeader = ({ title, subTitle }: Props) => {
     </Flex>
   );
 };
-
-export default SectionHeader;
