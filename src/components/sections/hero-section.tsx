@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { Flex, Text, Button } from '@radix-ui/themes';
 import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
 
-import EmailButton from '../EmailButton';
+import EmailButton from '../ui/email-button';
 import { BsWhatsapp } from 'react-icons/bs';
-import { MeWithSunglasses } from '../MeWithSunglasses';
+import { MeWithSunglasses } from '../ui/me-with-sunglasses';
 import { useLanguage } from '../../src/i18n/LanguageProvider';
 
 export default function HeroStrategy() {

@@ -1,33 +1,12 @@
 'use client';
 
+import { Language, LanguageContextType, messages } from '@/lib/types/i18n';
 import { IntlProvider } from 'next-intl';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
-import enMessages from './locales/en.json';
-import frMessages from './locales/fr.json';
-
-type Messages = typeof enMessages | typeof frMessages;
-
-type Language = 'en' | 'fr';
-
-// // Define a recursive type for nested message objects
-// type MessageValue = string | number | boolean | { [key: string]: MessageValue };
-// type Messages = { [key: string]: MessageValue };
-
-type LanguageContextType = {
-  language: Language;
-  toggleLanguage: () => void;
-  messages: Messages;
-};
-
-const LanguageContext = createContext<LanguageContextType | undefined>(
+export const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined
 );
-
-const messages = {
-  en: enMessages,
-  fr: frMessages,
-};
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguage] = useState<Language>('fr');
@@ -80,12 +59,4 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       </IntlProvider>
     </LanguageContext.Provider>
   );
-}
-
-export function useLanguage() {
-  const context = useContext(LanguageContext);
-  if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
-  return context;
 }

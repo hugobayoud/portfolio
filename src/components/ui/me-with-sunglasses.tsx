@@ -3,7 +3,7 @@
 import { Avatar } from '@radix-ui/themes';
 import { useEffect, useState } from 'react';
 
-import { useTheme } from './ThemeProvider';
+import { useTheme } from '../providers/theme-provider';
 
 /**
  * Light gradient: light blue to dark blue

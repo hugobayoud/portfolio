@@ -1,16 +1,12 @@
 'use client';
 
+import { ThemeContextType, ThemeMode } from '@/lib/types/theme';
 import { Theme } from '@radix-ui/themes';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
-type ThemeMode = 'dark' | 'light';
-
-type ThemeContextType = {
-  theme: ThemeMode;
-  toggleTheme: () => void;
-};
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext = createContext<ThemeContextType | undefined>(
+  undefined
+);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<ThemeMode>('dark');
@@ -41,12 +37,4 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       </Theme>
     </ThemeContext.Provider>
   );
-}
-
-export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
 }

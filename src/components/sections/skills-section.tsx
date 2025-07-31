@@ -24,8 +24,8 @@ import { HiOutlineCog } from 'react-icons/hi';
 import { AiOutlineDeploymentUnit } from 'react-icons/ai';
 import { RiCodeBlock, RiVideoAiLine } from 'react-icons/ri';
 import { Box, Flex, Grid, Link, Text } from '@radix-ui/themes';
-import SectionHeader from '../SectionHeader';
-import { useLanguage } from '@/i18n/LanguageProvider';
+import SectionHeader from '../layout/section-header';
+import { useLanguage } from '@/components/providers/language-providers';
 
 export default function SkillsStrategy() {
   const { messages } = useLanguage();

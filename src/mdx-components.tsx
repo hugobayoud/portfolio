@@ -2,7 +2,11 @@ import React, { ComponentPropsWithoutRef } from 'react';
 import { highlight } from 'sugar-high';
 import Link from 'next/link';
 import Image from 'next/image';
-import { OpenSans, TTTrailersBold, PoppinsRegular } from './app/layout';
+import {
+  OpenSans,
+  TTTrailersBold,
+  PoppinsRegular,
+} from './app/(homepage)/layout';
 
 type HeadingProps = ComponentPropsWithoutRef<'h1'>;
 type ParagraphProps = ComponentPropsWithoutRef<'p'>;

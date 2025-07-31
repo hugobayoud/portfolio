@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { Avatar, Flex, Text, Box } from '@radix-ui/themes';
 
-import { useTheme } from './ThemeProvider';
+import { useTheme } from '../providers/theme-provider';
 import Link from 'next/link';
 
 interface Props {

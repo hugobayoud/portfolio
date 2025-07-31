@@ -2,7 +2,7 @@
 
 import { Button } from '@radix-ui/themes';
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
-import { useTheme } from './ThemeProvider';
+import { useTheme } from '../providers/theme-provider';
 import { useLanguage } from '../src/i18n/LanguageProvider';
 
 export function ThemeToggle() {

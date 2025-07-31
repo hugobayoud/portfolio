@@ -1,31 +1,8 @@
-import { storage } from './firebase';
 import { ref, getDownloadURL, listAll } from 'firebase/storage';
 import matter from 'gray-matter';
 import { marked } from 'marked';
-
-export interface BlogPost {
-  slug: string;
-  title: string;
-  description: string;
-  date: string;
-  keywords: string[];
-  category: string;
-  publishedTime: string;
-  content: string;
-  htmlContent: string;
-}
-
-export interface BlogPostPreview {
-  slug: string;
-  title: string;
-  description: string;
-  date: string;
-  category: string;
-}
-
-/**
- * @TODO : Mettre toutes ces functions dans des fichiers séparés et plutot dans le dossier "utils/blog" avec des noms de fihchiers plus explicites: ex. "getBlogPost"
- */
+import { BlogPost, BlogPostPreview } from '@/lib/types/blog';
+import { storage } from '@/lib/services/firebase/storage';
 
 /**
  * Fetch a single blog post by slug from Firebase Storage

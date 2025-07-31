@@ -1,6 +1,6 @@
 'use client';
 
-import { useLanguage } from '@/i18n/LanguageProvider';
+import { useLanguage } from '@/lib/hooks/use-language';
 
 export default function BlogEmptyState() {
   const { messages } = useLanguage();

@@ -2,9 +2,9 @@
 
 import { Container, Flex, Button } from '@radix-ui/themes';
 import Link from 'next/link';
-import { LanguageToggle } from './LanguageToggle';
-import { ThemeToggle } from './ThemeToggle';
-import { useLanguage } from '@/i18n/LanguageProvider';
+import { LanguageToggle } from '../ui/language-toggle';
+import { ThemeToggle } from '../ui/theme-toggle';
+import { useLanguage } from '@/components/providers/language-providers';
 import { usePathname } from 'next/navigation';
 import { ArchiveIcon, ChevronLeftIcon, HomeIcon } from '@radix-ui/react-icons';
 

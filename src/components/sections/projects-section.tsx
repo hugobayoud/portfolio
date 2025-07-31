@@ -2,9 +2,9 @@
 
 import { Flex } from '@radix-ui/themes';
 
-import ProjectCard from '../ProjectCard';
-import SectionHeader from '../SectionHeader';
-import { useLanguage } from '@/i18n/LanguageProvider';
+import ProjectCard from '../ui/project-card';
+import SectionHeader from '../layout/section-header';
+import { useLanguage } from '@/components/providers/language-providers';
 
 export default function ProjectsStrategy() {
   const { messages } = useLanguage();

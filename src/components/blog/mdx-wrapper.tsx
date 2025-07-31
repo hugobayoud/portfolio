@@ -1,6 +1,6 @@
 'use client';
 
-import { useLanguage } from '@/i18n/LanguageProvider';
+import { useLanguage } from '@/components/providers/language-providers';
 
 interface MDXWrapperProps {
   children: React.ReactNode;
