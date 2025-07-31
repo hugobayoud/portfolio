@@ -48,8 +48,6 @@ export async function getAllBlogPosts(): Promise<BlogPostPreview[]> {
     const postsRef = ref(storage, 'posts/');
     const listResult = await listAll(postsRef);
 
-    const posts: BlogPostPreview[] = [];
-
     // Fetch all posts in parallel
     const postPromises = listResult.items.map(async (itemRef) => {
       try {

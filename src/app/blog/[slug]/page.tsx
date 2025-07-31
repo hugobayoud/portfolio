@@ -4,9 +4,7 @@ import { notFound } from 'next/navigation';
 import { getBlogPost } from '@/lib/services/blog/blog-service';
 
 interface BlogPostPageProps {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }>;
 }
 
 /**
