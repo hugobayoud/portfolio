@@ -79,9 +79,9 @@ export async function getAllBlogPosts(): Promise<BlogPostPreview[]> {
         const slug = itemRef.name.replace('.md', '');
 
         // Only include published posts
-        if (data.published === false) {
-          return null;
-        }
+        // if (data.published === false) {
+        //   return null;
+        // }
 
         return {
           slug,

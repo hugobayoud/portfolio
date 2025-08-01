@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { getBlogPost } from '@/lib/services/blog/blog-service';
+import { LikeButton } from '@/components/ui/like-button';
 
 /**
  * Dynamic blog post page with complete metadata generation
@@ -104,6 +105,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300"
         dangerouslySetInnerHTML={{ __html: post.htmlContent }}
       />
+
+      {/* Like Button */}
+      <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <LikeButton slug={post.slug} />
+      </div>
     </article>
   );
 }

@@ -1,6 +1,7 @@
 export const firebaseConfig = {
   apiKey: 'AIzaSyAvGhqOoUyZ26NX1IgIj9Tfhzx82KSaiEk',
   authDomain: 'portfolio-c336c.firebaseapp.com',
+  databaseURL: 'https://portfolio-c336c-default-rtdb.europe-west1.firebasedatabase.app',
   projectId: 'portfolio-c336c',
   storageBucket: 'portfolio-c336c.firebasestorage.app',
   messagingSenderId: '527681504318',
