@@ -3,12 +3,9 @@ import { notFound } from 'next/navigation';
 
 import { getBlogPost } from '@/lib/services/blog/blog-service';
 
-interface BlogPostPageProps {
-  params: Promise<{ slug: string }>;
-}
-
 /**
- * @TODO Avant de supprimer "/blog/chapitre-1-je-me-relance" il faut que je generate les metadatas dynamiquement pour chaque post.
+ * Dynamic blog post page with complete metadata generation
+ * Fetches blog posts from Firebase Storage and generates SEO-optimized metadata
  */
 
 // Custom Date component to match the expected format in the markdown
@@ -28,21 +25,52 @@ export async function generateMetadata({
 
   if (!post) {
     return {
-      title: 'Post not found',
+      title: 'Post not found | Hugo Bayoud',
+      description: 'The requested blog post could not be found.',
     };
   }
 
+  const { image } = post;
+
   return {
-    title: `${post.title} | Hugo Bayoud Blog`,
+    metadataBase: new URL('https://hugobayoud.fr'),
+    alternates: {
+      canonical: post.canonical,
+    },
+    title: `${post.title} | Hugo Bayoud`,
     description: post.description,
     keywords: post.keywords,
+    authors: [{ name: post.author }],
+    category: post.category,
     openGraph: {
+      type: 'article',
       title: post.title,
       description: post.description,
-      type: 'article',
+      images: image
+        ? [
+            {
+              url: image,
+              width: 1200,
+              height: 630,
+              alt: `${post.title} - ${post.author}`,
+            },
+          ]
+        : undefined,
+      siteName: 'Hugo Bayoud',
+      locale: 'fr_FR',
       publishedTime: post.publishedTime,
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+      images: image ? [image] : undefined,
+    },
   };
+}
+
+interface BlogPostPageProps {
+  params: Promise<{ slug: string }>;
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {

@@ -23,14 +23,25 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
     // Convert markdown to HTML
     const htmlContent = await marked(content);
 
+    // Convert date to ISO format for publishedTime if not provided
+    const publishedTime =
+      data.publishedTime ||
+      (data.date
+        ? new Date(data.date).toISOString()
+        : new Date().toISOString());
+
     return {
       slug,
-      title: data.title || 'Untitled',
-      description: data.description || '',
-      date: data.date || '',
+      title: data.title,
+      description: data.description,
+      date: data.date,
       keywords: data.keywords || [],
       category: data.category || 'General',
-      publishedTime: data.publishedTime || '',
+      publishedTime,
+      author: data.author || 'Hugo Bayoud',
+      image: data.image,
+      canonical: data.canonical || `/blog/${slug}`,
+      published: data.published !== false,
       content,
       htmlContent,
     };
@@ -66,6 +77,11 @@ export async function getAllBlogPosts(): Promise<BlogPostPreview[]> {
 
         // Extract slug from filename (remove .md extension)
         const slug = itemRef.name.replace('.md', '');
+
+        // Only include published posts
+        if (data.published === false) {
+          return null;
+        }
 
         return {
           slug,
