@@ -11,7 +11,11 @@ export default async function BlogPage() {
     <MDXWrapper>
       <div className="items-center flex flex-col sm:grid sm:grid-cols-2 gap-4">
         {articles.map((article) => (
-          <ArticleCard key={article.slug} {...article} />
+          <ArticleCard
+            key={article.slug}
+            {...article}
+            date={article.date.toDate().toLocaleDateString('fr-FR')}
+          />
         ))}
 
         {articles.length === 0 && <BlogEmptyState />}

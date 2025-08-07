@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 
 import { getBlogPost } from '@/lib/services/blog/blog-service';
 import { LikeButton } from '@/components/ui/like-button';
+import { TTTrailersBold } from '@/app/layout';
 
 /**
  * Dynamic blog post page with complete metadata generation
@@ -59,7 +60,7 @@ export async function generateMetadata({
         : undefined,
       siteName: 'Hugo Bayoud',
       locale: 'fr_FR',
-      publishedTime: post.publishedTime,
+      publishedTime: post.date.toDate().toISOString(),
     },
     twitter: {
       card: 'summary_large_image',
@@ -82,27 +83,26 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
+  const date = post.date.toDate().toLocaleDateString('fr-FR');
+
   return (
     <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <header className="mb-8">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+      <header className="mb-8 items-center">
+        <h1
+          className={`text-4xl sm:text-5xl text-center mb-4 ${TTTrailersBold.className}`}
+        >
           {post.title}
         </h1>
-        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
-          <Date>{post.date}</Date>
-          <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-md">
+        <div className="flex flex-col items-center gap-4 text-sm">
+          <Date>{date}</Date>
+          <span className="px-3 py-2 bg-gray-100 dark:bg-yellow-900/70 text-gray-700 dark:text-yellow-500 rounded-md">
             {post.category}
           </span>
         </div>
-        {post.description && (
-          <p className="mt-4 text-lg text-gray-700 dark:text-gray-300">
-            {post.description}
-          </p>
-        )}
       </header>
 
       <div
-        className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300"
+        className="max-w-none"
         dangerouslySetInnerHTML={{ __html: post.htmlContent }}
       />
 

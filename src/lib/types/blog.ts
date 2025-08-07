@@ -1,11 +1,12 @@
+import { Timestamp } from 'firebase/firestore';
+
 export type BlogPost = {
   slug: string;
   title: string;
   description: string;
-  date: string;
+  date: Timestamp;
   keywords: string[];
   category: string;
-  publishedTime: string;
   author: string;
   image?: string;
   canonical: string;
@@ -18,6 +19,8 @@ export type BlogPostPreview = {
   slug: string;
   title: string;
   description: string;
-  date: string;
+  date: Timestamp;
   category: string;
+  author: string;
+  published: boolean;
 };

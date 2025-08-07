@@ -12,7 +12,9 @@ export const BlogContent = ({ children }: { children: ReactNode }) => {
     <article
       className={`max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ${textColor}`}
     >
-      <div className="prose prose-lg max-w-none">{children}</div>
+      <div className="prose prose-lg dark:prose-invert max-w-none">
+        {children}
+      </div>
     </article>
   );
 };

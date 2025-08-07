@@ -1,18 +1,26 @@
-import { ref, getDownloadURL, listAll } from 'firebase/storage';
+import { ref, getDownloadURL } from 'firebase/storage';
+import { collection, getDocs, QuerySnapshot } from 'firebase/firestore';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 import { BlogPost, BlogPostPreview } from '@/lib/types/blog';
-import { storage } from '@/lib/services/firebase/storage';
+import { storage, firestore } from '@/lib/services/firebase/storage';
+import { blogPostsStore } from '@/lib/stores/blog-posts-store';
 
 /**
  * Fetch a single blog post by slug from Firebase Storage
  */
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
   try {
+    const blogPost = blogPostsStore.getState().getBlogPost(slug);
+
+    if (blogPost) return blogPost;
+
+    console.log('Fetching blog post from Firestore');
+
     const postRef = ref(storage, `posts/${slug}.md`);
     const downloadURL = await getDownloadURL(postRef);
-
     const response = await fetch(downloadURL);
+
     if (!response.ok) {
       throw new Error(`Failed to fetch post: ${response.statusText}`);
     }
@@ -23,28 +31,43 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
     // Convert markdown to HTML
     const htmlContent = await marked(content);
 
-    // Convert date to ISO format for publishedTime if not provided
-    const publishedTime =
-      data.publishedTime ||
-      (data.date
-        ? new Date(data.date).toISOString()
-        : new Date().toISOString());
+    // Get the blog post preview
+    const preview = await getBlogPostPreview(slug);
 
-    return {
+    /**
+     * @todo
+     * 1. Ajouter une collection dans "posts" de Firebase database pour le post "chapitre-1-je-me-relance" avec
+     * {
+  slug: "chapitre-1-je-me-relance";
+  title: "Chapitre 1 : Je me relance";
+  description: "Développeur freelance en quête de sens, il relance une aventure entrepreneuriale : créer deux apps B2C d’ici fin 2025, en binôme avec des profils marketing motivés.";
+  date: "2025-08-06T12:00:00.000Z";
+  category: "Entrepreneuriat";
+  author: "Hugo Bayoud";
+  published: true;
+};
+     * 2. Revoir le markdown pour le post "chapitre-1-je-me-relance" en prenant celui du fichier dans firebase storage
+     * 3. S'assurer que tout fonctionne bien
+     */
+
+    const newBlogPost: BlogPost = {
       slug,
-      title: data.title,
-      description: data.description,
-      date: data.date,
+      title: preview.title,
+      description: preview.description,
+      date: preview.date,
       keywords: data.keywords || [],
-      category: data.category || 'General',
-      publishedTime,
-      author: data.author || 'Hugo Bayoud',
+      category: preview.category,
+      author: preview.author,
       image: data.image,
-      canonical: data.canonical || `/blog/${slug}`,
-      published: data.published !== false,
+      canonical: `/blog/${slug}`,
+      published: preview.published,
       content,
       htmlContent,
     };
+
+    blogPostsStore.getState().setBlogPost(newBlogPost);
+
+    return newBlogPost;
   } catch (error) {
     console.error(`Error fetching blog post "${slug}":`, error);
     return null;
@@ -52,65 +75,72 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 }
 
 /**
- * Fetch all blog posts from Firebase Storage
+ * Fetch all blog posts from Firestore database
  */
 export async function getAllBlogPosts(): Promise<BlogPostPreview[]> {
   try {
-    const postsRef = ref(storage, 'posts/');
-    const listResult = await listAll(postsRef);
+    const blogPostPreviews = blogPostsStore.getState().getBlogPostPreviews();
+    if (blogPostPreviews.length > 0) return blogPostPreviews;
 
-    // Fetch all posts in parallel
-    const postPromises = listResult.items.map(async (itemRef) => {
-      try {
-        const downloadURL = await getDownloadURL(itemRef);
-        const response = await fetch(downloadURL);
+    console.log('Fetching blog posts from Firestore');
 
-        if (!response.ok) {
-          console.warn(
-            `Failed to fetch ${itemRef.name}: ${response.statusText}`
-          );
-          return null;
-        }
+    const postsCollection = collection(firestore, 'posts');
+    const querySnapshot = (await getDocs(
+      postsCollection
+    )) as QuerySnapshot<BlogPostPreview>;
 
-        const markdownContent = await response.text();
-        const { data } = matter(markdownContent);
+    const posts: BlogPostPreview[] = [];
 
-        // Extract slug from filename (remove .md extension)
-        const slug = itemRef.name.replace('.md', '');
+    querySnapshot.forEach((doc) => {
+      const { slug, title, description, date, category, author, published } =
+        doc.data();
 
-        // Only include published posts
-        // if (data.published === false) {
-        //   return null;
-        // }
+      const preview: BlogPostPreview = {
+        slug,
+        title,
+        description,
+        date,
+        category,
+        author,
+        published,
+      };
 
-        return {
-          slug,
-          title: data.title || 'Untitled',
-          description: data.description || '',
-          date: data.date || '',
-          category: data.category || 'General',
-        };
-      } catch (error) {
-        console.error(`Error processing ${itemRef.name}:`, error);
-        return null;
-      }
+      posts.push(preview);
     });
 
-    const results = await Promise.all(postPromises);
-
-    // Filter out null results and sort by date
-    const validPosts = results.filter(
-      (post): post is BlogPostPreview => post !== null
+    // Sort by date (most recent first)
+    const sortedPosts = posts.sort(
+      (a, b) => b.date.toDate().getTime() - a.date.toDate().getTime()
     );
 
-    return validPosts.sort((a, b) => {
-      // Sort by date (most recent first)
-      const dateA = new Date(a.date.split('/').reverse().join('-'));
-      const dateB = new Date(b.date.split('/').reverse().join('-'));
-      return dateB.getTime() - dateA.getTime();
-    });
+    blogPostsStore.getState().setBlogPostPreviews(sortedPosts);
+
+    return sortedPosts;
   } catch (error) {
-    console.error('Error fetching all blog posts:', error);
+    console.error('Error fetching all blog posts from Firestore:', error);
     return [];
+  }
+}
+
+/**
+ * Fetch a single blog post preview by slug from Firebase Storage
+ * @param slug - The slug of the blog post to fetch
+ * @returns The blog post preview
+ * @throws An error if the blog post preview is not found
+ */
+export async function getBlogPostPreview(
+  slug: string
+): Promise<BlogPostPreview> {
+  const blogPostPreview = blogPostsStore.getState().getBlogPostPreview(slug);
+  if (blogPostPreview) {
+    return blogPostPreview;
+  } else {
+    const postreviews = await getAllBlogPosts();
+    const postreview = postreviews.find((post) => post.slug === slug);
+    if (postreview) {
+      return postreview;
+    } else {
+      throw new Error(`Blog post preview not found for slug: ${slug}`);
+    }
   }
 }

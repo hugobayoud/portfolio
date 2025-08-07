@@ -2,7 +2,13 @@ import NextLink from 'next/link';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { Box, Card, Flex, Heading, Text } from '@radix-ui/themes';
 
-import { BlogPostPreview } from '@/lib/types/blog';
+interface ArticleCardProps {
+  title: string;
+  slug: string;
+  date: string;
+  description: string;
+  category: string;
+}
 
 export const ArticleCard = ({
   title,
@@ -10,7 +16,7 @@ export const ArticleCard = ({
   date,
   description,
   category,
-}: BlogPostPreview) => {
+}: ArticleCardProps) => {
   return (
     <Card size="2" asChild>
       <NextLink href={`/blog/${slug}`} passHref>
