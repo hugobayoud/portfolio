@@ -1,5 +1,5 @@
 import { ref, getDownloadURL } from 'firebase/storage';
-import { collection, getDocs, QuerySnapshot } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 import { BlogPost, BlogPostPreview } from '@/lib/types/blog';
@@ -17,7 +17,7 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 
     console.log('Fetching blog post from Firestore');
 
-    const postRef = ref(storage, `posts/${slug}.md`);
+    const postRef = ref(storage, `public/posts/${slug}.md`);
     const downloadURL = await getDownloadURL(postRef);
     const response = await fetch(downloadURL);
 
@@ -33,22 +33,6 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 
     // Get the blog post preview
     const preview = await getBlogPostPreview(slug);
-
-    /**
-     * @todo
-     * 1. Ajouter une collection dans "posts" de Firebase database pour le post "chapitre-1-je-me-relance" avec
-     * {
-  slug: "chapitre-1-je-me-relance";
-  title: "Chapitre 1 : Je me relance";
-  description: "Développeur freelance en quête de sens, il relance une aventure entrepreneuriale : créer deux apps B2C d’ici fin 2025, en binôme avec des profils marketing motivés.";
-  date: "2025-08-06T12:00:00.000Z";
-  category: "Entrepreneuriat";
-  author: "Hugo Bayoud";
-  published: true;
-};
-     * 2. Revoir le markdown pour le post "chapitre-1-je-me-relance" en prenant celui du fichier dans firebase storage
-     * 3. S'assurer que tout fonctionne bien
-     */
 
     const newBlogPost: BlogPost = {
       slug,
@@ -84,10 +68,15 @@ export async function getAllBlogPosts(): Promise<BlogPostPreview[]> {
 
     console.log('Fetching blog posts from Firestore');
 
-    const postsCollection = collection(firestore, 'posts');
-    const querySnapshot = (await getDocs(
-      postsCollection
-    )) as QuerySnapshot<BlogPostPreview>;
+    const postsCollectionRef = collection(firestore, 'posts');
+
+    // Fetch only accessible eras
+    const postsQueryRef = query(
+      postsCollectionRef,
+      where('published', '==', true)
+    );
+
+    const querySnapshot = await getDocs(postsQueryRef);
 
     const posts: BlogPostPreview[] = [];
 
