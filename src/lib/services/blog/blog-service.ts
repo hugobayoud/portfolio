@@ -64,6 +64,7 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 export async function getAllBlogPosts(): Promise<BlogPostPreview[]> {
   try {
     const blogPostPreviews = blogPostsStore.getState().getBlogPostPreviews();
+    console.log('blogPostPreviews', blogPostPreviews);
     if (blogPostPreviews.length > 0) return blogPostPreviews;
 
     console.log('Fetching blog posts from Firestore');
@@ -81,8 +82,16 @@ export async function getAllBlogPosts(): Promise<BlogPostPreview[]> {
     const posts: BlogPostPreview[] = [];
 
     querySnapshot.forEach((doc) => {
-      const { slug, title, description, date, category, author, published } =
-        doc.data();
+      const {
+        slug,
+        title,
+        description,
+        date,
+        category,
+        author,
+        published,
+        likes,
+      } = doc.data();
 
       const preview: BlogPostPreview = {
         slug,
@@ -92,6 +101,7 @@ export async function getAllBlogPosts(): Promise<BlogPostPreview[]> {
         category,
         author,
         published,
+        likes,
       };
 
       posts.push(preview);

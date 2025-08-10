@@ -23,4 +23,5 @@ export type BlogPostPreview = {
   category: string;
   author: string;
   published: boolean;
+  likes: number;
 };

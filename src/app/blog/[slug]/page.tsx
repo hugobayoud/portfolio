@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { getBlogPost } from '@/lib/services/blog/blog-service';
+import {
+  getBlogPost,
+  getBlogPostPreview,
+} from '@/lib/services/blog/blog-service';
 import { LikeButton } from '@/components/ui/like-button';
 import { TTTrailersBold } from '@/app/layout';
 
@@ -78,6 +81,7 @@ interface BlogPostPageProps {
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const post = await getBlogPost(slug);
+  const preview = await getBlogPostPreview(slug);
 
   if (!post) {
     notFound();
@@ -108,7 +112,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       {/* Like Button */}
       <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-        <LikeButton slug={post.slug} />
+        <LikeButton slug={post.slug} initialLikeCount={preview.likes} />
       </div>
     </article>
   );

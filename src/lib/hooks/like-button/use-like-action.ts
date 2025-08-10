@@ -1,5 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { generateSparkles, Sparkle } from '@/components/ui/sparkles';
+import {
+  clientLikeUtils,
+  incrementLikeCount,
+} from '@/lib/services/likes/like-service';
 
 interface ColorPair {
   primary: string;
@@ -19,17 +23,20 @@ const COLOR_PALETTE: ColorPair[] = [
 
 interface UseLikeActionOptions {
   slug: string;
+  initialLikeCount: number;
   maxLikes?: number;
   buttonSize?: number;
 }
 
 interface UseLikeActionReturn {
   clickCount: number;
+  totalLikeCount: number;
   colorIndex: number;
   sparkles: Sparkle[];
   currentColor: ColorPair;
   fillPercentage: number;
   isTouchDevice: boolean;
+  animationTrigger: number;
   performLikeAction: () => void;
   handleSparklesComplete: () => void;
   handleClick: () => void;
@@ -39,20 +46,41 @@ interface UseLikeActionReturn {
 export function useLikeAction(
   options: UseLikeActionOptions
 ): UseLikeActionReturn {
-  const { slug, maxLikes = 10, buttonSize = 64 } = options;
+  const { slug, initialLikeCount, maxLikes = 10, buttonSize = 64 } = options;
 
   const [clickCount, setClickCount] = useState<number>(0);
+  const [totalLikeCount, setTotalLikeCount] =
+    useState<number>(initialLikeCount);
   const [colorIndex, setColorIndex] = useState<number>(0);
   const [sparkles, setSparkles] = useState<Sparkle[]>([]);
   const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
+  const [animationTrigger, setAnimationTrigger] = useState<number>(0);
 
   const currentColor = COLOR_PALETTE[colorIndex];
   const fillPercentage = (clickCount / maxLikes) * 100;
 
-  const performLikeAction = (): void => {
-    // Increment click count up to maximum
-    const newClickCount = Math.min(clickCount + 1, maxLikes);
+  // Initialize click count from localStorage on mount
+  useEffect(() => {
+    const localClickCount = clientLikeUtils.getLocalClickCount(slug);
+    setClickCount(localClickCount);
+    setTotalLikeCount(initialLikeCount + localClickCount);
+  }, [slug, initialLikeCount]);
+
+  const performLikeAction = async (): Promise<void> => {
+    // Trigger MAX text animation by incrementing the trigger
+    setAnimationTrigger((prev) => prev + 1);
+
+    // Don't allow more clicks if already at maximum
+    if (clickCount >= maxLikes) {
+      return;
+    }
+
+    // Increment local click count
+    const newClickCount = clientLikeUtils.incrementLocalClickCount(slug);
     setClickCount(newClickCount);
+
+    // Update total like count display
+    setTotalLikeCount(initialLikeCount + newClickCount);
 
     // Cycle to next color in palette
     const nextIndex = (colorIndex + 1) % COLOR_PALETTE.length;
@@ -62,8 +90,26 @@ export function useLikeAction(
     const newSparkles = generateSparkles('#f59e0b', buttonSize);
     setSparkles(newSparkles);
 
-    // TODO: Add like to blog post using slug
-    console.log(`Liked blog post: ${slug}, total likes: ${newClickCount}`);
+    // If user completes 10 clicks, mark as liked and update database
+    if (newClickCount === maxLikes) {
+      try {
+        clientLikeUtils.markAsLiked(slug);
+        await incrementLikeCount(slug);
+        console.log(`Successfully updated database for blog post: ${slug}`);
+      } catch (error) {
+        console.error(
+          `Failed to update database for blog post: ${slug}`,
+          error
+        );
+        // Optionally, you could revert the local state here
+      }
+    }
+
+    console.log(
+      `Liked blog post: ${slug}, local clicks: ${newClickCount}, total likes: ${
+        initialLikeCount + newClickCount
+      }`
+    );
   };
 
   const handleClick = (): void => {
@@ -86,11 +132,13 @@ export function useLikeAction(
 
   return {
     clickCount,
+    totalLikeCount,
     colorIndex,
     sparkles,
     currentColor,
     fillPercentage,
     isTouchDevice,
+    animationTrigger,
     performLikeAction,
     handleSparklesComplete,
     handleClick,
