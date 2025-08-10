@@ -1,64 +1,121 @@
 'use client';
 
-import { useLike } from '@/lib/hooks/use-like';
+import React from 'react';
+
+import { Sparkles } from './sparkles';
+import { HeartIcon } from '../icons/heart-icon';
+import { useTheme } from '@/lib/hooks/use-theme';
+import { useLikeAction } from '@/lib/hooks/like-button/use-like-action';
+import { usePressAnimation } from '@/lib/hooks/like-button/use-press-animation';
 
 interface LikeButtonProps {
   slug: string;
   className?: string;
 }
 
-export function LikeButton({ slug, className = '' }: LikeButtonProps) {
-  const { likeCount, hasLiked, isLoading, handleLike } = useLike(slug);
+export const LikeButton = ({ slug, className = '' }: LikeButtonProps) => {
+  const { theme } = useTheme();
+
+  const {
+    sparkles,
+    currentColor,
+    fillPercentage,
+    performLikeAction,
+    handleSparklesComplete,
+    handleClick,
+    markAsTouchDevice,
+  } = useLikeAction({ slug });
+
+  const {
+    isPressed,
+    isHovered,
+    handleMouseEnter,
+    handleMouseLeave,
+    handleMouseDown,
+    handleMouseUp,
+    handleTouchStart,
+    handleTouchEnd,
+  } = usePressAnimation({
+    onTouchEnd: performLikeAction,
+    onTouchDevice: markAsTouchDevice,
+  });
+
+  // Button configuration
+  const BUTTON_SIZE = 64;
+  const shadowBottomOffset = BUTTON_SIZE / 12;
+  const shadowRightOffset = BUTTON_SIZE / 15;
+  const containerPadding = 30;
+
+  // Theme-based colors
+  const backgroundColor = theme === 'dark' ? '#0a1a33' : '#e6f0ff';
 
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
+    <div
+      className="relative"
+      style={{
+        width: `${BUTTON_SIZE + containerPadding * 2}px`,
+        height: `${BUTTON_SIZE + containerPadding * 2}px`,
+      }}
+    >
+      {/* Sparkle effects container */}
+      <Sparkles
+        sparkles={sparkles}
+        onAnimationComplete={handleSparklesComplete}
+      />
+
+      {/* Main button element */}
       <button
-        onClick={handleLike}
-        disabled={isLoading || hasLiked}
-        className={`
-          flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200
-          ${hasLiked 
-            ? 'bg-red-100 text-red-600 dark:bg-red-900/20 dark:text-red-400' 
-            : 'bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-300'
-          }
-          ${isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'}
-          disabled:cursor-not-allowed disabled:hover:scale-100
-        `}
-        aria-label={hasLiked ? 'Article déjà liké' : 'Liker cet article'}
+        onClick={handleClick}
+        className={`relative inline-block cursor-pointer select-none transition-transform duration-200 ease-out ${className}`}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        style={{
+          background: 'none',
+          border: 'none',
+          padding: 0,
+          width: `${BUTTON_SIZE}px`,
+          height: `${BUTTON_SIZE + shadowBottomOffset}px`,
+          position: 'absolute',
+          top: `${containerPadding}px`,
+          left: `${containerPadding}px`,
+          transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+        }}
+        aria-label="Interactive heart button"
       >
-        {/* Heart Icon */}
-        <svg
-          className={`w-5 h-5 transition-all duration-200 ${
-            hasLiked ? 'fill-red-500 text-red-500' : 'fill-none text-current'
-          }`}
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth="2"
+        {/* Shadow heart - creates 3D depth effect */}
+        <div
+          className="absolute transition-opacity duration-150 ease-out"
+          style={{
+            top: `${shadowBottomOffset}px`,
+            left: `${shadowRightOffset}px`,
+            opacity: isPressed ? 0 : 1, // Hide shadow when pressed
+          }}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+          <HeartIcon size={BUTTON_SIZE} color={currentColor.secondary} />
+        </div>
+
+        {/* Main heart - the interactive element */}
+        <div
+          className="absolute transition-all duration-150 ease-out"
+          style={{
+            top: isPressed ? `${shadowBottomOffset}px` : '0px',
+            left: isPressed ? `${shadowRightOffset}px` : '0px',
+            transform: isPressed ? 'scale(0.98)' : 'scale(1)',
+          }}
+        >
+          <HeartIcon
+            size={BUTTON_SIZE}
+            color={backgroundColor}
+            fillColor={currentColor.primary}
+            fillPercentage={fillPercentage}
+            stroke={{ color: currentColor.primary, width: 3 }}
           />
-        </svg>
-        
-        {/* Like Count */}
-        <span className="font-medium tabular-nums">
-          {likeCount}
-        </span>
-        
-        {/* Loading Spinner */}
-        {isLoading && (
-          <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-        )}
+        </div>
       </button>
-      
-      {/* Status Text */}
-      {hasLiked && (
-        <span className="text-sm text-gray-500 dark:text-gray-400">
-          Merci ! 💝
-        </span>
-      )}
     </div>
   );
-}
+};

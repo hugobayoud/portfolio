@@ -1,0 +1,33 @@
+/**
+ * Sparkle animation keyframes for heart button effects
+ * Can be reused across different components that need sparkle effects
+ */
+
+@keyframes heartSparkle {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) rotate(360deg);
+  }
+}
+
+.heart-sparkle {
+  animation: heartSparkle 600ms ease-out forwards;
+}
+
+/**
+ * Base sparkle dot styling
+ * Can be customized with different colors and sizes
+ */
+.sparkle-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
