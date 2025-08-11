@@ -6,6 +6,7 @@ import {
   getBlogPostPreview,
 } from '@/lib/services/blog/blog-service';
 import { LikeButton } from '@/components/ui/like-button';
+import HtmlContent from '@/components/blog/html-content';
 import { TTTrailersBold } from '@/app/layout';
 
 /**
@@ -34,6 +35,8 @@ export async function generateMetadata({
       description: 'The requested blog post could not be found.',
     };
   }
+
+  console.log(post.date);
 
   const { image } = post;
 
@@ -105,10 +108,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </header>
 
-      <div
-        className="max-w-none"
-        dangerouslySetInnerHTML={{ __html: post.htmlContent }}
-      />
+      <HtmlContent html={post.htmlContent} />
 
       {/* Like Button */}
       <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">

@@ -8,6 +8,7 @@ interface ArticleCardProps {
   date: string;
   description: string;
   category: string;
+  devOnly: boolean;
 }
 
 export const ArticleCard = ({
@@ -16,6 +17,7 @@ export const ArticleCard = ({
   date,
   description,
   category,
+  devOnly,
 }: ArticleCardProps) => {
   return (
     <Card size="2" asChild>
@@ -35,9 +37,25 @@ export const ArticleCard = ({
                   {date}
                 </Text>
               </Flex>
-              <Text size="1" color="blue">
-                {category}
-              </Text>
+              <Flex align="center" gap="2">
+                {devOnly && (
+                  <Box
+                    px="2"
+                    py="1"
+                    style={{
+                      backgroundColor: 'var(--green-3)',
+                      borderRadius: 9999,
+                    }}
+                  >
+                    <Text size="1" color="green">
+                      DEV
+                    </Text>
+                  </Box>
+                )}
+                <Text size="1" color="blue">
+                  {category}
+                </Text>
+              </Flex>
             </Flex>
           </Flex>
         </Box>
