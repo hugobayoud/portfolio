@@ -80,6 +80,7 @@
     "header": {
       "title": "Blog",
       "subtitle": "My articles and my reflections on web and mobile development."
-    }
+    },
+    "noPosts": "No posts found. Please check back later."
   }
 }

@@ -80,6 +80,7 @@
     "header": {
       "title": "Blog",
       "subtitle": "Mes articles et mes réflexions sur le développement web et mobile."
-    }
+    },
+    "noPosts": "Aucun article trouvé. Veuillez revenir plus tard."
   }
 }

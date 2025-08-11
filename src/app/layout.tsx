@@ -4,9 +4,9 @@ import { Open_Sans } from 'next/font/google';
 import localFont from 'next/font/local';
 
 import './globals.css';
-import { Header } from '../../components/Header';
-import { LanguageProvider } from '../i18n/LanguageProvider';
-import { ThemeProvider } from '../../components/ThemeProvider';
+import { Header } from '../components/layout/header';
+import { LanguageProvider } from '../components/providers/language-providers';
+import { ThemeProvider } from '../components/providers/theme-provider';
 
 export const OpenSans = Open_Sans({
   variable: '--font-open-sans',
