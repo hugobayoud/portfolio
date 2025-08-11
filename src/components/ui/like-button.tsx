@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { Sparkles } from './sparkles';
 import { HeartIcon } from '../icons/heart-icon';
@@ -46,8 +46,6 @@ export const LikeButton = ({
     onTouchEnd: performLikeAction,
     onTouchDevice: markAsTouchDevice,
   });
-
-  console.log('currentColor', currentColor);
 
   // Button configuration
   const BUTTON_SIZE = 56;
