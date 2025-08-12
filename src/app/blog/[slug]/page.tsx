@@ -36,8 +36,6 @@ export async function generateMetadata({
     };
   }
 
-  console.log(post.date);
-
   const { image } = post;
 
   return {

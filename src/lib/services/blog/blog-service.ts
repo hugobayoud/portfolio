@@ -82,7 +82,7 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 export async function getAllBlogPosts(): Promise<BlogPostPreview[]> {
   try {
     const blogPostPreviews = blogPostsStore.getState().getBlogPostPreviews();
-    console.log('blogPostPreviews', blogPostPreviews);
+
     if (blogPostPreviews.length > 0) {
       // Make sure dev preview is injected in dev mode even if cache exists
       const devPreview = await _findBlogPostPreviewLocally();

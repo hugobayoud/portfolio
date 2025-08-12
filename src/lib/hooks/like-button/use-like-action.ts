@@ -104,12 +104,6 @@ export function useLikeAction(
         // Optionally, you could revert the local state here
       }
     }
-
-    console.log(
-      `Liked blog post: ${slug}, local clicks: ${newClickCount}, total likes: ${
-        initialLikeCount + newClickCount
-      }`
-    );
   };
 
   const handleClick = (): void => {
