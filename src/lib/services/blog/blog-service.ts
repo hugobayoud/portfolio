@@ -1,19 +1,20 @@
-import { ref, getDownloadURL } from 'firebase/storage';
 import {
-  collection,
-  getDocs,
   query,
   where,
+  getDocs,
   Timestamp,
+  collection,
 } from 'firebase/firestore';
-import fs from 'node:fs/promises';
 import path from 'node:path';
-import matter from 'gray-matter';
 import { marked } from 'marked';
+import matter from 'gray-matter';
+import fs from 'node:fs/promises';
+import { ref, getDownloadURL } from 'firebase/storage';
+
+import { processMarkdownImages } from './image-service';
 import { BlogPost, BlogPostPreview } from '@/lib/types/blog';
 import { blogPostsStore } from '@/lib/stores/blog-posts-store';
 import { storage, firestore } from '@/lib/services/firebase/firebase';
-import { processMarkdownImages } from './image-service';
 
 /**
  * Fetch a single blog post by slug from Firebase Storage
@@ -41,10 +42,6 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 
     // Process images in markdown content to replace local paths with Firebase URLs
     const processedContent = await processMarkdownImages(content, slug);
-
-    /**
-     * @todo trouver un moyen de changer la styles de chaque elements d'un markdown en le passant en HTML
-     */
 
     // Convert processed markdown to HTML
     const htmlContent = await marked(processedContent);
