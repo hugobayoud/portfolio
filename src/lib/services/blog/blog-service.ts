@@ -199,8 +199,6 @@ async function _findBlogPostLocally(slug: string): Promise<BlogPost | null> {
 
         const htmlContent = await marked(processedContent);
 
-        console.log('htmlContent', htmlContent);
-
         // Get preview (will include dev preview in dev mode)
         const preview = await getBlogPostPreview(slug);
 
