@@ -24,4 +24,5 @@ export type BlogPostPreview = {
   author: string;
   published: boolean;
   likes: number;
+  devOnly: boolean;
 };

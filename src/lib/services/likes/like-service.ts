@@ -1,4 +1,4 @@
-import { firestore } from '@/lib/services/firebase/storage';
+import { firestore } from '@/lib/services/firebase/firebase';
 import { doc, increment, setDoc } from 'firebase/firestore';
 
 /**
