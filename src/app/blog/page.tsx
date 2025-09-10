@@ -1,11 +1,11 @@
 import { MDXWrapper } from '@/components/blog/mdx-wrapper';
 import { ArticleCard } from '@/components/blog/article-card';
-import { getAllBlogPosts } from '@/lib/services/blog/blog-service';
+import { getBlogPostPreviews } from '@/lib/services/blog/blog-service';
 import { BlogEmptyState } from '@/components/blog/blog-empty-state';
 
 // Server component that fetches data
 export default async function BlogPage() {
-  const articles = await getAllBlogPosts();
+  const articles = await getBlogPostPreviews();
 
   return (
     <MDXWrapper>
