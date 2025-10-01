@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import '@radix-ui/themes/styles.css';
+import { Analytics } from '@vercel/analytics/next';
 import { Open_Sans } from 'next/font/google';
 import localFont from 'next/font/local';
 
@@ -46,6 +47,7 @@ export default function RootLayout({
               <Header />
               {children}
             </div>
+            <Analytics />
           </ThemeProvider>
         </LanguageProvider>
       </body>
