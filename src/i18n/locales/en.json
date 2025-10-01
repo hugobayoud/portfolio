@@ -25,17 +25,21 @@
     "projects": {
       "title": "My projects",
       "subTitle": "I create profitable applications and tools and help people with my skills.",
+      "sapio": {
+        "title": "Sapio (Thetys Lab) [Full Stack Developer]",
+        "description": "The Duolingo of general knowledge. My role: developing the entire data architecture of the application to allow the application to grow from 0 to 50,000 users during my 6-month mission."
+      },
       "lepto": {
-        "title": "Lepto",
+        "title": "Lepto Count [CTO]",
         "description": "Automate repayments between friends when travelling, while avoiding the tensions associated with finances. The key challenge was to deliver a smoother, more intuitive experience than competitors such as Tricount, thanks to an optimised UI/UX."
       },
-      "sowhat": {
-        "title": "Sowhat",
-        "description": "A FinTech that leverages Open Finance to help users better manage their budget, savings, and assets. Simplicity, efficiency, and impact are the key principles."
+      "bankraft": {
+        "title": "Bankraft (formerly Sowhat) [CTO]",
+        "description": "A FinTech that leverages Open Finance to help users better manage their savings and match with professionals to make their money grow. Simplicity, efficiency, and impact are the key principles."
       },
       "mybus": {
-        "title": "Monkey Factory",
-        "description": "Facilitating urban mobility by centralizing transportation methods (bikes, scooters, buses, carpooling...) within a single application. My role: integrating a high-performance route calculation system and optimizing the Back-end architecture in a mono-repo."
+        "title": "Monkey Factory [Backend Developer]",
+        "description": "Facilitating urban mobility by centralizing transportation methods (bikes, scooters, buses, carpooling...) within a single application. My role: integrating a high-performance route calculation system and optimizing the Backend architecture in a mono-repo."
       }
     },
     "skills": {
@@ -53,15 +57,23 @@
       "subTitle": "People talking about me/I talk about myself",
       "leProgres": {
         "title": "Le Progrès",
+        "subtitle": "",
         "description": "The newspaper \"Le Progrès\" interviewed us to talk about the Lepto application."
       },
       "bfmLyon": {
         "title": "BFM TV Lyon",
-        "description": "Raphaël Metro, my partner on the Sowhat application, was interviewed on BFM TV Lyon to talk live about our work."
+        "subtitle": "",
+        "description": "Raphaël Metro, my partner on the Bankraft (formerly Sowhat) application, was interviewed on BFM TV Lyon to talk live about our work."
       },
       "podcast": {
         "title": "Podcast",
+        "subtitle": "",
         "description": "Invited to Fabien Serra's microphone on Tizy Media, I discuss my journey in development, FinTechs, and entrepreneurship."
+      },
+      "jbThouard": {
+        "title": "Jean Baptiste Thouard",
+        "subtitle": "Co-founder & CTO Thetys Lab",
+        "description": "We had the opportunity to collaborate with Hugo for 6 months (April to September 2025) from the conception to the release of Sapio: our general knowledge mobile application.\n\nHe demonstrated great mastery of React Native and the ecosystem, both backend and frontend: complete development of all the app's logic, setup of a large part of the backend, implementation of an advanced push notification system, creation of gamified interfaces and new game modes.\n\nWe particularly appreciated Hugo's organizational capacity (both independently and as part of a team), his great responsiveness, and always with a smile.\n\nHis work is always clear, well-presented and documented.\n\nThanks to his work, we were able to quickly publish a stable version of our app."
       }
     }
   },

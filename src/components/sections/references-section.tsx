@@ -39,6 +39,14 @@ export const ReferencesSection = () => {
           backgroundImage="/references/podcast_.webp"
           link="https://youtu.be/oDuGcrbxy6s?si=imEuTjTFmLMlNxjS"
         />
+        <ProjectCard
+          title={messages.strategies.references.jbThouard.title}
+          subtitle={messages.strategies.references.jbThouard.subtitle}
+          description={messages.strategies.references.jbThouard.description}
+          image="/references/thumbnails/jb-thouard.png"
+          backgroundImage="/references/jb-thouard_.webp"
+          asDialog
+        />
       </Flex>
     </Flex>
   );
