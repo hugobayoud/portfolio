@@ -58,10 +58,7 @@ export const MeWithSunglasses = () => {
             size="9"
             fallback="HB"
             radius="full"
-            style={{
-              position: 'absolute',
-              zIndex: 10,
-            }}
+            style={{ position: 'absolute', zIndex: 10 }}
           />
         </div>
       )}

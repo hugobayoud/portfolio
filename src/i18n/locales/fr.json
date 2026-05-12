@@ -23,23 +23,88 @@
       }
     },
     "projects": {
-      "title": "Mes projets",
-      "subTitle": "Je crée des applications et des outils rentables et aide les gens avec mes compétences.",
-      "sapio": {
-        "title": "Sapio (Thetys Lab) [Développeur Full Stack]",
-        "description": "Le Duolingo de la culture générale. Mon rôle : développer toute l'architecture de données de l'application pour permettre à l'application de passer de 0 à 50 000 utilisateurs pendant ma mission de 6 mois."
+      "title": "Expérience professionnelle",
+      "subTitle": "Entreprises et missions auxquelles j’ai contribué en tant que développeur ou cofondateur du produit à la direction technique.",
+      "currentLabel": "Aujourd’hui",
+      "visitWebsite": "Visiter le site",
+      "labels": {
+        "company": "L’entreprise",
+        "roleOverview": "Mon rôle en bref",
+        "roleInDepth": "En profondeur"
       },
-      "lepto": {
-        "title": "Lepto Count [CTO]",
-        "description": "Automatiser les remboursements entre amis en voyage tout en évitant les tensions liées aux finances. Le défi majeur : proposer une expérience plus fluide et intuitive que les concurrents, comme Tricount, grâce à une UI/UX optimisée."
-      },
-      "bankraft": {
-        "title": "Bankraft (ex Sowhat) [CTO]",
-        "description": "Une FinTech qui exploite l'Open Finance pour aider les utilisateurs à mieux gérer leur économies et patrimoine et faire croître leur argent avec des experts de la finance. Simplicité, efficacité et impact sont les maîtres mots."
-      },
-      "mybus": {
-        "title": "Monkey Factory [Développeur Backend]",
-        "description": "Faciliter la mobilité urbaine en centralisant les moyens de transport (vélos, trottinettes, bus, covoiturage…) au sein d'une application. Mon rôle : intégrer un système de calcul d'itinéraire performant et optimiser l'architecture Backend en mono-repo."
+      "experiences": {
+        "invstore": {
+          "id": "invstore",
+          "companyName": "Invstore",
+          "myRole": "Cofondateur & Développeur Full Stack Web & Mobile",
+          "companyDescription": "Invstore met en relation des particuliers et des professionnels de la finance.",
+          "myRoleShortDescription": "Développement de l’application mobile destinée aux particuliers, ainsi que d’une plateforme web sécurisée permettant aux professionnels de la finance d’accéder à leurs futurs prospects.",
+          "myRoleLongDescription": "À la suite de l’échec commercial de Sowhat, mon associé et moi avons décidé d’effectuer un pivot stratégique afin de développer une nouvelle solution centrée sur le parcours d’un particulier à la recherche d’un conseiller en gestion de patrimoine.\n\nNous avons levé 110 000 € auprès d’un family office afin de réaliser la preuve de concept de cette nouvelle idée.\n\nGrâce à l’expérience acquise, j’ai développé la solution en moins de trois mois, ainsi que la plateforme web permettant aux professionnels - banquiers, CGP et autres FinTech - de contacter leurs futurs prospects.\n\nCependant, les semaines suivantes ne nous ont pas permis d’atteindre les objectifs d’utilisateurs espérés. Nous avons donc cessé l’exploitation de la solution.\n\nTechnologies principales : UI/UX design, développement fullstack, API REST, API GraphQL, Node.js, JavaScript, TypeScript, NestJS, développement mobile, React Native avec Expo, CI/CD, déploiement sur l’App Store et le Play Store, création de site web, Next.js, Supabase, Microsoft Azure, GitHub Actions.",
+          "icon": "/projects/logos/invstore.webp",
+          "url": "https://invstore.fr",
+          "startDate": "09-2025",
+          "endDate": "05-2026"
+        },
+        "sapio": {
+          "id": "sapio",
+          "companyName": "Thetys Lab",
+          "myRole": "Développeur Full Stack (freelance)",
+          "companyDescription": "Thetys Lab est le studio derrière Sapio, une application mobile qui rend la culture générale aussi addictive qu’un jeu, souvent présentée comme le « Duolingo de la culture ».",
+          "myRoleShortDescription": "Mission de six mois pour accompagner Sapio de 0 à 50 000 utilisateurs : architecture de base de données, backend, système avancé de notifications push et fonctionnalités de gamification.",
+          "myRoleLongDescription": "J’ai porté les fondations techniques de l’application : modèle de données, architecture orientée croissance, développement d’une grande partie du backend, logique applicative en React Native, interfaces gamifiées, nouveaux modes de jeu et système avancé de notifications push.\n\nLe travail a été structuré et documenté, en lien étroit avec l’équipe, afin d’assurer une mise en production stable dans un délai serré.\n\nTechnologies principales : Développement fullstack, API REST, Node.js, JavaScript, TypeScript, développement mobile, React Native avec Expo, CI/CD, GitHub, Firebase, Cloud Functions, Expo Push Notifications.",
+          "icon": "/projects/logos/sapio.webp",
+          "url": "https://apps.apple.com/fr/app/sapio-culture-g%C3%A9n%C3%A9rale/id6741903694",
+          "startDate": "04-2025",
+          "endDate": "09-2025"
+        },
+        "sowhat": {
+          "id": "sowhat",
+          "companyName": "Sowhat",
+          "myRole": "Cofondateur & CTO",
+          "companyDescription": "Sowhat est une FinTech qui s’appuie sur l’Open Finance pour aider les utilisateurs à mieux gérer leurs finances personnelles et leur patrimoine.",
+          "myRoleShortDescription": "Cofondateur de Sowhat, une FinTech exploitant les opportunités offertes par l’Open Finance et la DSP2 pour développer une application de finances personnelles : gestion de budget, suivi bancaire et gestion de patrimoine.",
+          "myRoleLongDescription": "Avant de lancer le développement de l’application Sowhat, j’ai travaillé avec mon associé sur la conception des maquettes avec Figma. Nous avons consacré plusieurs mois à définir une interface utilisateur pertinente et une approche adaptée aux besoins identifiés.\n\nJ’ai ensuite développé le premier MVP de l’application, en couvrant toutes les étapes, de l’idée initiale jusqu’au déploiement sur les stores, en neuf mois.\n\nAprès plusieurs mois d’exploitation et de correctifs, nous avons constaté que nous n’avions pas encore trouvé notre marché. Le site sowhat-app.com n’est désormais plus en ligne et a été remplacé par invstore.fr, un second projet développé avec mon associé.",
+          "icon": "/projects/logos/sowhat.webp",
+          "url": "https://sowhat-app.com",
+          "startDate": "10-2023",
+          "endDate": "03-2025"
+        },
+        "lepto": {
+          "id": "lepto",
+          "companyName": "Lepto",
+          "myRole": "Cofondateur et Lead développeur Backend",
+          "companyDescription": "Lepto est une application mobile dédiée à la gestion des dépenses de groupe. Contrairement à des solutions existantes comme Tricount, Lepto se distingue par une interface moderne, intuitive et agréable à utiliser, pensée pour les vacances et les sorties entre amis. L’application facilite le calcul automatique des remboursements et limite les tensions liées aux discussions financières au sein d’un groupe.",
+          "myRoleShortDescription": "Conception et développement du backend de Lepto, une application mobile dédiée à la gestion des dépenses de groupe.",
+          "myRoleLongDescription": "En tant que CTO, j’ai fait le lien entre la vision produit et l’exécution technique : choix de la stack, définition de l’architecture, livraison de fonctionnalités de bout en bout et maintien de la qualité technique à mesure que l’usage augmentait.\n\nL’enjeu principal était de proposer une expérience plus fluide et intuitive que les applications génériques de remboursement, grâce à une UI/UX soignée et à une base technique solide.\n\nTechnologies principales : UI/UX design, développement backend, API REST, Node.js, JavaScript, NestJS, CI/CD, déploiement sur l’App Store et le Play Store, réseaux sociaux, montage vidéo.",
+          "icon": "/projects/logos/lepto.webp",
+          "url": "https://count.lepto.app/",
+          "startDate": "10-2022",
+          "endDate": "12-2024"
+        },
+        "startupoklm": {
+          "id": "startupoklm",
+          "companyName": "Startup OKLM",
+          "myRole": "Co-créateur de contenus",
+          "companyDescription": "Startup OKLM est un média dédié à l’entrepreneuriat. Aux côtés de mon associé, nous avons interviewé des entrepreneurs reconnus, tels qu’Ilan Benhaim, fondateur de Veepee, et Anthony Bourbon, fondateur de Feed et Blast.club. Nos contenus ont été diffusés auprès de plus de 30 000 abonnés cumulés sur LinkedIn, Instagram, TikTok et Twitch.",
+          "myRoleShortDescription": "Responsable de la production et de la gestion des contenus vidéo : tournage, montage et publication sur les différentes plateformes (Instagram, Tiktok, LinkedIn, Twitch).",
+          "myRoleLongDescription": "Mon rôle était centré sur la production et la gestion des contenus vidéo. Je me chargeais du tournage, du montage et de la publication des vidéos sur les différentes plateformes.\n\nCette expérience m’a permis de développer des compétences en stratégie de communication sur les réseaux sociaux, tout en maîtrisant les spécificités de chaque plateforme afin d’optimiser l’engagement et la visibilité du média.\n\nCompétences principales : Production vidéo, montage vidéo, gestion des publications sur les réseaux sociaux, adaptation des contenus aux contraintes de chaque plateforme, préparation d’interviews de personnalités publiques.",
+          "icon": "/projects/logos/startupoklm.webp",
+          "url": "https://www.instagram.com/startupoklm/",
+          "startDate": "10-2021",
+          "endDate": "10-2023"
+        },
+        "mybus": {
+          "id": "mybus",
+          "companyName": "Monkey Factory",
+          "myRole": "Développeur Backend",
+          "companyDescription": "Monkey Factory développe MyBus, une application qui centralise plusieurs modes de transport - vélos, trottinettes, bus, covoiturage, etc. — afin de simplifier la mobilité urbaine.",
+          "myRoleShortDescription": "Développeur backend au sein d’un monorepo : intégration d’un système de calcul d’itinéraires et contribution à la dématérialisation des titres de transport.",
+          "myRoleLongDescription": "J’ai intégré un sous-système performant de calcul d’itinéraires et contribué à fiabiliser le backend afin de permettre des itérations rapides, dans un contexte de croissance du nombre de clients, notamment des villes et agglomérations.\n\nLe backend était organisé sous forme de monorepo, avec une API GraphQL et une API REST. J’ai travaillé au sein d’une équipe réduite, dans un cadre agile structuré autour de sprints de deux semaines.\n\nTechnologies principales : JavaScript, Node.js, NestJS, GraphQL, REST API, XML, GitLab, CI/CD, DevOps, méthode agile.",
+          "icon": "/projects/logos/mybus.webp",
+          "url": "https://mybus.io/",
+          "startDate": "03-2020",
+          "endDate": "09-2022"
+        }
       }
     },
     "skills": {
@@ -63,7 +128,7 @@
       "bfmLyon": {
         "title": "BFM TV Lyon",
         "subtitle": "",
-        "description": "Raphaël Metro, mon associé sur l'application Bankraft (ex Sowhat) a été interviewé sur BFM TV Lyon pour parler en direct de notre travail."
+        "description": "Raphaël Metrop, mon associé sur l'application Bankraft (ex Sowhat) a été interviewé sur BFM TV Lyon pour parler en direct de notre travail."
       },
       "podcast": {
         "title": "Podcast",
@@ -72,7 +137,7 @@
       },
       "jbThouard": {
         "title": "Jean Baptiste Thouard",
-        "subtitle": "Co-fondateur & CTO Thetys Lab",
+        "subtitle": "Cofondateur & CTO Thetys Lab",
         "description": "Nous avons eu l'opportunité de collaborer avec Hugo durant 6 mois (avril à septembre 2025) de la conception à la sortie de Sapio : notre application mobile de culture générale.\n\nIl a fait preuve d'une grande maîtrise de React Native et de l'écosystème, tant en backend qu'en frontend : développement complet de toute la logique de l'app, setup d'une grande partie du backend, mise en place d'un système avancé de push notifications, création d'interfaces gamifiées et de nouveaux modes de jeu.\n\n Nous avons particulièrement apprécié la capacité d'organisation d'Hugo (tant en autonomie qu'en équipe), sa grande réactivité, et ce toujours avec le sourire.\n\nSon travail est toujours clair, bien présenté et documenté.\n\nGrâce à son travail, nous avons pu rapidement publier une version stable de notre app."
       }
     }

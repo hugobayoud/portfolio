@@ -20,16 +20,7 @@ export const Header = () => {
 
   return (
     <Container size="4">
-      <Flex justify="between" align="center" gap="2" p="2" mb="4">
-        {isHomePage && (
-          <Link href="/blog" passHref>
-            <Button variant="soft" size="2">
-              <ArchiveIcon />
-              {messages.header.blog.title}
-            </Button>
-          </Link>
-        )}
-
+      <Flex justify="end" align="end" gap="2" p="2" mb="4">
         {isBlogPage && (
           <Link href="/" passHref>
             <Button variant="soft" size="2">

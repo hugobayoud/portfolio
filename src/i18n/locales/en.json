@@ -23,23 +23,88 @@
       }
     },
     "projects": {
-      "title": "My projects",
-      "subTitle": "I create profitable applications and tools and help people with my skills.",
-      "sapio": {
-        "title": "Sapio (Thetys Lab) [Full Stack Developer]",
-        "description": "The Duolingo of general knowledge. My role: developing the entire data architecture of the application to allow the application to grow from 0 to 50,000 users during my 6-month mission."
+      "title": "Professional experience",
+      "subTitle": "Companies and missions where I contributed as a developer or co-founder—from product work to technical leadership.",
+      "currentLabel": "Present",
+      "visitWebsite": "Visit website",
+      "labels": {
+        "company": "The company",
+        "roleOverview": "My role at a glance",
+        "roleInDepth": "In depth"
       },
-      "lepto": {
-        "title": "Lepto Count [CTO]",
-        "description": "Automate repayments between friends when travelling, while avoiding the tensions associated with finances. The key challenge was to deliver a smoother, more intuitive experience than competitors such as Tricount, thanks to an optimised UI/UX."
-      },
-      "bankraft": {
-        "title": "Bankraft (formerly Sowhat) [CTO]",
-        "description": "A FinTech that leverages Open Finance to help users better manage their savings and match with professionals to make their money grow. Simplicity, efficiency, and impact are the key principles."
-      },
-      "mybus": {
-        "title": "Monkey Factory [Backend Developer]",
-        "description": "Facilitating urban mobility by centralizing transportation methods (bikes, scooters, buses, carpooling...) within a single application. My role: integrating a high-performance route calculation system and optimizing the Backend architecture in a mono-repo."
+      "experiences": {
+        "invstore": {
+          "id": "invstore",
+          "companyName": "Invstore",
+          "myRole": "Co-founder & Full-Stack Web and Mobile Developer",
+          "companyDescription": "Invstore connects private individuals with financial professionals.",
+          "myRoleShortDescription": "Development of a mobile app for private individuals, as well as a secure web platform enabling financial professionals to access their prospective clients.",
+          "myRoleLongDescription": "Following the commercial failure of Sowhat, my business partner and I decided to make a strategic pivot in order to develop a new solution focused on the journey of an individual looking for a wealth management adviser.\n\nWe have raised €110,000 from a family office to carry out a proof of concept for this new idea.\n\nThanks to the experience I’ve gained, I developed the solution in less than three months, along with the web platform that enables professionals – bankers, wealth managers and other FinTech firms – to contact their prospective clients.\n\nHowever, in the weeks that followed, we were unable to meet our user targets. We therefore discontinued the service.\n\nKey technologies: UI/UX design, full-stack development, REST APIs, GraphQL APIs, Node.js, JavaScript, TypeScript, NestJS, mobile development, React Native with Expo, CI/CD, deployment to the App Store and Google Play, website development, Next.js, Supabase, Microsoft Azure, GitHub Actions.",
+          "icon": "/projects/logos/invstore.webp",
+          "url": "https://invstore.fr",
+          "startDate": "09-2025",
+          "endDate": "05-2026"
+        },
+        "sapio": {
+          "id": "sapio",
+          "companyName": "Thetys Lab",
+          "myRole": "Full-Stack Developer (freelance)",
+          "companyDescription": "Thetys Lab is the studio behind Sapio, a mobile app that makes general knowledge as addictive as a game, often described as the ‘Duolingo of general knowledge’.",
+          "myRoleShortDescription": "A six-month project to help Sapio grow from 0 to 50,000 users: database architecture, backend, an advanced push notification system and gamification features.",
+          "myRoleLongDescription": "I was responsible for the technical foundations of the app: the data model, growth-oriented architecture, development of a large part of the backend, React Native application logic, gamified interfaces, new game modes and an advanced push notification system.\n\nThe work was organised and documented in close collaboration with the team to ensure a smooth launch within a tight deadline.\n\nKey technologies: Full-stack development, REST APIs, Node.js, JavaScript, TypeScript, mobile development, React Native with Expo, CI/CD, GitHub, Firebase, Cloud Functions, Expo Push Notifications.",
+          "icon": "/projects/logos/sapio.webp",
+          "url": "https://apps.apple.com/fr/app/sapio-culture-g%C3%A9n%C3%A9rale/id6741903694",
+          "startDate": "04-2025",
+          "endDate": "09-2025"
+        },
+        "sowhat": {
+          "id": "sowhat",
+          "companyName": "Sowhat",
+          "myRole": "Co-founder & CTO",
+          "companyDescription": "Sowhat is a FinTech company that uses Open Finance to help users manage their personal finances and assets more effectively.",
+          "myRoleShortDescription": "Co-founder of Sowhat, a FinTech company harnessing the opportunities offered by Open Finance and PSD2 to develop a personal finance app: budget management, banking monitoring and wealth management.",
+          "myRoleLongDescription": "Before starting to develop the Sowhat app, my business partner and I worked on designing the mock-ups using Figma. We spent several months defining a user interface that met our needs and an approach tailored to the requirements we had identified.\n\nI then developed the app’s first MVP, handling every stage of the process - from the initial idea through to deployment on the app stores - in nine months.\n\nAfter several months of operation and bug fixes, we realised that we hadn’t yet found our niche. The sowhat-app.com website is no longer online and has been replaced by invstore.fr, a second project developed with my business partner.",
+          "icon": "/projects/logos/sowhat.webp",
+          "url": "https://sowhat-app.com",
+          "startDate": "10-2023",
+          "endDate": "03-2025"
+        },
+        "lepto": {
+          "id": "lepto",
+          "companyName": "Lepto",
+          "myRole": "Co-founder and Lead Backend Developer",
+          "companyDescription": "Lepto is a mobile app designed for managing group expenses. Unlike existing solutions such as Tricount, Lepto stands out thanks to its modern, intuitive and user-friendly interface, designed with holidays and nights out with friends in mind. The app makes it easy to calculate reimbursements automatically and helps to minimise the stress associated with financial discussions within a group.",
+          "myRoleShortDescription": "Design and development of the backend for Lepto, a mobile app designed for managing group expenses.",
+          "myRoleLongDescription": "As CTO, I bridged the gap between the product vision and technical implementation: choosing the tech stack, defining the architecture, delivering end-to-end features, and maintaining technical quality as usage grew.\n\nThe main challenge was to offer a more seamless and intuitive experience than standard reimbursement apps, thanks to a well-designed UI/UX and a robust technical foundation.\n\nKey technologies: UI/UX design, backend development, REST APIs, Node.js, JavaScript, NestJS, CI/CD, deployment to the App Store and Google Play, social media, video editing.",
+          "icon": "/projects/logos/lepto.webp",
+          "url": "https://count.lepto.app/",
+          "startDate": "10-2022",
+          "endDate": "12-2024"
+        },
+        "startupoklm": {
+          "id": "startupoklm",
+          "companyName": "Startup OKLM",
+          "myRole": "Content co-creator",
+          "companyDescription": "Startup OKLM is a media outlet dedicated to entrepreneurship. Together with my business partner, we have interviewed well-known entrepreneurs such as Ilan Benhaim, founder of Veepee, and Anthony Bourbon, founder of Feed and Blast.club. Our content has reached a combined audience of over 30,000 followers across LinkedIn, Instagram, TikTok and Twitch.",
+          "myRoleShortDescription": "Responsible for the production and management of video content: filming, editing and publishing on various platforms (Instagram, TikTok, LinkedIn, Twitch).",
+          "myRoleLongDescription": "My role focused on the production and management of video content. I was responsible for filming, editing and publishing videos across various platforms.\n\nThis experience has enabled me to develop skills in social media communication strategy, whilst gaining a thorough understanding of the specific features of each platform in order to maximise engagement and visibility.\n\nKey skills: Video production, video editing, managing social media posts, adapting content to suit the requirements of each platform, and preparing interviews with public figures.",
+          "icon": "/projects/logos/startupoklm.webp",
+          "url": "https://www.instagram.com/startupoklm/",
+          "startDate": "10-2021",
+          "endDate": "10-2023"
+        },
+        "mybus": {
+          "id": "mybus",
+          "companyName": "Monkey Factory",
+          "myRole": "Back-end Developer",
+          "companyDescription": "Monkey Factory is developing MyBus, an app that brings together various modes of transport – bikes, scooters, buses, carpooling, etc. – to simplify urban travel.",
+          "myRoleShortDescription": "Backend developer working on a monorepo: integrating a route-planning system and contributing to the digitisation of travel tickets.",
+          "myRoleLongDescription": "I integrated a high-performance route-planning subsystem and helped to improve the reliability of the backend to enable rapid iterations, against a backdrop of growing client numbers, particularly from cities and urban areas.\n\nThe backend was organised as a monorepo, featuring a GraphQL API and a REST API. I worked as part of a small team, within an agile framework structured around two-week sprints.\n\nKey technologies: JavaScript, Node.js, NestJS, GraphQL, REST API, XML, GitLab, CI/CD, DevOps, agile methodology.",
+          "icon": "/projects/logos/mybus.webp",
+          "url": "https://mybus.io/",
+          "startDate": "03-2020",
+          "endDate": "09-2022"
+        }
       }
     },
     "skills": {
@@ -63,7 +128,7 @@
       "bfmLyon": {
         "title": "BFM TV Lyon",
         "subtitle": "",
-        "description": "Raphaël Metro, my partner on the Bankraft (formerly Sowhat) application, was interviewed on BFM TV Lyon to talk live about our work."
+        "description": "Raphaël Metrop, my partner on the Bankraft (formerly Sowhat) application, was interviewed on BFM TV Lyon to talk live about our work."
       },
       "podcast": {
         "title": "Podcast",
