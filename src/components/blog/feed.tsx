@@ -27,7 +27,7 @@ export const Feed = ({
   initialExpandedSlug?: string | null;
 }) => {
   const [expandedSlug, setExpandedSlug] = useState<string | null>(
-    initialExpandedSlug
+    initialExpandedSlug,
   );
 
   // The feed's own path — `/` on the blog subdomain, `/blog` when the internal
@@ -36,6 +36,7 @@ export const Feed = ({
   // slug URLs can be built later without re-parsing an already-mutated bar.
   const feedRootRef = useRef<string>('/');
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: initialExpandedSlug is the server-rendered value, fixed for a page instance — this URL wiring must run exactly once.
   useEffect(() => {
     const { pathname } = window.location;
     feedRootRef.current = initialExpandedSlug
@@ -52,20 +53,13 @@ export const Feed = ({
     };
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
-    // `initialExpandedSlug` is the server-rendered value and is fixed for a
-    // given page instance, so this wiring runs exactly once.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggle = (slug: string) => {
     setExpandedSlug((current) => {
       const next = current === slug ? null : slug;
       const root = feedRootRef.current;
-      const url = next
-        ? root === '/'
-          ? `/${next}`
-          : `${root}/${next}`
-        : root;
+      const url = next ? (root === '/' ? `/${next}` : `${root}/${next}`) : root;
       // Update the address bar without a route change or fetch — pushState
       // integrates with the Next router so `usePathname` stays consistent.
       window.history.pushState(null, '', url);

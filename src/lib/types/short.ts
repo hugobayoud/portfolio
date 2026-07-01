@@ -1,4 +1,4 @@
-import { Timestamp } from 'firebase/firestore';
+import type { Timestamp } from 'firebase/firestore';
 
 /**
  * The single mandatory image of a Short, shown *contained* in its Tile.
@@ -6,7 +6,7 @@ import { Timestamp } from 'firebase/firestore';
  * Its intrinsic dimensions and a blur placeholder live in the read index so the
  * cover renders instantly with no layout shift (see CONTEXT.md → "Cover").
  */
-export type ShortCover = {
+type ShortCover = {
   /** Firebase Storage path to the `.webp` cover (resolved to a URL at read time). */
   path: string;
   /** Intrinsic width in px — pins the aspect ratio so there is no layout shift. */

@@ -1,10 +1,10 @@
 'use client';
 
 import parse, {
-  HTMLReactParserOptions,
-  Element,
+  type DOMNode,
   domToReact,
-  DOMNode,
+  type Element,
+  type HTMLReactParserOptions,
 } from 'html-react-parser';
 import React from 'react';
 
@@ -96,5 +96,3 @@ export function HtmlContent({ html }: HtmlContentProps) {
     </div>
   );
 }
-
-export default HtmlContent;

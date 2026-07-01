@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "biome check --write",
+    "knip": "knip",
     "publish-short": "node scripts/publish-short.js"
   },
   "dependencies": {
@@ -25,15 +26,15 @@
     "next-intl": "^3.26.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-icons": "^5.5.0",
-    "zustand": "^5.0.7"
+    "react-icons": "^5.5.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
+    "@biomejs/biome": "^2.5.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "firebase-admin": "^14.1.0",
+    "knip": "^6.23.0",
     "sharp": "^0.35.2",
     "tailwindcss": "^4",
     "typescript": "^5"

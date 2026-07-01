@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRef } from 'react';
 
 import { HtmlContent } from '@/components/blog/html-content';
-import { TILE_WIDTH, getTileHeight } from '@/components/blog/tile-pattern';
+import { getTileHeight, TILE_WIDTH } from '@/components/blog/tile-pattern';
 import type { ShortFeedItem } from '@/lib/types/short';
 
 /** Reading column width for the expanded panel's cover and body text. */
