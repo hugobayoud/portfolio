@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
 import { Container, Text } from '@radix-ui/themes';
+import React from 'react';
 
 import { useLanguage } from '@/lib/hooks/use-language';
 
@@ -11,7 +11,7 @@ export const StorySection = () => {
   // Split the text to maintain the bold formatting
   const fullText = messages.strategies.story.text;
   const parts = fullText.split(
-    /(\bstartups\b|\bscale-ups\b|\bévoluer leurs produits\b|\bMon objectif est d'accompagner les\b|\bMy goal is to support\b|\bto evolve their products\b)/gi
+    /(\bstartups\b|\bscale-ups\b|\bévoluer leurs produits\b|\bMon objectif est d'accompagner les\b|\bMy goal is to support\b|\bto evolve their products\b)/gi,
   );
 
   return (
@@ -27,7 +27,7 @@ export const StorySection = () => {
           // Check if this part should be bold
           const isBold =
             /startups|scale-ups|évoluer leurs produits|Mon objectif est d'accompagner les|My goal is to support|to evolve their products/i.test(
-              part
+              part,
             );
 
           return isBold ? (

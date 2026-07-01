@@ -1,10 +1,9 @@
 'use client';
 
-import { Button } from '@radix-ui/themes';
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
-
-import { useTheme } from '@/lib/hooks/use-theme';
+import { Button } from '@radix-ui/themes';
 import { useLanguage } from '@/lib/hooks/use-language';
+import { useTheme } from '@/lib/hooks/use-theme';
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();

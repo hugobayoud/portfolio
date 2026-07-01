@@ -1,11 +1,11 @@
 'use client';
 
-import { ThemeContextType, ThemeMode } from '@/lib/types/theme';
 import { Theme } from '@radix-ui/themes';
 import { createContext, useEffect, useState } from 'react';
+import type { ThemeContextType, ThemeMode } from '@/lib/types/theme';
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {

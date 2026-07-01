@@ -1,11 +1,15 @@
 'use client';
 
-import { Language, LanguageContextType, messages } from '@/lib/types/i18n';
 import { IntlProvider } from 'next-intl';
 import { createContext, useEffect, useState } from 'react';
+import {
+  type Language,
+  type LanguageContextType,
+  messages,
+} from '@/lib/types/i18n';
 
 export const LanguageContext = createContext<LanguageContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {

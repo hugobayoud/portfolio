@@ -1,5 +1,5 @@
-import React from 'react';
 import { Box, Flex, Text } from '@radix-ui/themes';
+import type React from 'react';
 
 interface SkillListProps {
   title: string;

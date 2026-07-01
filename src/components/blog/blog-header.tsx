@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import { ChevronLeftIcon } from '@radix-ui/react-icons';
+import Image from 'next/image';
 
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 

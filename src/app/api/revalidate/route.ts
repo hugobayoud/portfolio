@@ -1,5 +1,5 @@
 import { revalidateTag } from 'next/cache';
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 import { SHORTS_CACHE_TAG } from '@/lib/services/shorts/shorts-service';
 
@@ -11,8 +11,14 @@ import { SHORTS_CACHE_TAG } from '@/lib/services/shorts/shorts-service';
 export async function POST(request: NextRequest) {
   const secret = request.headers.get('x-revalidate-secret');
 
-  if (!process.env.REVALIDATE_SECRET || secret !== process.env.REVALIDATE_SECRET) {
-    return NextResponse.json({ revalidated: false, message: 'Invalid secret' }, { status: 401 });
+  if (
+    !process.env.REVALIDATE_SECRET ||
+    secret !== process.env.REVALIDATE_SECRET
+  ) {
+    return NextResponse.json(
+      { revalidated: false, message: 'Invalid secret' },
+      { status: 401 },
+    );
   }
 
   revalidateTag(SHORTS_CACHE_TAG);

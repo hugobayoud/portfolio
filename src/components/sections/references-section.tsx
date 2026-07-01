@@ -1,11 +1,10 @@
 'use client';
 
-import React from 'react';
 import { Flex } from '@radix-ui/themes';
-
-import { ProjectCard } from '../ui/project-card';
+import React from 'react';
 import { useLanguage } from '@/lib/hooks/use-language';
 import { SectionHeader } from '../layout/section-header';
+import { ProjectCard } from '../ui/project-card';
 
 export const ReferencesSection = () => {
   const { messages } = useLanguage();

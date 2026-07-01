@@ -1,10 +1,8 @@
-import { unstable_cache } from 'next/cache';
-
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { getDownloadURL, ref } from 'firebase/storage';
-
-import { renderShortBody } from '@/lib/services/shorts/short-body';
+import { unstable_cache } from 'next/cache';
 import { firestore, storage } from '@/lib/services/firebase/firebase';
+import { renderShortBody } from '@/lib/services/shorts/short-body';
 import type { Short, ShortFeedItem } from '@/lib/types/short';
 
 const SHORTS_COLLECTION = 'shorts';
@@ -34,7 +32,7 @@ export const SHORTS_CACHE_TAG = 'shorts';
 export const getPublishedShorts = unstable_cache(
   fetchPublishedShorts,
   ['published-shorts'],
-  { tags: [SHORTS_CACHE_TAG], revalidate: 3600 }
+  { tags: [SHORTS_CACHE_TAG], revalidate: 3600 },
 );
 
 async function fetchPublishedShorts(): Promise<ShortFeedItem[]> {
@@ -54,15 +52,20 @@ async function fetchPublishedShorts(): Promise<ShortFeedItem[]> {
           ]);
           // `date` is serialized to an ISO string here — see the type-level
           // note on `ShortFeedItem` — before this crosses into the client.
-          return { ...short, date: short.date.toDate().toISOString(), coverUrl, bodyHtml };
+          return {
+            ...short,
+            date: short.date.toDate().toISOString(),
+            coverUrl,
+            bodyHtml,
+          };
         } catch (error) {
           console.warn(
             `Skipping Short "${short.slug}": cover or body could not be resolved`,
-            error
+            error,
           );
           return null;
         }
-      })
+      }),
     );
 
     // Sort in memory (newest first) so the query needs no composite index.
@@ -81,7 +84,9 @@ async function fetchShortBodyHtml(short: Short): Promise<string> {
   const response = await fetch(bodyUrl);
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch body for Short "${short.slug}": ${response.statusText}`);
+    throw new Error(
+      `Failed to fetch body for Short "${short.slug}": ${response.statusText}`,
+    );
   }
 
   const markdown = await response.text();

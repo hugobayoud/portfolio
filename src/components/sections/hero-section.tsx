@@ -1,12 +1,12 @@
 'use client';
 
-import Link from 'next/link';
-import { Flex, Text, Button } from '@radix-ui/themes';
 import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
+import { Button, Flex, Text } from '@radix-ui/themes';
+import Link from 'next/link';
 
 import { BsWhatsapp } from 'react-icons/bs';
-import { EmailButton } from '../ui/email-button';
 import { useLanguage } from '@/lib/hooks/use-language';
+import { EmailButton } from '../ui/email-button';
 import { MeWithSunglasses } from '../ui/me-with-sunglasses';
 
 export const HeroSection = () => {

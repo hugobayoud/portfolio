@@ -1,34 +1,33 @@
 'use client';
 
+import { Flex, Grid } from '@radix-ui/themes';
 import React from 'react';
+import { AiOutlineDeploymentUnit } from 'react-icons/ai';
+import { HiOutlineCog } from 'react-icons/hi';
+import { RiCodeBlock, RiVideoAiLine } from 'react-icons/ri';
 import {
-  SiGit,
-  SiExpo,
-  SiReact,
   SiClerk,
+  SiExpo,
   SiFigma,
-  SiNestjs,
-  SiVercel,
+  SiGit,
   SiGithub,
-  SiSentry,
-  SiTypeorm,
-  SiObsidian,
-  SiNextdotjs,
-  SiObsstudio,
-  SiTypescript,
-  SiTailwindcss,
   SiGithubactions,
+  SiNestjs,
+  SiNextdotjs,
+  SiObsidian,
+  SiObsstudio,
+  SiReact,
+  SiSentry,
+  SiTailwindcss,
+  SiTypeorm,
+  SiTypescript,
+  SiVercel,
 } from 'react-icons/si';
 import { VscAzure } from 'react-icons/vsc';
-import { Flex, Grid } from '@radix-ui/themes';
-import { HiOutlineCog } from 'react-icons/hi';
-import { AiOutlineDeploymentUnit } from 'react-icons/ai';
-import { RiCodeBlock, RiVideoAiLine } from 'react-icons/ri';
-
-import { SkillList } from '../ui/skill-list';
-import { SkillListItem } from '../ui/skill-list-item';
 import { useLanguage } from '@/lib/hooks/use-language';
 import { SectionHeader } from '../layout/section-header';
+import { SkillList } from '../ui/skill-list';
+import { SkillListItem } from '../ui/skill-list-item';
 
 export const SkillsSection = () => {
   const { messages } = useLanguage();

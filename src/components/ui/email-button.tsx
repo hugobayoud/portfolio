@@ -5,9 +5,9 @@ import {
   ClipboardCopyIcon,
   EnvelopeClosedIcon,
 } from '@radix-ui/react-icons';
-import { Button } from '@radix-ui/themes';
 import * as Toast from '@radix-ui/react-toast';
-import React, { useState, useEffect } from 'react';
+import { Button } from '@radix-ui/themes';
+import React, { useEffect, useState } from 'react';
 
 import { useLanguage } from '@/lib/hooks/use-language';
 

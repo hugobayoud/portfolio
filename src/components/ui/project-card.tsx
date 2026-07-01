@@ -1,18 +1,18 @@
 'use client';
 
-import Link from 'next/link';
-import Image from 'next/image';
+import { Cross2Icon, ExternalLinkIcon, QuoteIcon } from '@radix-ui/react-icons';
 import {
   Avatar,
-  Flex,
-  Text,
   Box,
-  Dialog,
-  VisuallyHidden,
   Button,
+  Dialog,
+  Flex,
   Separator,
+  Text,
+  VisuallyHidden,
 } from '@radix-ui/themes';
-import { Cross2Icon, ExternalLinkIcon, QuoteIcon } from '@radix-ui/react-icons';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import { useTheme } from '@/lib/hooks/use-theme';
@@ -275,7 +275,7 @@ function formatMonthYear(value: string, locale: string): string {
 /** Higher start date first (most recent experience on top). */
 export function compareExperiencesByStartDesc(
   a: { startDate: string },
-  b: { startDate: string }
+  b: { startDate: string },
 ): number {
   const pa = parseMonthYear(a.startDate);
   const pb = parseMonthYear(b.startDate);
@@ -289,7 +289,7 @@ function formatExperiencePeriod(
   startDate: string,
   endDate: string,
   locale: string,
-  currentLabel: string
+  currentLabel: string,
 ): string {
   const start = formatMonthYear(startDate, locale);
   if (endDate.trim().toLowerCase() === 'current') {
@@ -320,7 +320,7 @@ export const ExperienceTimelineItem = ({
     startDate,
     endDate,
     dateLocale,
-    currentLabel
+    currentLabel,
   );
 
   const cardContent = (

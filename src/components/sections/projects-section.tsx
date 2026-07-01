@@ -1,20 +1,19 @@
 'use client';
 
 import { Box, Flex } from '@radix-ui/themes';
-
-import {
-  ExperienceTimelineItem,
-  compareExperiencesByStartDesc,
-} from '../ui/project-card';
 import { useLanguage } from '@/lib/hooks/use-language';
 import { SectionHeader } from '../layout/section-header';
+import {
+  compareExperiencesByStartDesc,
+  ExperienceTimelineItem,
+} from '../ui/project-card';
 
 export const ProjectsSection = () => {
   const { messages, language } = useLanguage();
   const dateLocale = language === 'fr' ? 'fr-FR' : 'en-US';
   const projects = messages.strategies.projects;
   const sorted = Object.values(projects.experiences).sort(
-    compareExperiencesByStartDesc
+    compareExperiencesByStartDesc,
   );
 
   return (

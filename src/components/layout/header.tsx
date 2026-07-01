@@ -1,13 +1,12 @@
 'use client';
 
+import { ArchiveIcon, ChevronLeftIcon, HomeIcon } from '@radix-ui/react-icons';
+import { Button, Container, Flex } from '@radix-ui/themes';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Container, Flex, Button } from '@radix-ui/themes';
-import { ArchiveIcon, ChevronLeftIcon, HomeIcon } from '@radix-ui/react-icons';
-
-import { ThemeToggle } from '../ui/theme-toggle';
 import { useLanguage } from '@/lib/hooks/use-language';
 import { LanguageToggle } from '../ui/language-toggle';
+import { ThemeToggle } from '../ui/theme-toggle';
 
 export const Header = () => {
   const pathname = usePathname();

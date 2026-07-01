@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 /**
  * Host-based routing for the blog subdomain.
@@ -39,8 +39,7 @@ export function middleware(req: NextRequest) {
 
   // Avoid double-prefixing if the internal path already targets /blog.
   if (!url.pathname.startsWith('/blog')) {
-    url.pathname =
-      url.pathname === '/' ? '/blog' : `/blog${url.pathname}`;
+    url.pathname = url.pathname === '/' ? '/blog' : `/blog${url.pathname}`;
     return NextResponse.rewrite(url);
   }
 
