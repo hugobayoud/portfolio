@@ -4,6 +4,7 @@ import { CheckCircledIcon, Cross2Icon } from '@radix-ui/react-icons';
 import { Tooltip } from '@radix-ui/themes';
 import Image from 'next/image';
 import { type ReactNode, useCallback, useRef } from 'react';
+import { RiCheckboxCircleFill } from 'react-icons/ri';
 
 import { HtmlContent } from '@/components/blog/html-content';
 import { getTileHeight, TILE_WIDTH } from '@/components/blog/tile-pattern';
@@ -59,6 +60,17 @@ function GhostIconButton({
   );
 }
 
+/** The read-marker glyph: a hollow circle-check while unread, and its filled
+ *  (plain) counterpart once the Short is marked read — the single at-a-glance
+ *  cue that the icon itself now carries. */
+function ReadMarkIcon({ isRead }: { isRead: boolean }) {
+  return isRead ? (
+    <RiCheckboxCircleFill className="h-5 w-5" />
+  ) : (
+    <CheckCircledIcon className="h-5 w-5" />
+  );
+}
+
 /**
  * The read + collapse controls, rendered as an identical right-aligned cluster
  * at both the top and the end of an expanded panel. Same icons, same size, same
@@ -86,7 +98,7 @@ function PanelControls({
         ariaPressed={isRead}
         tooltip={isRead ? 'Marquer comme non lu' : 'Marquer comme lu'}
       >
-        <CheckCircledIcon className="h-5 w-5" />
+        <ReadMarkIcon isRead={isRead} />
       </GhostIconButton>
       <GhostIconButton onClick={onCollapse} tooltip="Réduire">
         <Cross2Icon className="h-5 w-5" />
@@ -264,7 +276,7 @@ export const ShortTile = ({
             tooltip={isRead ? 'Marquer comme non lu' : 'Marquer comme lu'}
             className="absolute right-2 top-2 z-10"
           >
-            <CheckCircledIcon className="h-5 w-5" />
+            <ReadMarkIcon isRead={isRead} />
           </GhostIconButton>
         </div>
       )}
