@@ -1,8 +1,9 @@
 'use client';
 
-import { CheckCircledIcon, CheckIcon, Cross2Icon } from '@radix-ui/react-icons';
+import { CheckCircledIcon, Cross2Icon } from '@radix-ui/react-icons';
+import { Tooltip } from '@radix-ui/themes';
 import Image from 'next/image';
-import { useRef } from 'react';
+import { type ReactNode, useCallback, useRef } from 'react';
 
 import { HtmlContent } from '@/components/blog/html-content';
 import { getTileHeight, TILE_WIDTH } from '@/components/blog/tile-pattern';
@@ -10,6 +11,89 @@ import type { ShortFeedItem } from '@/lib/types/short';
 
 /** Reading column width for the expanded panel's cover and body text. */
 const EXPANDED_CONTENT_WIDTH = 500;
+
+type GhostTone = 'panel' | 'onImage';
+
+/** Colour variants for the ghost button: `panel` inherits the theme foreground
+ *  over a plain background; `onImage` forces white so it stays legible on top
+ *  of the cover's dark scrim. Both add only a faint background on hover. */
+const GHOST_TONE: Record<GhostTone, string> = {
+  panel: 'hover:bg-[var(--gray-a3)]',
+  onImage: 'text-white hover:bg-white/15',
+};
+
+/**
+ * A shadcn-style *ghost* icon button: transparent and dimmed at rest, full
+ * opacity plus a faint background on hover, always paired with a tooltip. Every
+ * control on a Tile — the collapse ✕ and the read-marker ◯✓ — is one of these,
+ * so the top of the expanded panel, its end, and the collapsed cover all share
+ * a single affordance (only the `tone` differs).
+ */
+function GhostIconButton({
+  onClick,
+  tooltip,
+  ariaPressed,
+  tone = 'panel',
+  className = '',
+  children,
+}: {
+  onClick: () => void;
+  tooltip: string;
+  ariaPressed?: boolean;
+  tone?: GhostTone;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <Tooltip content={tooltip}>
+      <button
+        type="button"
+        onClick={onClick}
+        aria-label={tooltip}
+        aria-pressed={ariaPressed}
+        className={`inline-flex h-8 w-8 items-center justify-center rounded-md opacity-60 transition-[opacity,background-color] hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ${GHOST_TONE[tone]} ${className}`}
+      >
+        {children}
+      </button>
+    </Tooltip>
+  );
+}
+
+/**
+ * The read + collapse controls, rendered as an identical right-aligned cluster
+ * at both the top and the end of an expanded panel. Same icons, same size, same
+ * ghost styling; the ✕ collapses and the ◯✓ toggles the read marker (its lu /
+ * non-lu state shown only in its tooltip).
+ */
+function PanelControls({
+  isRead,
+  onToggleRead,
+  onCollapse,
+  className = '',
+}: {
+  isRead: boolean;
+  onToggleRead: () => void;
+  onCollapse: () => void;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`mx-auto flex w-full items-center justify-end gap-1 ${className}`}
+      style={{ maxWidth: EXPANDED_CONTENT_WIDTH }}
+    >
+      <GhostIconButton
+        onClick={onToggleRead}
+        ariaPressed={isRead}
+        tooltip={isRead ? 'Marquer comme non lu' : 'Marquer comme lu'}
+      >
+        <CheckCircledIcon className="h-5 w-5" />
+      </GhostIconButton>
+      <GhostIconButton onClick={onCollapse} tooltip="Réduire">
+        <Cross2Icon className="h-5 w-5" />
+      </GhostIconButton>
+    </div>
+  );
+}
 
 /**
  * Tile — a Short's rendering in the Feed.
@@ -28,10 +112,12 @@ const EXPANDED_CONTENT_WIDTH = 500;
  * docs/adr/0002-no-wait-blog-delivery.md), so expanding costs zero network
  * for the text, only its inline images, lazy loaded and prefetched on hover.
  *
- * An idle Tile also carries a read marker (check-in-a-circle, top-right):
- * clicking it toggles the Short's per-device read flag via `onToggleRead`,
- * receding the cover (dimmed) and showing a filled rather than hollow check.
- * It is a *sibling* of the expand button, so toggling read never expands.
+ * Every Tile carries a read marker — a ghost circle-check button whose state
+ * lives in its tooltip (lu / non lu), not its icon. Clicking it toggles the
+ * Short's per-device read flag via `onToggleRead`, receding the cover (dimmed).
+ * On the collapsed cover the marker is a *sibling* of the expand button, so
+ * toggling read never expands; on the expanded panel it joins the collapse ✕ in
+ * the control clusters at the top and the end.
  */
 export const ShortTile = ({
   short,
@@ -40,6 +126,7 @@ export const ShortTile = ({
   onToggle,
   isRead,
   onToggleRead,
+  registerTile,
 }: {
   short: ShortFeedItem;
   index: number;
@@ -47,9 +134,20 @@ export const ShortTile = ({
   onToggle: () => void;
   isRead: boolean;
   onToggleRead: () => void;
+  /** Registers this Tile's <article> with the Feed so it can drive the FLIP
+   *  glide on expand/collapse (see feed.tsx). */
+  registerTile: (slug: string, el: HTMLElement | null) => void;
 }) => {
   const bodyRef = useRef<HTMLDivElement>(null);
   const hasPrefetchedRef = useRef(false);
+
+  // Bound to this Tile's slug and stable across renders, so the Feed's registry
+  // isn't churned on every re-render (a fresh closure would fire ref(null) then
+  // ref(el) each time).
+  const setTileRef = useCallback(
+    (el: HTMLElement | null) => registerTile(short.slug, el),
+    [registerTile, short.slug],
+  );
 
   const tileHeight = getTileHeight(index);
 
@@ -76,24 +174,18 @@ export const ShortTile = ({
 
   return (
     <article
+      ref={setTileRef}
       className={`mb-6 self-start ${isExpanded ? 'col-span-full' : ''}`}
       style={isExpanded ? undefined : { gridRow: `span ${tileHeight}` }}
       onPointerEnter={prefetchBodyImages}
     >
       {isExpanded && (
-        <div
-          className="mx-auto mb-2 flex w-full justify-end"
-          style={{ maxWidth: EXPANDED_CONTENT_WIDTH }}
-        >
-          <button
-            type="button"
-            onClick={toggleExpanded}
-            aria-label="Réduire"
-            className="rounded-full p-1.5 opacity-60 transition-opacity hover:opacity-100"
-          >
-            <Cross2Icon className="h-5 w-5" />
-          </button>
-        </div>
+        <PanelControls
+          className="mb-2"
+          isRead={isRead}
+          onToggleRead={onToggleRead}
+          onCollapse={toggleExpanded}
+        />
       )}
 
       {isExpanded ? (
@@ -165,21 +257,15 @@ export const ShortTile = ({
               so a click here toggles read state and never expands, while a
               click anywhere else on the cover still expands. Manual only; the
               receded/dimmed cover above is driven by the same `isRead`. */}
-          <button
-            type="button"
+          <GhostIconButton
             onClick={onToggleRead}
-            aria-pressed={isRead}
-            aria-label={isRead ? 'Marquer comme non lu' : 'Marquer comme lu'}
-            className="absolute right-2 top-2 z-10 grid h-7 w-7 place-items-center rounded-full transition-transform hover:scale-110"
+            ariaPressed={isRead}
+            tone="onImage"
+            tooltip={isRead ? 'Marquer comme non lu' : 'Marquer comme lu'}
+            className="absolute right-2 top-2 z-10"
           >
-            {isRead ? (
-              <span className="grid h-6 w-6 place-items-center rounded-full bg-white text-black shadow">
-                <CheckIcon className="h-4 w-4" />
-              </span>
-            ) : (
-              <CheckCircledIcon className="h-6 w-6 text-white/85 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
-            )}
-          </button>
+            <CheckCircledIcon className="h-5 w-5" />
+          </GhostIconButton>
         </div>
       )}
 
@@ -187,7 +273,7 @@ export const ShortTile = ({
           merely clipped to zero height until expand, so opening a Tile never
           performs a network request for its text. */}
       <div
-        className={`mx-auto grid w-full transition-[grid-template-rows] duration-300 ease-in-out ${
+        className={`mx-auto grid w-full transition-[grid-template-rows] duration-300 ease-in-out motion-reduce:transition-none ${
           isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
         }`}
         style={{ maxWidth: EXPANDED_CONTENT_WIDTH }}
@@ -195,14 +281,12 @@ export const ShortTile = ({
         <div className="overflow-hidden">
           <div ref={bodyRef} className="pt-4">
             <HtmlContent html={short.bodyHtml} />
-            <button
-              type="button"
-              onClick={toggleExpanded}
-              aria-label="Réduire"
-              className="mt-4 flex items-center gap-1 text-sm opacity-60 hover:opacity-100"
-            >
-              <Cross2Icon /> Réduire
-            </button>
+            <PanelControls
+              className="mt-4"
+              isRead={isRead}
+              onToggleRead={onToggleRead}
+              onCollapse={toggleExpanded}
+            />
           </div>
         </div>
       </div>
