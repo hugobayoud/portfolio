@@ -1,25 +1,19 @@
-import { MDXWrapper } from '@/components/blog/mdx-wrapper';
-import { ArticleCard } from '@/components/blog/article-card';
-import { getBlogPostPreviews } from '@/lib/services/blog/blog-service';
-import { BlogEmptyState } from '@/components/blog/blog-empty-state';
-
-// Server component that fetches data
-export default async function BlogPage() {
-  const articles = await getBlogPostPreviews();
+// Feed shell for blog.hugobayoud.fr. Reading real Shorts is issue 002;
+// for now the feed renders its heading and an empty state.
+export default function BlogFeedPage() {
+  const hasShorts = false;
 
   return (
-    <MDXWrapper>
-      <div className="items-center flex flex-col sm:grid sm:grid-cols-2 gap-4">
-        {articles.map((article) => (
-          <ArticleCard
-            key={article.slug}
-            {...article}
-            date={article.date.toDate().toLocaleDateString('fr-FR')}
-          />
-        ))}
+    <main className="mt-6">
+      <h2 className="text-xl font-[family-name:var(--font-tt-trailers-bold)] tracking-wide mb-6">
+        Mes shorts
+      </h2>
 
-        {articles.length === 0 && <BlogEmptyState />}
-      </div>
-    </MDXWrapper>
+      {!hasShorts && (
+        <p className="opacity-60 text-sm py-16 text-center">
+          Rien ici pour l’instant. Reviens bientôt.
+        </p>
+      )}
+    </main>
   );
 }

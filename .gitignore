@@ -45,3 +45,6 @@ next-env.d.ts
 
 # local scripts
 /scripts
+
+# grilled issues
+.grilled/

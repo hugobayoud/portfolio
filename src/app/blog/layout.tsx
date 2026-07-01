@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 
-import { BlogContent } from '@/components/blog/blog-content';
+import { BlogHeader } from '@/components/blog/blog-header';
 
 export const metadata: Metadata = {
-  title: 'Blog | Hugo Bayoud Développeur Full Stack Web & Mobile',
-  description: 'Mon blog',
+  metadataBase: new URL('https://blog.hugobayoud.fr'),
+  title: 'Hugo Bayoud',
+  description: 'Mes shorts — petits billets au jour le jour.',
 };
 
 export default function BlogLayout({
@@ -12,5 +13,10 @@ export default function BlogLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <BlogContent>{children}</BlogContent>;
+  return (
+    <div className="min-h-dvh max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+      <BlogHeader />
+      {children}
+    </div>
+  );
 }
