@@ -1,7 +1,11 @@
-// Feed shell for blog.hugobayoud.fr. Reading real Shorts is issue 002;
-// for now the feed renders its heading and an empty state.
-export default function BlogFeedPage() {
-  const hasShorts = false;
+import { ShortTile } from '@/components/blog/short-tile';
+import { getPublishedShorts } from '@/lib/services/shorts/shorts-service';
+
+// The feed is statically generated (SSG) and served from the CDN — the Shorts
+// are read from Firestore at build / ISR time, never in the browser.
+// See docs/adr/0002-no-wait-blog-delivery.md.
+export default async function BlogFeedPage() {
+  const shorts = await getPublishedShorts();
 
   return (
     <main className="mt-6">
@@ -9,10 +13,18 @@ export default function BlogFeedPage() {
         Mes shorts
       </h2>
 
-      {!hasShorts && (
+      {shorts.length === 0 ? (
         <p className="opacity-60 text-sm py-16 text-center">
           Rien ici pour l’instant. Reviens bientôt.
         </p>
+      ) : (
+        <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {shorts.map((short) => (
+            <li key={short.slug}>
+              <ShortTile short={short} />
+            </li>
+          ))}
+        </ul>
       )}
     </main>
   );
