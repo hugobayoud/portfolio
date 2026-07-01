@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "upload-blog-post": "node scripts/upload-blog-post.js",
-    "seed-short": "node scripts/seed-short.js"
+    "publish-short": "node scripts/publish-short.js"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.2",

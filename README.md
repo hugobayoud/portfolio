@@ -1,17 +1,27 @@
-# Comment j'upload un article sur mon blog ?
+# Comment je publie un Short sur le blog ?
 
-Je stocke les articles sur Firebase firestore (projet "portfolio").
+Les Shorts sont indexés dans Firestore (projet "portfolio", base `portfolio-main`) et leurs fichiers (cover, images, corps markdown) sont stockés dans Firebase Storage. Tout se fait via le script `publish-short`, à partir d'un dossier `drafts/` local (`.gitignore`).
 
-J'ai en local un dossier `articles` qui est .gitignore
-Dans ce dossier `articles` il n'y a que des mes articles en markdown que je peux uploader via le script npm `npm run upload-blog {file_path}` (exemple: `npm run upload-blog-post /Users/hugobayoud/prog/porfolio/articles/chapitre-1-je-me-relance.md`).
+Pour publier un nouveau Short :
 
-Ce script `updload-blog-post` est dans le dossier `scripts` qui est lui aussi .gitignore.
+- Créer un dossier dans `drafts/<mon-slug>/` (le nom du dossier devient le slug).
+- Y écrire `body.md` avec le frontmatter (`title`, `description`, `date`, `published`, `keywords?`) suivi du corps en markdown.
+- Ajouter `cover.(jpg|jpeg|png|webp)` dans ce dossier.
+- Les éventuelles images inline vont dans `drafts/<mon-slug>/images/` et sont référencées depuis `body.md` en `![alt](./images/xxx.ext)`.
+- Lancer `npm run publish-short drafts/<mon-slug>`.
 
-Pour upload un nouvel article :
+Le script (`scripts/publish-short.js`, lui aussi `.gitignore`) :
 
-- Écrire l'article (🤓)
-- Le mettre dans le dossier `articles` avec comme nom de fichier le slug plus ".md"
-- Ajouter les metadata qui vont bien en haut de ce fichier
-- Ajouter le BlogPostPreview data dans la bdd firebase firestore "portfolio-main" de la structure dans `src/libs/types/blog.ts:BlogPostPreview`
-- Lancer la commande `npm run update-blog-post /Users/hugobayoud/prog/porfolio/articles/nom-du-slug.md`
-  Note : Pour voir le post directement sur hugobayoud.fr, il faut s'assurer que le champ `published` est à `true` en BDD.
+1. lit et valide le frontmatter de `body.md`,
+2. passe la cover dans `sharp` pour générer la version `.webp`, sa largeur/hauteur et le `blurDataURL`,
+3. uploade le corps markdown + les images (cover et inline) sur Firebase Storage,
+4. upsert le doc `shorts/{slug}` dans Firestore,
+5. ping `POST /api/revalidate` pour rafraîchir le feed statique en quelques secondes (sans redéploiement git).
+
+Setup requis en local (`.env.local`) :
+
+- `GOOGLE_APPLICATION_CREDENTIALS` — chemin vers une clé de service Firebase (Console Firebase → Paramètres du projet → Comptes de service).
+- `REVALIDATE_SECRET` — doit correspondre à la valeur définie sur l'app déployée.
+- `REVALIDATE_URL` — optionnel, endpoint de revalidation à pinger (défaut : `https://hugobayoud.com/api/revalidate`).
+
+Note : `published: false` dans le frontmatter garde le Short hors du feed public tout en le stockant.

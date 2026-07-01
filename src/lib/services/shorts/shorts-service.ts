@@ -1,3 +1,5 @@
+import { unstable_cache } from 'next/cache';
+
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { getDownloadURL, ref } from 'firebase/storage';
 
@@ -6,6 +8,9 @@ import { firestore, storage } from '@/lib/services/firebase/firebase';
 import type { Short, ShortFeedItem } from '@/lib/types/short';
 
 const SHORTS_COLLECTION = 'shorts';
+
+/** Cache tag for the Shorts feed data — invalidated by `POST /api/revalidate`. */
+export const SHORTS_CACHE_TAG = 'shorts';
 
 /**
  * Read every published Short from the Firestore `shorts` index, newest first.
@@ -20,8 +25,19 @@ const SHORTS_COLLECTION = 'shorts';
  * Failures are swallowed into an empty (or partial) result rather than thrown,
  * so a missing index or a single unresolvable cover/body degrades to an empty /
  * thin feed instead of breaking the static build.
+ *
+ * Wrapped in `unstable_cache` (rather than relying on `fetch` caching, since
+ * this reads Firestore directly) and tagged `SHORTS_CACHE_TAG` so the publish
+ * pipeline's revalidate ping can invalidate it on demand; the `revalidate`
+ * window is a time-based fallback in case a ping is missed.
  */
-export async function getPublishedShorts(): Promise<ShortFeedItem[]> {
+export const getPublishedShorts = unstable_cache(
+  fetchPublishedShorts,
+  ['published-shorts'],
+  { tags: [SHORTS_CACHE_TAG], revalidate: 3600 }
+);
+
+async function fetchPublishedShorts(): Promise<ShortFeedItem[]> {
   try {
     const shortsRef = collection(firestore, SHORTS_COLLECTION);
     const publishedQuery = query(shortsRef, where('published', '==', true));
