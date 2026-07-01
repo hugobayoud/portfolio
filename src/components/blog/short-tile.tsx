@@ -5,26 +5,37 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 
 import { HtmlContent } from '@/components/blog/html-content';
+import { TILE_WIDTH, getTileHeight } from '@/components/blog/tile-pattern';
 import type { ShortFeedItem } from '@/lib/types/short';
 
+/** Reading column width for the expanded panel's cover and body text. */
+const EXPANDED_CONTENT_WIDTH = 500;
+
 /**
- * Basic Tile — the idle rendering of a Short in the Feed.
+ * Tile — a Short's rendering in the Feed.
  *
- * Shows the cover *contained* (rendered at its intrinsic ratio, so the whole
- * image is visible) with a blur-up placeholder and no layout shift — the
- * width/height come from the index — plus the title and date. Clicking the
- * Tile expands it in place into a full-width panel showing its body, already
- * inlined into the page HTML (see docs/adr/0002-no-wait-blog-delivery.md), so
- * expanding costs zero network for the text — only its inline images, lazy
- * loaded and prefetched on hover.
- *
- * Deliberately single-column and un-hovered here — masonry sizing and hover
- * states land in 004.
+ * Idle: a fixed-size box (see tile-pattern.ts) with the cover filling it
+ * (cropped, never letterboxed), a title overlay top and a date overlay
+ * bottom, both on gradient scrims; desktop pointer hover swaps the date for
+ * the description, touch devices skip that peek and tapping expands
+ * directly. Expanding spans the full Feed width (`col-span-full`, applied by
+ * the Feed's grid) and centers a fixed-width reading column — cover, title,
+ * date, then the body, already inlined into the page HTML (see
+ * docs/adr/0002-no-wait-blog-delivery.md), so expanding costs zero network
+ * for the text, only its inline images, lazy loaded and prefetched on hover.
  */
-export const ShortTile = ({ short }: { short: ShortFeedItem }) => {
+export const ShortTile = ({
+  short,
+  index,
+}: {
+  short: ShortFeedItem;
+  index: number;
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
   const hasPrefetchedRef = useRef(false);
+
+  const tileHeight = getTileHeight(index);
 
   const publishedAt = new Date(short.date);
   const formattedDate = publishedAt.toLocaleDateString('fr-FR', {
@@ -48,44 +59,99 @@ export const ShortTile = ({ short }: { short: ShortFeedItem }) => {
   };
 
   return (
-    <article className="flex flex-col gap-3" onPointerEnter={prefetchBodyImages}>
-      <button
-        type="button"
-        onClick={toggleExpanded}
-        aria-expanded={isExpanded}
-        className="flex flex-col gap-3 text-left"
-      >
-        <Image
-          src={short.coverUrl}
-          alt={short.title}
-          width={short.cover.width}
-          height={short.cover.height}
-          placeholder="blur"
-          blurDataURL={short.cover.blurDataURL}
-          sizes="(min-width: 1024px) 960px, 100vw"
-          className="h-auto w-full rounded-lg object-contain"
-        />
-
-        <div className="flex flex-col gap-1">
-          <h3 className="text-lg font-[family-name:var(--font-tt-trailers-bold)] tracking-wide">
-            {short.title}
-          </h3>
-          <time
-            dateTime={publishedAt.toISOString()}
-            className="text-sm opacity-60"
+    <article
+      className={`mb-6 self-start ${isExpanded ? 'col-span-full' : ''}`}
+      style={isExpanded ? undefined : { gridRow: `span ${tileHeight}` }}
+      onPointerEnter={prefetchBodyImages}
+    >
+      {isExpanded && (
+        <div
+          className="mx-auto mb-2 flex w-full justify-end"
+          style={{ maxWidth: EXPANDED_CONTENT_WIDTH }}
+        >
+          <button
+            type="button"
+            onClick={toggleExpanded}
+            aria-label="Réduire"
+            className="rounded-full p-1.5 opacity-60 transition-opacity hover:opacity-100"
           >
-            {formattedDate}
-          </time>
+            <Cross2Icon className="h-5 w-5" />
+          </button>
         </div>
-      </button>
+      )}
+
+      {isExpanded ? (
+        <button
+          type="button"
+          onClick={toggleExpanded}
+          aria-expanded={isExpanded}
+          className="mx-auto flex w-full flex-col gap-3 text-left"
+          style={{ maxWidth: EXPANDED_CONTENT_WIDTH }}
+        >
+          <Image
+            src={short.coverUrl}
+            alt={short.title}
+            width={short.cover.width}
+            height={short.cover.height}
+            placeholder="blur"
+            blurDataURL={short.cover.blurDataURL}
+            sizes={`${EXPANDED_CONTENT_WIDTH}px`}
+            className="h-auto w-full rounded-lg object-contain"
+          />
+
+          <div className="flex flex-col gap-1">
+            <h3 className="text-lg font-[family-name:var(--font-tt-trailers-bold)] tracking-wide">
+              {short.title}
+            </h3>
+            <time
+              dateTime={publishedAt.toISOString()}
+              className="text-sm opacity-60"
+            >
+              {formattedDate}
+            </time>
+          </div>
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={toggleExpanded}
+          aria-expanded={isExpanded}
+          className="short-tile-cover relative block w-full overflow-hidden rounded-lg bg-black/5 text-left dark:bg-white/5"
+          style={{ height: tileHeight }}
+        >
+          <Image
+            src={short.coverUrl}
+            alt={short.title}
+            fill
+            placeholder="blur"
+            blurDataURL={short.cover.blurDataURL}
+            sizes={`${TILE_WIDTH}px`}
+            className="object-cover"
+          />
+
+          <div className="pointer-events-none absolute inset-x-0 top-0 bg-gradient-to-b from-black/90 to-transparent px-3 pb-8 pt-2 text-white">
+            <p className="text-sm font-medium">{short.title}</p>
+          </div>
+
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent px-3 pb-2 pt-8 text-white">
+            <p className="short-tile-caption-idle text-xs opacity-80">
+              {formattedDate}
+            </p>
+            <p className="short-tile-caption-hover hidden text-xs opacity-90 line-clamp-4">
+              {short.description}
+            </p>
+          </div>
+        </button>
+      )}
 
       {/* Always rendered — the body HTML is inlined into the static page and
           merely clipped to zero height until expand, so opening a Tile never
           performs a network request for its text. */}
       <div
-        className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
+        className={`mx-auto grid w-full transition-[grid-template-rows] duration-300 ease-in-out ${
           isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
         }`}
+        style={{ maxWidth: EXPANDED_CONTENT_WIDTH }}
       >
         <div className="overflow-hidden">
           <div ref={bodyRef} className="pt-4">

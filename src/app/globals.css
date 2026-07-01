@@ -87,3 +87,17 @@ body {
     transform: rotate(360deg);
   }
 }
+
+/* Idle Tile caption: desktop/pointer hover swaps the date for the
+   description. Gated to real hover-capable pointers so a tap on touch
+   devices (which lack `:hover`) never flashes this before the tap's own
+   click handler expands the Tile. */
+@media (hover: hover) and (pointer: fine) {
+  .short-tile-cover:hover .short-tile-caption-idle {
+    display: none;
+  }
+
+  .short-tile-cover:hover .short-tile-caption-hover {
+    display: block;
+  }
+}

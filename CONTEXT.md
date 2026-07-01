@@ -15,7 +15,7 @@ The UI rendering of a Short in the feed grid. Has one of three fixed aspect-rati
 _Avoid_: Card, Cell, Block.
 
 **Cover**:
-The single mandatory image of a Short, shown *contained* (whole image visible, letterboxed) in its idle Tile. Distinct from the Short's optional inline body images. Its intrinsic width/height and a blur placeholder are stored in the index for instant, no-layout-shift rendering.
+The single mandatory image of a Short, shown *filling* its idle Tile's fixed box (cropped to the Tile's ratio, never letterboxed); shown at its natural aspect ratio in the expanded panel. Distinct from the Short's optional inline body images. Its intrinsic width/height and a blur placeholder are stored in the index for instant, no-layout-shift rendering.
 _Avoid_: Thumbnail, hero, banner.
 
 **Feed**:
