@@ -60,15 +60,15 @@ export const Feed = ({
   }, []);
 
   const toggle = (slug: string) => {
-    setExpandedSlug((current) => {
-      const next = current === slug ? null : slug;
-      const root = feedRootRef.current;
-      const url = next ? (root === '/' ? `/${next}` : `${root}/${next}`) : root;
-      // Update the address bar without a route change or fetch — pushState
-      // integrates with the Next router so `usePathname` stays consistent.
-      window.history.pushState(null, '', url);
-      return next;
-    });
+    const next = expandedSlug === slug ? null : slug;
+    const root = feedRootRef.current;
+    const url = next ? (root === '/' ? `/${next}` : `${root}/${next}`) : root;
+    setExpandedSlug(next);
+    // Update the address bar without a route change or fetch — pushState
+    // integrates with the Next router so `usePathname` stays consistent. This
+    // runs in the click handler, never inside the state updater, so the router
+    // update it triggers can't fire during Feed's render.
+    window.history.pushState(null, '', url);
   };
 
   return (

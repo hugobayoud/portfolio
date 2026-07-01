@@ -14,6 +14,9 @@ import { type NextRequest, NextResponse } from 'next/server';
  * edge redirect is ever missing, the blog host still serves the blog rather than
  * the portfolio.
  *
+ * The blog used to live on the apex under `/blog/*`; those old paths are now
+ * 301-redirected onto the blog subdomain so bookmarked/shared links keep working.
+ *
  * See docs/adr/0001-blog-subdomain-same-app-middleware.md
  */
 
@@ -30,17 +33,30 @@ function isBlogHost(host: string): boolean {
 
 export function middleware(req: NextRequest) {
   const host = req.headers.get('host') ?? '';
+  const url = req.nextUrl.clone();
 
-  if (!isBlogHost(host)) {
+  if (isBlogHost(host)) {
+    // Rewrite subdomain requests into the internal `/blog` subtree; avoid
+    // double-prefixing if the internal path already targets /blog.
+    if (!url.pathname.startsWith('/blog')) {
+      url.pathname = url.pathname === '/' ? '/blog' : `/blog${url.pathname}`;
+      return NextResponse.rewrite(url);
+    }
     return NextResponse.next();
   }
 
-  const url = req.nextUrl.clone();
-
-  // Avoid double-prefixing if the internal path already targets /blog.
-  if (!url.pathname.startsWith('/blog')) {
-    url.pathname = url.pathname === '/' ? '/blog' : `/blog${url.pathname}`;
-    return NextResponse.rewrite(url);
+  // Apex host: the old `/blog/*` paths moved onto the blog subdomain. 301 them
+  // there, dropping the `/blog` prefix and preserving the TLD and port
+  // (hugobayoud.com/blog/x → blog.hugobayoud.com/x, .fr → blog.….fr).
+  if (url.pathname === '/blog' || url.pathname.startsWith('/blog/')) {
+    const [hostname, port] = host.split(':');
+    const protocol = hostname.endsWith('localhost') ? 'http' : 'https';
+    const authority = `blog.${hostname}${port ? `:${port}` : ''}`;
+    const rest = url.pathname.slice('/blog'.length) || '/';
+    return NextResponse.redirect(
+      new URL(`${protocol}://${authority}${rest}${url.search}`),
+      301,
+    );
   }
 
   return NextResponse.next();
