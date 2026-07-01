@@ -5,7 +5,6 @@ import { Open_Sans } from 'next/font/google';
 import localFont from 'next/font/local';
 
 import './globals.css';
-import { Header } from '../components/layout/header';
 import { LanguageProvider } from '../components/providers/language-providers';
 import { ThemeProvider } from '../components/providers/theme-provider';
 
@@ -43,10 +42,7 @@ export default function RootLayout({
       >
         <LanguageProvider>
           <ThemeProvider>
-            <div className="max-w-5xl mx-auto p-8 sm:p-20 mb-16">
-              <Header />
-              {children}
-            </div>
+            {children}
             <Analytics />
           </ThemeProvider>
         </LanguageProvider>
