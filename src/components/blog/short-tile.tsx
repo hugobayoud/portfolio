@@ -1,6 +1,6 @@
 'use client';
 
-import { Cross2Icon } from '@radix-ui/react-icons';
+import { CheckCircledIcon, CheckIcon, Cross2Icon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import { useRef } from 'react';
 
@@ -27,17 +27,26 @@ const EXPANDED_CONTENT_WIDTH = 500;
  * date, then the body, already inlined into the page HTML (see
  * docs/adr/0002-no-wait-blog-delivery.md), so expanding costs zero network
  * for the text, only its inline images, lazy loaded and prefetched on hover.
+ *
+ * An idle Tile also carries a read marker (check-in-a-circle, top-right):
+ * clicking it toggles the Short's per-device read flag via `onToggleRead`,
+ * receding the cover (dimmed) and showing a filled rather than hollow check.
+ * It is a *sibling* of the expand button, so toggling read never expands.
  */
 export const ShortTile = ({
   short,
   index,
   isExpanded,
   onToggle,
+  isRead,
+  onToggleRead,
 }: {
   short: ShortFeedItem;
   index: number;
   isExpanded: boolean;
   onToggle: () => void;
+  isRead: boolean;
+  onToggleRead: () => void;
 }) => {
   const bodyRef = useRef<HTMLDivElement>(null);
   const hasPrefetchedRef = useRef(false);
@@ -119,36 +128,59 @@ export const ShortTile = ({
           </div>
         </button>
       ) : (
-        <button
-          type="button"
-          onClick={toggleExpanded}
-          aria-expanded={isExpanded}
-          className="short-tile-cover relative block w-full overflow-hidden rounded-lg bg-black/5 text-left dark:bg-white/5"
-          style={{ height: tileHeight }}
-        >
-          <Image
-            src={short.coverUrl}
-            alt={short.title}
-            fill
-            placeholder="blur"
-            blurDataURL={short.cover.blurDataURL}
-            sizes={`${TILE_WIDTH}px`}
-            className="object-cover"
-          />
+        <div className="relative" style={{ height: tileHeight }}>
+          <button
+            type="button"
+            onClick={toggleExpanded}
+            aria-expanded={isExpanded}
+            className={`short-tile-cover relative block h-full w-full overflow-hidden rounded-lg bg-black/5 text-left transition-[opacity,filter] duration-300 dark:bg-white/5 ${
+              isRead ? 'opacity-60 saturate-50' : ''
+            }`}
+          >
+            <Image
+              src={short.coverUrl}
+              alt={short.title}
+              fill
+              placeholder="blur"
+              blurDataURL={short.cover.blurDataURL}
+              sizes={`${TILE_WIDTH}px`}
+              className="object-cover"
+            />
 
-          <div className="pointer-events-none absolute inset-x-0 top-0 bg-gradient-to-b from-black/90 to-transparent px-3 pb-8 pt-2 text-white">
-            <p className="text-sm font-medium">{short.title}</p>
-          </div>
+            <div className="pointer-events-none absolute inset-x-0 top-0 bg-gradient-to-b from-black/90 to-transparent px-3 pb-8 pt-2 text-white">
+              <p className="pr-8 text-sm font-medium">{short.title}</p>
+            </div>
 
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent px-3 pb-2 pt-8 text-white">
-            <p className="short-tile-caption-idle text-xs opacity-80">
-              {formattedDate}
-            </p>
-            <p className="short-tile-caption-hover hidden text-xs opacity-90 line-clamp-4">
-              {short.description}
-            </p>
-          </div>
-        </button>
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent px-3 pb-2 pt-8 text-white">
+              <p className="short-tile-caption-idle text-xs opacity-80">
+                {formattedDate}
+              </p>
+              <p className="short-tile-caption-hover hidden text-xs opacity-90 line-clamp-4">
+                {short.description}
+              </p>
+            </div>
+          </button>
+
+          {/* Read marker — a sibling of (not nested inside) the expand button,
+              so a click here toggles read state and never expands, while a
+              click anywhere else on the cover still expands. Manual only; the
+              receded/dimmed cover above is driven by the same `isRead`. */}
+          <button
+            type="button"
+            onClick={onToggleRead}
+            aria-pressed={isRead}
+            aria-label={isRead ? 'Marquer comme non lu' : 'Marquer comme lu'}
+            className="absolute right-2 top-2 z-10 grid h-7 w-7 place-items-center rounded-full transition-transform hover:scale-110"
+          >
+            {isRead ? (
+              <span className="grid h-6 w-6 place-items-center rounded-full bg-white text-black shadow">
+                <CheckIcon className="h-4 w-4" />
+              </span>
+            ) : (
+              <CheckCircledIcon className="h-6 w-6 text-white/85 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
+            )}
+          </button>
+        </div>
       )}
 
       {/* Always rendered — the body HTML is inlined into the static page and

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { ShortTile } from '@/components/blog/short-tile';
 import { TILE_WIDTH } from '@/components/blog/tile-pattern';
+import { useReadShorts } from '@/lib/hooks/use-read-shorts';
 import type { ShortFeedItem } from '@/lib/types/short';
 
 /**
@@ -29,6 +30,9 @@ export const Feed = ({
   const [expandedSlug, setExpandedSlug] = useState<string | null>(
     initialExpandedSlug,
   );
+
+  // Per-device read markers, layered on after hydration (see the hook).
+  const { isRead, toggleRead } = useReadShorts();
 
   // The feed's own path — `/` on the blog subdomain, `/blog` when the internal
   // route is hit directly (e.g. localhost). Captured once on mount by stripping
@@ -100,6 +104,8 @@ export const Feed = ({
               index={index}
               isExpanded={short.slug === expandedSlug}
               onToggle={() => toggle(short.slug)}
+              isRead={isRead(short.slug)}
+              onToggleRead={() => toggleRead(short.slug)}
             />
           ))}
         </div>
