@@ -32,7 +32,7 @@ export const BlogHeader = () => {
           priority
           className="rounded-full object-cover"
         />
-        <span className="text-lg font-[family-name:var(--font-tt-trailers-bold)] tracking-wide">
+        <span className="text-lg font-[family-name:var(--font-lexend)] tracking-wide">
           Hugo Bayoud
         </span>
       </div>

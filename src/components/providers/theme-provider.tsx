@@ -31,7 +31,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         scaling="100%"
         radius="medium"
         hasBackground={true}
-        className="font-[family-name:var(--font-open-sans)]"
+        className="font-[family-name:var(--font-google-sans)]"
       >
         {children}
       </Theme>

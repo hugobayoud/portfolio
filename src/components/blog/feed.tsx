@@ -180,7 +180,7 @@ export const Feed = ({
 
   return (
     <main className="mt-6">
-      <h2 className="text-xl font-[family-name:var(--font-tt-trailers-bold)] tracking-wide mb-6">
+      <h2 className="text-xl font-[family-name:var(--font-lexend)] tracking-wide mb-6">
         Mes shorts
       </h2>
 

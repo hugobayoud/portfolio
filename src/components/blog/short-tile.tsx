@@ -208,7 +208,7 @@ export const ShortTile = ({
           />
 
           <div className="flex flex-col gap-1">
-            <h3 className="text-lg font-[family-name:var(--font-tt-trailers-bold)] tracking-wide">
+            <h3 className="text-lg font-[family-name:var(--font-lexend)] tracking-wide">
               {short.title}
             </h3>
             <time
