@@ -1,6 +1,6 @@
 # Portfolio
 
-Personal site for Hugo Bayoud. The apex `hugobayoud.fr` serves the portfolio; the subdomain `blog.hugobayoud.fr` serves a feed of daily short writings.
+Personal site for Hugo Bayoud. The canonical domain is `hugobayoud.com`: the apex serves the portfolio and the subdomain `blog.hugobayoud.com` serves a feed of daily short writings. The `.fr` domain is brand-protection only and redirects to `.com` at the edge.
 
 ## Language
 
@@ -19,7 +19,7 @@ The single mandatory image of a Short, shown *contained* (whole image visible, l
 _Avoid_: Thumbnail, hero, banner.
 
 **Feed**:
-The masonry stream of Tiles on `blog.hugobayoud.fr`, newest Short first. Labelled "Mes shorts" in the UI. Expanding a Tile opens a full-width panel in place within the Feed.
+The masonry stream of Tiles on `blog.hugobayoud.com`, newest Short first. Labelled "Mes shorts" in the UI. Expanding a Tile opens a full-width panel in place within the Feed.
 _Avoid_: Grid, list, timeline, wall.
 
 **Read marker**:

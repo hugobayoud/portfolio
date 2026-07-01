@@ -3,18 +3,29 @@ import { NextRequest, NextResponse } from 'next/server';
 /**
  * Host-based routing for the blog subdomain.
  *
- * `blog.hugobayoud.fr` (and `blog.localhost` in dev) is served by this same
- * Next app: requests to the blog host are rewritten into the internal `/blog`
- * route subtree, so visitors see `blog.hugobayoud.fr/mon-slug` while the app
- * renders `/blog/mon-slug`. The apex `hugobayoud.fr` keeps serving the
- * portfolio untouched.
+ * The canonical domain is `hugobayoud.com`; the `.fr` domain redirects to it at
+ * Vercel's edge (before this middleware runs). The blog is served on
+ * `blog.hugobayoud.com` (and `blog.localhost` in dev): requests to a blog host
+ * are rewritten into the internal `/blog` route subtree, so visitors see
+ * `blog.hugobayoud.com/mon-slug` while the app renders `/blog/mon-slug`. The
+ * apex `hugobayoud.com` keeps serving the portfolio untouched.
+ *
+ * `blog.hugobayoud.fr` is also matched as a belt-and-suspenders fallback: if its
+ * edge redirect is ever missing, the blog host still serves the blog rather than
+ * the portfolio.
  *
  * See docs/adr/0001-blog-subdomain-same-app-middleware.md
  */
 
+const BLOG_HOSTS = new Set([
+  'blog.hugobayoud.com',
+  'blog.hugobayoud.fr',
+  'blog.localhost',
+]);
+
 function isBlogHost(host: string): boolean {
   const hostname = host.split(':')[0]; // strip port
-  return hostname === 'blog.hugobayoud.fr' || hostname === 'blog.localhost';
+  return BLOG_HOSTS.has(hostname);
 }
 
 export function middleware(req: NextRequest) {

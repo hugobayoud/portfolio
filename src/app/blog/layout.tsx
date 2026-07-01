@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { BlogHeader } from '@/components/blog/blog-header';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://blog.hugobayoud.fr'),
+  metadataBase: new URL('https://blog.hugobayoud.com'),
   title: 'Hugo Bayoud',
   description: 'Mes shorts — petits billets au jour le jour.',
 };

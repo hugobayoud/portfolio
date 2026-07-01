@@ -5,7 +5,7 @@ import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 // The portfolio lives on the apex domain; from the blog subdomain the back-link
 // is an absolute cross-origin URL.
-const PORTFOLIO_URL = 'https://hugobayoud.fr';
+const PORTFOLIO_URL = 'https://hugobayoud.com';
 
 /**
  * Minimal, bespoke header for the blog subdomain. Deliberately does NOT reuse
@@ -20,7 +20,7 @@ export const BlogHeader = () => {
         className="inline-flex items-center gap-1 text-sm opacity-70 transition-opacity hover:opacity-100"
       >
         <ChevronLeftIcon />
-        hugobayoud.fr
+        hugobayoud.com
       </a>
 
       <div className="flex flex-col items-center gap-2">
