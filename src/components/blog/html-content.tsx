@@ -65,6 +65,8 @@ export function HtmlContent({ html }: HtmlContentProps) {
               <img
                 src={el.attribs?.src}
                 alt={el.attribs?.alt || ''}
+                loading="lazy"
+                decoding="async"
                 className="rounded-xl my-3 sm:my-5"
               />
             );

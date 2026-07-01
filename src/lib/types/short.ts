@@ -32,13 +32,29 @@ export type Short = {
   published: boolean;
   keywords?: string[];
   cover: ShortCover;
+  /** Firebase Storage path to the Short's markdown body (frontmatter-free). */
+  bodyPath: string;
 };
 
 /**
  * A Short ready to render as a Tile in the Feed: the index data plus its cover
- * `path` already resolved to a download URL by the read service.
+ * `path` already resolved to a download URL, and its body already rendered to
+ * sanitized HTML, by the read service.
+ *
+ * `date` is serialized to an ISO 8601 string (rather than the Firestore
+ * `Timestamp` instance `Short` carries) because this type is passed as props
+ * from the Server Component feed page into the `'use client'` `ShortTile` —
+ * and a `Timestamp` class instance can't cross that boundary.
  */
-export type ShortFeedItem = Short & {
+export type ShortFeedItem = Omit<Short, 'date'> & {
+  /** Publish date as an ISO 8601 string — see type-level note above. */
+  date: string;
   /** Resolved Storage download URL for {@link ShortCover.path}. */
   coverUrl: string;
+  /**
+   * Body rendered to sanitized HTML at build time and inlined into the static
+   * feed page, hidden until the Tile is expanded (see
+   * docs/adr/0002-no-wait-blog-delivery.md).
+   */
+  bodyHtml: string;
 };

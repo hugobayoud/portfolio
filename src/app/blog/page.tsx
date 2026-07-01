@@ -18,7 +18,7 @@ export default async function BlogFeedPage() {
           Rien ici pour l’instant. Reviens bientôt.
         </p>
       ) : (
-        <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="flex flex-col gap-8">
           {shorts.map((short) => (
             <li key={short.slug}>
               <ShortTile short={short} />
