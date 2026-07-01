@@ -2,7 +2,7 @@
 
 import { Cross2Icon } from '@radix-ui/react-icons';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import { HtmlContent } from '@/components/blog/html-content';
 import { TILE_WIDTH, getTileHeight } from '@/components/blog/tile-pattern';
@@ -13,6 +13,10 @@ const EXPANDED_CONTENT_WIDTH = 500;
 
 /**
  * Tile — a Short's rendering in the Feed.
+ *
+ * Expansion is *controlled*: only one Short is open at a time, and which one is
+ * owned by the parent Feed (which mirrors it to the URL, see feed.tsx). The Tile
+ * reports clicks via `onToggle` and renders from the `isExpanded` prop.
  *
  * Idle: a fixed-size box (see tile-pattern.ts) with the cover filling it
  * (cropped, never letterboxed), a title overlay top and a date overlay
@@ -27,11 +31,14 @@ const EXPANDED_CONTENT_WIDTH = 500;
 export const ShortTile = ({
   short,
   index,
+  isExpanded,
+  onToggle,
 }: {
   short: ShortFeedItem;
   index: number;
+  isExpanded: boolean;
+  onToggle: () => void;
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
   const hasPrefetchedRef = useRef(false);
 
@@ -44,7 +51,7 @@ export const ShortTile = ({
     year: 'numeric',
   });
 
-  const toggleExpanded = () => setIsExpanded((expanded) => !expanded);
+  const toggleExpanded = onToggle;
 
   const prefetchBodyImages = () => {
     if (hasPrefetchedRef.current) return;
