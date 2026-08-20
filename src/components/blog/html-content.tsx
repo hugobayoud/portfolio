@@ -40,7 +40,7 @@ export function HtmlContent({ html }: HtmlContentProps) {
             return (
               <a
                 href={(el.attribs && el.attribs.href) || '#'}
-                className="text-sky-600 dark:text-amber-400 font-bold hover:opacity-80"
+                className="text-navy font-bold underline decoration-yellow decoration-2 underline-offset-2 hover:opacity-80"
                 target={el.attribs && el.attribs.target}
                 rel={el.attribs && el.attribs.rel}
               >
@@ -55,7 +55,7 @@ export function HtmlContent({ html }: HtmlContentProps) {
             return <li className="my-1">{children}</li>;
           case 'blockquote':
             return (
-              <blockquote className="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic my-4">
+              <blockquote className="border-l-4 border-yellow pl-4 italic my-4">
                 {children}
               </blockquote>
             );
@@ -72,13 +72,13 @@ export function HtmlContent({ html }: HtmlContentProps) {
             );
           case 'code':
             return (
-              <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded">
+              <code className="bg-black/[0.06] px-1 py-0.5 rounded">
                 {children}
               </code>
             );
           case 'pre':
             return (
-              <pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded overflow-x-auto my-4">
+              <pre className="bg-black/[0.05] p-4 rounded overflow-x-auto my-4">
                 {children}
               </pre>
             );
@@ -91,8 +91,6 @@ export function HtmlContent({ html }: HtmlContentProps) {
   };
 
   return (
-    <div className="prose prose-lg dark:prose-invert max-w-none">
-      {parse(html, options)}
-    </div>
+    <div className="prose prose-lg max-w-none">{parse(html, options)}</div>
   );
 }

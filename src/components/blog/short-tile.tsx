@@ -1,7 +1,6 @@
 'use client';
 
 import { CheckCircledIcon, Cross2Icon } from '@radix-ui/react-icons';
-import { Tooltip } from '@radix-ui/themes';
 import Image from 'next/image';
 import { type ReactNode, useCallback, useRef } from 'react';
 import { RiCheckboxCircleFill } from 'react-icons/ri';
@@ -19,16 +18,20 @@ type GhostTone = 'panel' | 'onImage';
  *  over a plain background; `onImage` forces white so it stays legible on top
  *  of the cover's dark scrim. Both add only a faint background on hover. */
 const GHOST_TONE: Record<GhostTone, string> = {
-  panel: 'hover:bg-[var(--gray-a3)]',
+  panel: 'hover:bg-black/[0.06]',
   onImage: 'text-white hover:bg-white/15',
 };
 
 /**
  * A shadcn-style *ghost* icon button: transparent and dimmed at rest, full
- * opacity plus a faint background on hover, always paired with a tooltip. Every
- * control on a Tile — the collapse ✕ and the read-marker ◯✓ — is one of these,
- * so the top of the expanded panel, its end, and the collapsed cover all share
- * a single affordance (only the `tone` differs).
+ * opacity plus a faint background on hover, always labelled. Every control on a
+ * Tile — the collapse ✕ and the read-marker ◯✓ — is one of these, so the top of
+ * the expanded panel, its end, and the collapsed cover all share a single
+ * affordance (only the `tone` differs).
+ *
+ * The label rides on `aria-label` + the native `title` tooltip rather than a
+ * component: it is the only thing the blog still needed `@radix-ui/themes` for,
+ * and that stylesheet is far too large to ship for two hover hints.
  */
 function GhostIconButton({
   onClick,
@@ -46,17 +49,16 @@ function GhostIconButton({
   children: ReactNode;
 }) {
   return (
-    <Tooltip content={tooltip}>
-      <button
-        type="button"
-        onClick={onClick}
-        aria-label={tooltip}
-        aria-pressed={ariaPressed}
-        className={`inline-flex h-8 w-8 items-center justify-center rounded-md opacity-60 transition-[opacity,background-color] hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ${GHOST_TONE[tone]} ${className}`}
-      >
-        {children}
-      </button>
-    </Tooltip>
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={tooltip}
+      title={tooltip}
+      aria-pressed={ariaPressed}
+      className={`inline-flex h-8 w-8 items-center justify-center rounded-md opacity-60 transition-[opacity,background-color] hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current ${GHOST_TONE[tone]} ${className}`}
+    >
+      {children}
+    </button>
   );
 }
 

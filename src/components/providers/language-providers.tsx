@@ -1,66 +1,66 @@
 'use client';
 
-import { IntlProvider } from 'next-intl';
-import { createContext, useEffect, useState } from 'react';
 import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+
+import {
+  isLanguage,
   type Language,
   type LanguageContextType,
   messages,
 } from '@/lib/types/i18n';
 
+const STORAGE_KEY = 'language';
+
 export const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined,
 );
 
+/**
+ * Language is pure client state: both locales are bundled with the page, so
+ * flipping FR ⇄ EN is instant and never refetches or re-routes.
+ *
+ * The initial value is French (the canonical copy); after hydration a `?lg=`
+ * query parameter wins over the visitor's stored preference, and either one is
+ * persisted so the choice sticks on the next visit.
+ */
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>('fr');
-  const [isClient, setIsClient] = useState(false);
+  const [language, setLanguageState] = useState<Language>('fr');
 
-  // Setting up the default language based on URL or local storage preferences
   useEffect(() => {
-    setIsClient(true);
-
-    // Check URL parameters first
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlLanguage = urlParams.get('lg');
-
-      if (urlLanguage === 'en' || urlLanguage === 'fr') {
-        setLanguage(urlLanguage);
-        localStorage.setItem('language', urlLanguage);
-        return;
-      }
+    const fromUrl = new URLSearchParams(window.location.search).get('lg');
+    if (isLanguage(fromUrl)) {
+      setLanguageState(fromUrl);
+      localStorage.setItem(STORAGE_KEY, fromUrl);
+      return;
     }
 
-    // If no URL parameter, check localStorage
-    const savedLanguage = localStorage.getItem('language') as Language;
-    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'fr')) {
-      setLanguage(savedLanguage);
-    }
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (isLanguage(stored)) setLanguageState(stored);
   }, []);
 
   useEffect(() => {
-    if (isClient) {
-      // Update html lang attribute
-      document.documentElement.lang = language;
-    }
-  }, [language, isClient]);
+    document.documentElement.lang = language;
+  }, [language]);
 
-  const toggleLanguage = () => {
-    const newLanguage = language === 'fr' ? 'en' : 'fr';
-    setLanguage(newLanguage);
-    if (isClient) {
-      localStorage.setItem('language', newLanguage);
-    }
-  };
+  const setLanguage = useCallback((next: Language) => {
+    setLanguageState(next);
+    localStorage.setItem(STORAGE_KEY, next);
+  }, []);
+
+  const value = useMemo(
+    () => ({ language, setLanguage, messages: messages[language] }),
+    [language, setLanguage],
+  );
 
   return (
-    <LanguageContext.Provider
-      value={{ language, toggleLanguage, messages: messages[language] }}
-    >
-      <IntlProvider locale={language} messages={messages[language]}>
-        {children}
-      </IntlProvider>
+    <LanguageContext.Provider value={value}>
+      {children}
     </LanguageContext.Provider>
   );
 }

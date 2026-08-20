@@ -1,84 +1,134 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
+/*
+ * Single light palette — the site mirrors the printed CV, so there is no dark
+ * theme and no `prefers-color-scheme` branch. Every colour below is either one
+ * of the four brand values or plain black at a given opacity.
+ */
+@theme {
+  /* Brand */
+  --color-muted: #f6f6f6; /* page background */
+  --color-quiet: #ececec; /* quiet button / track background */
+  --color-quiet-hover: #e2e2e2;
+  --color-navy: #172554; /* titles, company names */
+  --color-yellow: #f7c504; /* accent: logo monogram fallback */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --font-family: var(--font-google-sans), system-ui, sans-serif;
+  /* The disc behind the portrait — a vertical wash, not a flat fill. */
+  --color-halo-start: #f7c400;
+  --color-halo-end: #ffda60;
+
+  /* Ink — plain black at fixed opacities, so text tones stay consistent */
+  --color-ink: rgba(0, 0, 0, 0.88);
+  --color-ink-soft: rgba(0, 0, 0, 0.72);
+  --color-ink-muted: rgba(0, 0, 0, 0.5);
+  --color-ink-faint: rgba(0, 0, 0, 0.38);
+  --color-rule: rgba(0, 0, 0, 0.08);
+
+  /* Type: Lexend Bold for titles, Google Sans for everything else. */
+  --font-sans: var(--font-google-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-title:
+    var(--font-lexend), var(--font-google-sans), ui-sans-serif, system-ui,
+    sans-serif;
 }
 
-/* Light theme colors */
-.light-theme {
-  --background: #e6f0ff; /* Light blue background */
-  --foreground: #171717;
-
-  /* Radix UI theme overrides */
-  --accent-1: #e6f0ff;
-  --accent-2: #cce0ff;
-  --accent-3: #99c0ff;
-  --accent-4: #66a0ff;
-  --accent-5: #3380ff;
-  --accent-6: #0066ff; /* Primary blue */
-  --accent-7: #0052cc;
-  --accent-8: #003d99;
-  --accent-9: #002966;
-  --accent-10: #001433;
-}
-
-/* Dark theme colors */
-.dark-theme {
-  --background: #0a1a33; /* Dark blue background */
-  --foreground: #ededed;
-
-  /* Radix UI theme overrides */
-  --accent-1: #0a1a33;
-  --accent-2: #0d2240;
-  --accent-3: #102a4d;
-  --accent-4: #13325a;
-  --accent-5: #163a66;
-  --accent-6: #194273;
-  --accent-7: #1c4a80;
-  --accent-8: #1f528c;
-  --accent-9: #ffeb99; /* Light yellow primary */
-  --accent-10: #ffe066;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-google-sans);
-  --color-light-yellow: #ffed88;
-  --color-dark-yellow: #f7c400;
-  --color-light-blue: #0090ff;
-  --color-dark-blue: #003a7c;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background-color: var(--color-muted);
+  /* Google Sans ships real 400 and 600 faces (see src/app/layout.tsx), so the
+     browser must never invent a third one. */
+  font-synthesis-weight: none;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  color: var(--foreground);
-  font-family: var(--font-family);
+  background-color: var(--color-muted);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
 }
 
-/* MAX text fadeout animation */
-@keyframes fadeOutMax {
-  0% {
-    opacity: 1;
-    transform: translateY(0px) scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: translateY(-4px) scale(1.1);
-  }
-  100% {
+::selection {
+  background-color: color-mix(in srgb, var(--color-yellow) 45%, transparent);
+  color: var(--color-navy);
+}
+
+/* Keyboard focus only — a yellow ring on the navy/white surfaces. */
+:focus-visible {
+  outline: 2px solid var(--color-navy);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* `showModal()` does not stop the page behind the backdrop from scrolling.
+   Keying the lock off the element's own `[open]` state means it cannot drift
+   out of sync the way a JS-managed lock can. */
+html:has(.cv-dialog[open]) {
+  overflow: hidden;
+}
+
+/* The reference panel (a native `<dialog>`) fades and lifts into place.
+   `@starting-style` gives it an opening frame and `allow-discrete` keeps it
+   mounted long enough to animate back out; browsers without either just show
+   and hide it instantly. */
+.cv-dialog {
+  opacity: 0;
+  transform: translateY(8px) scale(0.98);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    overlay 180ms allow-discrete,
+    display 180ms allow-discrete;
+}
+
+.cv-dialog[open] {
+  opacity: 1;
+  transform: none;
+}
+
+.cv-dialog::backdrop {
+  background: rgb(0 0 0 / 0%);
+  transition:
+    background 180ms ease,
+    overlay 180ms allow-discrete,
+    display 180ms allow-discrete;
+}
+
+.cv-dialog[open]::backdrop {
+  background: rgb(0 0 0 / 35%);
+}
+
+@starting-style {
+  .cv-dialog[open] {
     opacity: 0;
-    transform: translateY(-8px) scale(0.9);
+    transform: translateY(8px) scale(0.98);
+  }
+
+  .cv-dialog[open]::backdrop {
+    background: rgb(0 0 0 / 0%);
+  }
+}
+
+/* These rules live outside every `@layer`, so they win over Tailwind's layered
+   utilities (`transition-*`, `duration-*`, `hidden`…) on cascade order alone —
+   no `!important` needed. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+    scroll-behavior: auto;
+  }
+}
+
+/* The CV page prints as a CV: chrome (header, buttons) drops out. */
+@media print {
+  html,
+  body {
+    background: #fff;
+  }
+
+  .print-hidden {
+    display: none;
   }
 }
 

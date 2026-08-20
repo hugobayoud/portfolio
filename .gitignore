@@ -50,3 +50,6 @@ next-env.d.ts
 
 # grilled issues
 .grilled/
+
+# personal source material (CV, notes) — never committed
+/.private/

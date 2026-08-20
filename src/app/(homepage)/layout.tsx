@@ -1,4 +1,4 @@
-import { Header } from '@/components/layout/header';
+import { SiteHeader } from '@/components/layout/site-header';
 
 export default function HomepageLayout({
   children,
@@ -6,8 +6,8 @@ export default function HomepageLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="max-w-5xl mx-auto p-8 sm:p-20 mb-16">
-      <Header />
+    <div className="mx-auto w-full max-w-[62rem] px-5 pb-20 sm:px-8 lg:px-10">
+      <SiteHeader />
       {children}
     </div>
   );
