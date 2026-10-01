@@ -2,6 +2,7 @@ import parse from 'html-react-parser';
 import DOMPurify from 'isomorphic-dompurify';
 import { marked } from 'marked';
 
+import { carouselPhotos } from '@/app/reunion/photos';
 import type { Question } from '@/app/reunion/quiz';
 
 import { Carousel } from './carousel';
@@ -28,8 +29,7 @@ export const Explanation = ({ question }: { question: Question }) => {
         ) : (
           <Carousel
             key={block.carousel.join()}
-            questionId={question.id}
-            files={block.carousel}
+            photos={carouselPhotos(question.id, block.carousel)}
           />
         ),
       )}

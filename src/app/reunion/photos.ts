@@ -3,6 +3,9 @@ import type { Question } from './quiz';
 
 type PhotoSize = { width: number; height: number };
 
+/** A Carousel photo: its URL and its size from the manifest. */
+export type Photo = PhotoSize & { src: string };
+
 /**
  * Width and height of every photo in `public/reunion/<id>/`, keyed by
  * Question id then file name. Written by `npm run reunion:photos` — never
@@ -10,9 +13,12 @@ type PhotoSize = { width: number; height: number };
  */
 const manifest: Record<string, Record<string, PhotoSize>> = photos;
 
-/** The size of a photo of a Question, as listed in the manifest. */
-export const photoSize = (questionId: string, file: string): PhotoSize =>
-  manifest[questionId][file];
+/** The photos of a `carousel` block of a Question, in their authored order. */
+export const carouselPhotos = (questionId: string, files: string[]): Photo[] =>
+  files.map((file) => ({
+    src: `/reunion/${questionId}/${file}`,
+    ...manifest[questionId][file],
+  }));
 
 /**
  * Throws, naming the Question and file, if a `carousel` block references a

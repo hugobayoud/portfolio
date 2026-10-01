@@ -24,7 +24,8 @@
     "next": "15.2.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "yet-another-react-lightbox": "^3.32.2"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.2",

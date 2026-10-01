@@ -22,10 +22,14 @@ const STEPS = ['prompt', 'pick', 'reveal'] as const;
 type Play = SavedPlay & { at: number };
 
 /**
- * The keys this quiz keeps in `history.state`: which Step an entry is, and
- * which load of the page pushed it.
+ * The keys this quiz keeps in `history.state`: which Step an entry is, which
+ * load of the page pushed it, and whether it is a Viewer's (see `Viewer`).
  */
-type HistoryState = { reunionStep?: number; reunionLoad?: number } | null;
+type HistoryState = {
+  reunionStep?: number;
+  reunionLoad?: number;
+  reunionViewer?: boolean;
+} | null;
 
 /** This load of the page, to tell its history entries from earlier loads'. */
 const PAGE_LOAD = Date.now();
@@ -33,13 +37,14 @@ const PAGE_LOAD = Date.now();
 /**
  * The history entry of a Step. Keeps the router's own keys (`__NA`): without
  * them Next reloads the page on every back/forward, and it only adds them
- * itself to entries pushed after it has mounted.
+ * itself to entries pushed after it has mounted. Drops the Viewer's flag, left
+ * on the current entry by a reload while the Viewer was open.
  */
-const stepEntry = (step: number) => ({
-  ...window.history.state,
-  reunionStep: step,
-  reunionLoad: PAGE_LOAD,
-});
+const stepEntry = (step: number) => {
+  const { reunionViewer, ...state }: NonNullable<HistoryState> =
+    window.history.state ?? {};
+  return { ...state, reunionStep: step, reunionLoad: PAGE_LOAD };
+};
 
 /**
  * One play of the Quiz, from the first Prompt step to the Score screen, with
@@ -89,6 +94,11 @@ export const PlayThrough = ({
       if (state?.reunionLoad !== PAGE_LOAD) {
         // An entry left by an earlier load of the page: skip it, and the next,
         // until back on Q1 has left the site.
+        window.history.back();
+        return;
+      }
+      if (state.reunionViewer) {
+        // A closed Viewer's entry, reached by forward: nothing to show there.
         window.history.back();
         return;
       }
