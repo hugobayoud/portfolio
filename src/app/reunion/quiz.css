@@ -8,4 +8,9 @@
   --color-lagon: #0369a1;
   --color-soleil: #f7c504;
   --color-foret: #15803d;
+
+  /* The Reveal step's points line — kept apart from Lave and Forêt so it
+     never reads as a Choice. */
+  --color-right: #16a34a;
+  --color-wrong: #dc2626;
 }
