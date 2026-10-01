@@ -39,3 +39,13 @@ export function assertCarouselPhotos(questions: Question[]) {
     }
   }
 }
+
+/** The URL of every Carousel photo of the Quiz, to save it for offline play. */
+export const quizPhotoUrls = (questions: Question[]): string[] =>
+  questions.flatMap((question) =>
+    question.explanation.flatMap((block) =>
+      'carousel' in block
+        ? carouselPhotos(question.id, block.carousel).map(({ src }) => src)
+        : [],
+    ),
+  );

@@ -46,3 +46,12 @@ export function savePlay(play: SavedPlay) {
     // Storage unavailable (private mode / quota) — keep in-memory play.
   }
 }
+
+/** Forgets the Answers and the Frontier, for a Re-download. */
+export function wipePlay() {
+  try {
+    window.localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // Storage unavailable — nothing was saved.
+  }
+}
