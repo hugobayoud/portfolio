@@ -11,7 +11,7 @@ export default function ReunionPage() {
     <PlayThrough
       questions={quiz}
       explanations={quiz.map((question) => (
-        <Explanation key={question.id} blocks={question.explanation} />
+        <Explanation key={question.id} question={question} />
       ))}
     />
   );
