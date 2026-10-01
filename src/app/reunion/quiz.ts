@@ -10,7 +10,7 @@
 
 type ExplanationBlock = { text: string } | { carousel: string[] };
 
-type Question = {
+export type Question = {
   id: string;
   prompt: string;
   choices: [string, string, string, string];

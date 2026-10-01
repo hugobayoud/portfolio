@@ -1,4 +1,5 @@
 import { SiteHeader } from '@/components/layout/site-header';
+import { LanguageProvider } from '@/components/providers/language-providers';
 
 export default function HomepageLayout({
   children,
@@ -6,9 +7,11 @@ export default function HomepageLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="mx-auto w-full max-w-[62rem] px-5 pb-20 sm:px-8 lg:px-10">
-      <SiteHeader />
-      {children}
-    </div>
+    <LanguageProvider>
+      <div className="mx-auto w-full max-w-[62rem] px-5 pb-20 sm:px-8 lg:px-10">
+        <SiteHeader />
+        {children}
+      </div>
+    </LanguageProvider>
   );
 }
