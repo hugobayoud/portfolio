@@ -25,3 +25,13 @@ Setup requis en local (`.env.local`) :
 - `REVALIDATE_URL` — optionnel, endpoint de revalidation à pinger (défaut : `https://hugobayoud.com/api/revalidate`).
 
 Note : `published: false` dans le frontmatter garde le Short hors du feed public tout en le stockant.
+
+# Comment j'ajoute des photos au quiz La Réunion ?
+
+- Déposer les originaux (JPEG, PNG ou HEIC, toute taille), déjà nommés, dans `drafts/reunion/<question-id>/`.
+- Lancer `npm run reunion:photos`.
+- Référencer chaque photo dans un bloc `carousel` de `src/app/reunion/quiz.ts` par son nom en `.webp`.
+
+Le script (`scripts/reunion-photos.js`, lui aussi `.gitignore`) redimensionne chaque original à 1600 px max sur le grand côté (jamais d'agrandissement), le convertit en WebP qualité 75 sans aucune métadonnée (EXIF/GPS compris) dans `public/reunion/<question-id>/`, puis réécrit le manifeste `src/app/reunion/photos.json` (largeur/hauteur de chaque photo). Les HEIC passent d'abord par `sips` (macOS uniquement). Relancer le script est sans effet de bord.
+
+`npm run build` échoue, en nommant la Question et le fichier, si un `carousel` référence une photo absente du manifeste.

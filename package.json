@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "biome check --write",
     "knip": "knip",
-    "publish-short": "node scripts/publish-short.js"
+    "publish-short": "node scripts/publish-short.js",
+    "reunion:photos": "node scripts/reunion-photos.js"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.2",
