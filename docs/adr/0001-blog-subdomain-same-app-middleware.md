@@ -6,6 +6,10 @@ The blog lives on the subdomain `blog.hugobayoud.com`, but rather than a separat
 
 `hugobayoud.com` is the canonical domain. The `.fr` domain is kept for brand protection and redirects to `.com` at Vercel's edge (`hugobayoud.fr` → `hugobayoud.com`, `blog.hugobayoud.fr` → `blog.hugobayoud.com`, `www` → apex), so `.fr` never renders content. The middleware still matches `blog.hugobayoud.fr` as a fallback in case that edge redirect is ever missing.
 
+## Other subdomains
+
+The same pattern serves the Réunion quiz on `reunion.hugobayoud.com` (rewritten into its own internal subtree; `reunion.hugobayoud.fr` redirects at the edge, and `hugobayoud.com/reunion` 301s to the subdomain).
+
 ## Consequences
 
 - The old `hugobayoud.com/blog/*` path is removed and 301-redirected to `https://blog.hugobayoud.com/*`.

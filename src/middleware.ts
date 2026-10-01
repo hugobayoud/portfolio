@@ -1,58 +1,72 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
 /**
- * Host-based routing for the blog subdomain.
+ * Host-based routing for the subdomains.
  *
  * The canonical domain is `hugobayoud.com`; the `.fr` domain redirects to it at
- * Vercel's edge (before this middleware runs). The blog is served on
- * `blog.hugobayoud.com` (and `blog.localhost` in dev): requests to a blog host
- * are rewritten into the internal `/blog` route subtree, so visitors see
+ * Vercel's edge (before this middleware runs). Each subdomain is served by this
+ * same app: requests to `<sub>.hugobayoud.com` (and `<sub>.localhost` in dev)
+ * are rewritten into the internal `/<sub>` route subtree, so visitors see
  * `blog.hugobayoud.com/mon-slug` while the app renders `/blog/mon-slug`. The
  * apex `hugobayoud.com` keeps serving the portfolio untouched.
  *
- * `blog.hugobayoud.fr` is also matched as a belt-and-suspenders fallback: if its
- * edge redirect is ever missing, the blog host still serves the blog rather than
- * the portfolio.
+ * - `blog` — the Shorts feed.
+ * - `reunion` — the Réunion quiz (see src/app/reunion/CONTEXT.md).
  *
- * The blog used to live on the apex under `/blog/*`; those old paths are now
- * 301-redirected onto the blog subdomain so bookmarked/shared links keep working.
+ * `<sub>.hugobayoud.fr` is also matched as a belt-and-suspenders fallback: if
+ * its edge redirect is ever missing, the subdomain still serves its own content
+ * rather than the portfolio.
+ *
+ * On the apex, `/<sub>/*` paths are 301-redirected onto the subdomain — for the
+ * blog, which used to live there, so bookmarked/shared links keep working.
  *
  * See docs/adr/0001-blog-subdomain-same-app-middleware.md
  */
 
-const BLOG_HOSTS = new Set([
-  'blog.hugobayoud.com',
-  'blog.hugobayoud.fr',
-  'blog.localhost',
-]);
+const SUBDOMAINS = ['blog', 'reunion'];
 
-function isBlogHost(host: string): boolean {
+const ROOT_HOSTS = ['hugobayoud.com', 'hugobayoud.fr', 'localhost'];
+
+/** The subdomain a host is serving, if any (`blog.localhost:3000` → `blog`). */
+function subdomainOf(host: string): string | undefined {
   const hostname = host.split(':')[0]; // strip port
-  return BLOG_HOSTS.has(hostname);
+  return SUBDOMAINS.find((sub) =>
+    ROOT_HOSTS.some((root) => hostname === `${sub}.${root}`),
+  );
+}
+
+/** The subdomain an apex path belongs to (`/blog/x` → `blog`). */
+function subdomainPathOf(pathname: string): string | undefined {
+  return SUBDOMAINS.find(
+    (sub) => pathname === `/${sub}` || pathname.startsWith(`/${sub}/`),
+  );
 }
 
 export function middleware(req: NextRequest) {
   const host = req.headers.get('host') ?? '';
   const url = req.nextUrl.clone();
 
-  if (isBlogHost(host)) {
-    // Rewrite subdomain requests into the internal `/blog` subtree; avoid
-    // double-prefixing if the internal path already targets /blog.
-    if (!url.pathname.startsWith('/blog')) {
-      url.pathname = url.pathname === '/' ? '/blog' : `/blog${url.pathname}`;
+  const sub = subdomainOf(host);
+  if (sub) {
+    // Rewrite subdomain requests into the internal `/<sub>` subtree; avoid
+    // double-prefixing if the internal path already targets it.
+    if (subdomainPathOf(url.pathname) !== sub) {
+      url.pathname =
+        url.pathname === '/' ? `/${sub}` : `/${sub}${url.pathname}`;
       return NextResponse.rewrite(url);
     }
     return NextResponse.next();
   }
 
-  // Apex host: the old `/blog/*` paths moved onto the blog subdomain. 301 them
-  // there, dropping the `/blog` prefix and preserving the TLD and port
+  // Apex host: 301 `/<sub>/*` onto the subdomain, dropping the `/<sub>` prefix
+  // and preserving the TLD and port
   // (hugobayoud.com/blog/x → blog.hugobayoud.com/x, .fr → blog.….fr).
-  if (url.pathname === '/blog' || url.pathname.startsWith('/blog/')) {
+  const pathSub = subdomainPathOf(url.pathname);
+  if (pathSub) {
     const [hostname, port] = host.split(':');
     const protocol = hostname.endsWith('localhost') ? 'http' : 'https';
-    const authority = `blog.${hostname}${port ? `:${port}` : ''}`;
-    const rest = url.pathname.slice('/blog'.length) || '/';
+    const authority = `${pathSub}.${hostname}${port ? `:${port}` : ''}`;
+    const rest = url.pathname.slice(`/${pathSub}`.length) || '/';
     return NextResponse.redirect(
       new URL(`${protocol}://${authority}${rest}${url.search}`),
       301,

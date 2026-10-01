@@ -1,0 +1,20 @@
+/*
+ * The four Choice colours, by position. Scoped to the quiz — they never join
+ * the CV's `@theme` in globals.css. Used through Tailwind's variable shorthand
+ * (`bg-(--color-lave)`).
+ */
+.reunion-quiz {
+  --color-lave: #c2410c;
+  --color-lagon: #0369a1;
+  --color-soleil: #f7c504;
+  --color-foret: #15803d;
+
+  /* The Reveal step's points line — kept apart from Lave and Forêt so it
+     never reads as a Choice. */
+  --color-right: #16a34a;
+  --color-wrong: #dc2626;
+
+  /* No double-tap zoom: quick taps (the Secret tap, tapping through Steps)
+     must never zoom the page. Pinch-zoom still works. */
+  touch-action: manipulation;
+}

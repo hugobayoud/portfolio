@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 
 import './globals.css';
-import { LanguageProvider } from '../components/providers/language-providers';
 
 /**
  * Google Sans — regular for body copy, semi-bold for subtitles, italic for
@@ -74,7 +73,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${googleSans.variable} ${lexend.variable}`}>
       <body className="antialiased">
-        <LanguageProvider>{children}</LanguageProvider>
+        {children}
         <Analytics />
       </body>
     </html>
