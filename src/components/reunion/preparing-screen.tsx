@@ -1,7 +1,14 @@
 'use client';
 
-import { type ReactNode, useEffect, useState } from 'react';
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
+import { wipePlay } from './saved-play';
 import {
   isQuizSaved,
   registerServiceWorker,
@@ -26,6 +33,12 @@ const canSave = () =>
   'serviceWorker' in navigator &&
   'caches' in window;
 
+/** The Re-download, handed from the Preparing screen down to the Quiz. */
+const RedownloadContext = createContext(() => {});
+
+/** The Re-download, for the Secret tap inside the Quiz. */
+export const useRedownload = () => useContext(RedownloadContext);
+
 /**
  * Shows the Preparing screen until the whole Quiz is saved on the device,
  * then `children` — the Quiz, which starts on its own on the Frontier. Once
@@ -41,6 +54,8 @@ export const PreparingScreen = ({
   children: ReactNode;
 }) => {
   const [preparing, setPreparing] = useState<Preparing>({ status: 'checking' });
+  /** Bumped to start a fresh Quiz where nothing but the play is saved. */
+  const [freshPlays, setFreshPlays] = useState(0);
 
   const save = () => {
     setPreparing({ status: 'saving', saved: 0 });
@@ -50,6 +65,21 @@ export const PreparingScreen = ({
       () => setPreparing({ status: 'ready' }),
       () => setPreparing({ status: 'failed' }),
     );
+  };
+
+  /**
+   * The Re-download: wipes everything saved, then saves the whole Quiz again
+   * behind the Preparing screen. Where the Quiz can't be saved, only the play
+   * is wiped, and the Quiz starts again fresh.
+   */
+  const redownload = () => {
+    if (!canSave()) {
+      wipePlay();
+      setFreshPlays((count) => count + 1);
+      return;
+    }
+    setPreparing({ status: 'saving', saved: 0 });
+    wipeSavedQuiz().then(save, save);
   };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: the device is checked once, on mount.
@@ -70,7 +100,13 @@ export const PreparingScreen = ({
       });
   }, []);
 
-  if (preparing.status === 'ready') return children;
+  if (preparing.status === 'ready') {
+    return (
+      <RedownloadContext key={freshPlays} value={redownload}>
+        {children}
+      </RedownloadContext>
+    );
+  }
   if (preparing.status === 'checking') return null;
 
   if (preparing.status === 'failed') {
@@ -81,7 +117,7 @@ export const PreparingScreen = ({
         </p>
         <button
           type="button"
-          onClick={() => wipeSavedQuiz().then(save, save)}
+          onClick={redownload}
           className="w-full rounded-2xl bg-navy px-6 py-5 font-semibold text-white text-xl"
         >
           Réessayer

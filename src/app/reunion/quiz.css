@@ -13,4 +13,8 @@
      never reads as a Choice. */
   --color-right: #16a34a;
   --color-wrong: #dc2626;
+
+  /* No double-tap zoom: quick taps (the Secret tap, tapping through Steps)
+     must never zoom the page. Pinch-zoom still works. */
+  touch-action: manipulation;
 }

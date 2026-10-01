@@ -5,10 +5,12 @@ import { type ReactNode, useEffect, useRef, useState } from 'react';
 import type { Question } from '@/app/reunion/quiz';
 
 import { PickStep } from './pick-step';
+import { useRedownload } from './preparing-screen';
 import { PromptStep } from './prompt-step';
 import { RevealStep } from './reveal-step';
 import { loadPlay, type SavedPlay, savePlay } from './saved-play';
 import { ScoreScreen } from './score-screen';
+import { SecretTap } from './secret-tap';
 import { StepArrows } from './step-arrows';
 
 /** The Steps of every Question, in order. */
@@ -64,6 +66,7 @@ export const PlayThrough = ({
   // Unknown until mounted: the saved play only exists in the browser, so the
   // server and the first client render draw nothing rather than Q1.
   const [play, setPlay] = useState<Play>();
+  const redownload = useRedownload();
   /** A browser back is on its way (see `back`). */
   const traversing = useRef(false);
 
@@ -160,13 +163,28 @@ export const PlayThrough = ({
     window.history.go(-at);
   };
 
+  /**
+   * Re-download from the Secret tap. Like a Restart, it heads back to Q1's
+   * entry (`go(0)` would reload the page): the fresh Quiz lands there.
+   */
+  const redownloadQuiz = () => {
+    if (at > 0) window.history.go(-at);
+    redownload();
+  };
+
   const scoreAt = STEPS.length * questions.length;
-  if (at === scoreAt) {
+  const questionIndex = Math.floor(at / STEPS.length);
+  const step = at === scoreAt ? 'score' : STEPS[at % STEPS.length];
+  const question = questions[questionIndex];
+  const answer = answers[questionIndex];
+
+  let screen: ReactNode;
+  if (step === 'score') {
     const score = questions.reduce(
       (sum, question, i) => sum + (answers[i] === question.correct ? 3 : 0),
       0,
     );
-    return (
+    screen = (
       <ScoreScreen
         score={score}
         maxScore={3 * questions.length}
@@ -174,15 +192,8 @@ export const PlayThrough = ({
         arrows={<StepArrows onBack={back} className="text-navy" />}
       />
     );
-  }
-
-  const questionIndex = Math.floor(at / STEPS.length);
-  const step = STEPS[at % STEPS.length];
-  const question = questions[questionIndex];
-  const answer = answers[questionIndex];
-
-  if (step === 'prompt') {
-    return (
+  } else if (step === 'prompt') {
+    screen = (
       <PromptStep
         question={question}
         answer={answer}
@@ -200,11 +211,9 @@ export const PlayThrough = ({
         }
       />
     );
-  }
-
-  if (step === 'pick') {
+  } else if (step === 'pick') {
     // The Pick step always moves on: → on the Frontier pushes it to the Reveal.
-    return (
+    screen = (
       <PickStep
         question={question}
         answer={answer}
@@ -212,22 +221,24 @@ export const PlayThrough = ({
         arrows={<StepArrows onBack={back} onForward={() => forward()} />}
       />
     );
+  } else {
+    screen = (
+      <RevealStep
+        question={question}
+        answer={answer}
+        explanation={explanations[questionIndex]}
+        isLast={questionIndex === questions.length - 1}
+        onNext={() => forward()}
+        arrows={
+          <StepArrows
+            onBack={back}
+            onForward={forwardBehindFrontier}
+            className="text-navy"
+          />
+        }
+      />
+    );
   }
 
-  return (
-    <RevealStep
-      question={question}
-      answer={answer}
-      explanation={explanations[questionIndex]}
-      isLast={questionIndex === questions.length - 1}
-      onNext={() => forward()}
-      arrows={
-        <StepArrows
-          onBack={back}
-          onForward={forwardBehindFrontier}
-          className="text-navy"
-        />
-      }
-    />
-  );
+  return <SecretTap onRedownload={redownloadQuiz}>{screen}</SecretTap>;
 };
