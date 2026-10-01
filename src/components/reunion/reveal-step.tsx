@@ -14,17 +14,21 @@ export const RevealStep = ({
   explanation,
   isLast,
   onNext,
+  arrows,
 }: {
   question: Question;
   answer: number;
   explanation: ReactNode;
   isLast: boolean;
   onNext: () => void;
+  arrows: ReactNode;
 }) => {
   const isRight = answer === question.correct;
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-xl flex-col gap-6 px-4 pt-6 pb-[max(1rem,env(safe-area-inset-bottom))]">
+    <main className="mx-auto flex min-h-dvh w-full max-w-xl flex-col gap-6 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+      {arrows}
+
       <p
         className={`font-semibold text-xl leading-snug ${isRight ? 'text-(--color-right)' : 'text-(--color-wrong)'}`}
       >

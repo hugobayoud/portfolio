@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 /**
  * The Score screen: the Score out of three points per Question, and the
  * Restart button (not wired yet).
@@ -5,12 +7,16 @@
 export const ScoreScreen = ({
   score,
   maxScore,
+  arrows,
 }: {
   score: number;
   maxScore: number;
+  arrows: ReactNode;
 }) => {
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-xl flex-col px-4 pt-6 pb-[max(1rem,env(safe-area-inset-bottom))]">
+    <main className="mx-auto flex min-h-dvh w-full max-w-xl flex-col px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+      {arrows}
+
       <div className="flex flex-1 items-center justify-center py-6">
         <p className="font-title text-7xl text-navy">
           {score} / {maxScore}
