@@ -46,11 +46,11 @@ export const useRedownload = () => useContext(RedownloadContext);
  * download offers "Réessayer": a full Re-download, from zero.
  */
 export const PreparingScreen = ({
-  photos,
+  images,
   children,
 }: {
-  /** URL of every Carousel photo of the Quiz. */
-  photos: string[];
+  /** URL of every image of the Quiz: the Choice pins and Carousel photos. */
+  images: string[];
   children: ReactNode;
 }) => {
   const [preparing, setPreparing] = useState<Preparing>({ status: 'checking' });
@@ -59,7 +59,7 @@ export const PreparingScreen = ({
 
   const save = () => {
     setPreparing({ status: 'saving', saved: 0 });
-    saveQuiz(photos, (saved, total) =>
+    saveQuiz(images, (saved, total) =>
       setPreparing({ status: 'saving', saved, total }),
     ).then(
       () => setPreparing({ status: 'ready' }),

@@ -55,6 +55,9 @@ Every image is supplied by hand. Sizes below already cover a 3× phone screen; a
 | Experience logo           | `public/projects/logos/<id>.webp`   | **256×256**  | square, artwork edge-to-edge (it is cropped to a 13 px radius)  |
 | Reference avatar          | `public/references/thumbnails/*`    | **256×256**  | square, face centred (cropped to a circle)                      |
 | Social preview            | `src/app/opengraph-image.png`       | **1200×630** | see below — Next picks the file up automatically, no code needed |
+| Quiz social preview       | `src/app/reunion/opengraph-image.png` | **1200×630** | same constraints; see below |
+| Quiz favicon              | `src/app/reunion/icon.png`          | **192×192**  | the four Choice Pins on their tiles, 2×2, transparent background |
+| Quiz home-screen icon     | `src/app/reunion/apple-icon.png`    | **180×180**  | same, on the page background, no alpha |
 
 #### The social preview
 
@@ -63,6 +66,8 @@ Every image is supplied by hand. Sizes below already cover a 3× phone screen; a
 Constraints that shaped it: 1200×630, **no alpha** (some clients flatten transparency to black), under 300 KB, and type large enough to survive being shown ~500 px wide in a feed. It is the page's own vocabulary — portrait on the yellow disc, Lexend Bold name, Google Sans role, the three grey chips — rendered with the site's real font files, with the text converted to vector paths so no font has to be resolved at render time.
 
 Platforms cache these hard; after deploying a new one, force a refresh through LinkedIn's Post Inspector.
+
+The Réunion quiz has its own share image, favicon and home-screen icon (`opengraph-image.png`, `icon.png`, `apple-icon.png` in `src/app/reunion/`), built the same way: the four Choice Pins on their coloured tiles (originals in `drafts/reunion/pins/`). They replace the CV's for that subtree only. That is why the CV's favicon is `src/app/icon.ico` and not `favicon.ico`: a root `favicon.ico` is linked on every route and can't be overridden, so `/favicon.ico` is a rewrite to it in `next.config.ts`. Its layout does need a `twitter.card` line: once a nested layout sets its own `twitter` title, the card falls back to `summary` unless it is restated.
 
 An experience with no `logo` key (or a missing file) falls back to a yellow monogram — the layout is identical, so adding the real file changes nothing else. To wire a new one up: drop the file in `public/projects/logos/` **and** add `"logo": "/projects/logos/<id>.webp"` to both locale files.
 

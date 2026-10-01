@@ -2,10 +2,10 @@ import type { ReactNode } from 'react';
 
 import type { Question } from '@/app/reunion/quiz';
 
-import { ChoiceShape, choiceColours } from './choice-style';
+import { ChoicePin, choiceColours } from './choice-style';
 
 /**
- * The Pick step: the whole screen takes the Answer's colour, the shape and
+ * The Pick step: the whole screen takes the Answer's colour, the Pin and
  * Choice text very large in the centre — the screen held up to the room.
  * Tapping anywhere except the arrows moves on: the arrows sit over the
  * full-screen button rather than inside it, so they never trigger it.
@@ -32,7 +32,7 @@ export const PickStep = ({
           {question.prompt}
         </span>
         <span className="mx-auto flex w-full max-w-xl flex-1 flex-col items-center justify-center gap-6 py-8 text-center">
-          <ChoiceShape position={answer} className="size-24" />
+          <ChoicePin position={answer} className="size-32" />
           <span className="break-words font-title text-5xl leading-tight">
             {question.choices[answer]}
           </span>

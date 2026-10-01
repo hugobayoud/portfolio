@@ -1,3 +1,4 @@
+import { choicePinUrls } from '@/components/reunion/choice-style';
 import { Explanation } from '@/components/reunion/explanation';
 import { PlayThrough } from '@/components/reunion/play-through';
 import { PreparingScreen } from '@/components/reunion/preparing-screen';
@@ -9,7 +10,7 @@ assertCarouselPhotos(quiz);
 
 export default function ReunionPage() {
   return (
-    <PreparingScreen photos={quizPhotoUrls(quiz)}>
+    <PreparingScreen images={[...choicePinUrls, ...quizPhotoUrls(quiz)]}>
       <PlayThrough
         questions={quiz}
         explanations={quiz.map((question) => (

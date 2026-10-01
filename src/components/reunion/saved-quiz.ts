@@ -44,12 +44,12 @@ export const registerServiceWorker = () =>
 
 /**
  * Saves the whole Quiz from scratch: the page, every script, stylesheet and
- * font it needs, and every photo in `photos`. Reports `(saved, total)` after
+ * font it needs, and every image in `images`. Reports `(saved, total)` after
  * each file once the total is known. Rejects on the first failed download
  * (and stops the others); the Quiz then counts as not saved.
  */
 export async function saveQuiz(
-  photos: string[],
+  images: string[],
   onProgress: (saved: number, total: number) => void,
 ) {
   await caches.delete(CACHE_NAME);
@@ -87,7 +87,7 @@ export async function saveQuiz(
     const others = unique([
       ...pageAssets.filter((url) => !url.endsWith('.css')),
       ...fonts,
-      ...photos,
+      ...images,
     ]);
 
     const total = 1 + stylesheets.length + others.length;

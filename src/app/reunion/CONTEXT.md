@@ -21,8 +21,12 @@ One authored item of the Quiz: a prompt, exactly four Choices, one Correct choic
 _Avoid_: Card, slide, item.
 
 **Choice**:
-One of the four proposed answers to a Question, shown in the order authored. Its position gives it a fixed colour and shape that Players can name out loud: Lave ▲, Lagon ◆, Soleil ●, Forêt ■.
+One of the four proposed answers to a Question, shown in the order authored. Its position gives it a fixed colour and Pin that Players can name out loud: Lave (volcano), Lagon (dolphin), Soleil (sun), Forêt (palm tree).
 _Avoid_: Option, proposition, answer.
+
+**Pin**:
+The enamel-pin illustration of a Choice position, shown on the Choice and again on the Pick and Reveal steps.
+_Avoid_: Icon, shape, symbol.
 
 **Correct choice**:
 The one Choice of a Question that is right.

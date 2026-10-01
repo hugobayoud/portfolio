@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import type { Question } from '@/app/reunion/quiz';
 
-import { ChoiceShape, choiceColours } from './choice-style';
+import { ChoicePin, choiceColours } from './choice-style';
 
 /**
  * The Reveal step: the points earned, the Correct choice, then the
@@ -40,7 +40,7 @@ export const RevealStep = ({
       <div
         className={`flex items-center gap-4 rounded-2xl p-5 shadow-[0_2px_10px_rgba(0,0,0,0.07)] ${choiceColours(question.correct)}`}
       >
-        <ChoiceShape position={question.correct} className="size-10" />
+        <ChoicePin position={question.correct} className="size-12" />
         <span className="break-words font-title text-3xl leading-tight">
           {question.choices[question.correct]}
         </span>
