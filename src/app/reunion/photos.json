@@ -1,1 +1,132 @@
-{}
+{
+  "archipel": {
+    "archipel-1.webp": {
+      "width": 800,
+      "height": 480
+    },
+    "archipel-2.webp": {
+      "width": 1455,
+      "height": 938
+    },
+    "archipel-3.webp": {
+      "width": 1510,
+      "height": 947
+    }
+  },
+  "aviateur": {
+    "aviateur-1.webp": {
+      "width": 1111,
+      "height": 908
+    },
+    "aviateur-2.webp": {
+      "width": 474,
+      "height": 284
+    }
+  },
+  "capitale": {
+    "capitale-1.webp": {
+      "width": 1600,
+      "height": 945
+    }
+  },
+  "diagonale-des-fous": {
+    "diagonale-des-fous-1.webp": {
+      "width": 800,
+      "height": 500
+    }
+  },
+  "drapeau": {
+    "drapeau-1.webp": {
+      "width": 900,
+      "height": 600
+    }
+  },
+  "fleur": {
+    "fleur-1.webp": {
+      "width": 1200,
+      "height": 1200
+    },
+    "fleur-2.webp": {
+      "width": 1024,
+      "height": 683
+    }
+  },
+  "migration": {
+    "migration-1.webp": {
+      "width": 1240,
+      "height": 915
+    }
+  },
+  "ocean": {
+    "ocean-1.webp": {
+      "width": 696,
+      "height": 440
+    },
+    "ocean-2.webp": {
+      "width": 1289,
+      "height": 937
+    }
+  },
+  "oiseau": {
+    "oiseau-1.webp": {
+      "width": 900,
+      "height": 675
+    },
+    "oiseau-2.webp": {
+      "width": 720,
+      "height": 405
+    },
+    "oiseau-3.webp": {
+      "width": 512,
+      "height": 325
+    }
+  },
+  "plat": {
+    "plat-1.webp": {
+      "width": 681,
+      "height": 1024
+    },
+    "plat-2.webp": {
+      "width": 978,
+      "height": 1406
+    }
+  },
+  "point-culminant": {
+    "point-culminant-1.webp": {
+      "width": 1209,
+      "height": 915
+    }
+  },
+  "poisson": {
+    "poisson-1.webp": {
+      "width": 1000,
+      "height": 1193
+    },
+    "poisson-2.webp": {
+      "width": 1000,
+      "height": 600
+    }
+  },
+  "riviere": {
+    "riviere-1.webp": {
+      "width": 526,
+      "height": 526
+    }
+  },
+  "volcan-actif": {
+    "volcan-actif-1.webp": {
+      "width": 1600,
+      "height": 1068
+    },
+    "volcan-actif-2.webp": {
+      "width": 960,
+      "height": 1056
+    }
+  },
+  "volcans": {
+    "volcans-1.webp": {
+      "width": 580,
+      "height": 399
+    }
+  }
+}
